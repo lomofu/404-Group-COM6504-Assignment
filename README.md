@@ -8,7 +8,7 @@
 
 - Jiaqi Fu jfu15@sheffield.ac.uk
 - Lixuan Lou lou1@sheffield.ac.uk
-- xxx
+- Xu Li xli327@sheffield.ac.uk
 
 ### Runtime Environment
 
