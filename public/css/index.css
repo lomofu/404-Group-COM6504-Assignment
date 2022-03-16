@@ -27,8 +27,12 @@ body {
     margin: 20% auto 0;
 }
 
+p{
+    font-size: 0.8rem;
+}
+
 .card {
-    width: 40vw;
+    width: 75vw;
     height: 50vh;
     position: absolute;
     top: 0;
@@ -96,5 +100,34 @@ body {
     }
     100% {
         transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95);
+    }
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .card {
+        width: 60vw;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .card {
+        width: 50vw;
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .card {
+        width: 40vw;
+    }
+}
+
+
+/*X-Large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .card {
+        width: 40vw;
     }
 }
