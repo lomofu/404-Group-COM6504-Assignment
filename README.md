@@ -6,9 +6,9 @@
 
 ### Participants
 
-- Jiaqi Fu jfu15@sheffield.ac.uk
-- Lixuan Lou lou1@sheffield.ac.uk
-- Xu Li xli327@sheffield.ac.uk
+- Jiaqi Fu : jfu15@sheffield.ac.uk
+- Lixuan Lou : llou1@sheffield.ac.uk
+- Xu Li : xli327@sheffield.ac.uk
 
 ### Runtime Environment
 
