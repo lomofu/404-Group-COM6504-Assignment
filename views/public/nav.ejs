@@ -1,5 +1,6 @@
 <nav id="nav-bar" class="navbar navbar-expand-lg navbar-dark position-fixed fixed-top" style="z-index: 999">
     <div class="container">
+        <!-- logo -->
         <div class="d-inline-flex align-content-center me-3">
             <a class="navbar-brand" href="#">
                 <img class="ml-4" width="32" height="32" src="/img/icon-64.png" alt="icon">
@@ -23,10 +24,43 @@
                 <div class="row">
                     <input class="form-control me-lg-3 mb-3 mb-lg-0 col" type="search" placeholder="Search a story"
                            aria-label="Search">
-                    <button class="btn btn-outline-light me-3 col-12 col-lg-3">Create a Story</button>
+                    <button class="btn btn-outline-light me-3 col-12 col-lg-3" data-bs-toggle="modal"
+                            data-bs-target="#storyModal">Create a Story
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Modal -->
+<div class="modal fade" id="storyModal" tabindex="-1" aria-labelledby="storyModalLabel" aria-hidden="true">
+    <div class="modal-dialog align-items-center justify-content-center">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div>
+
                 </div>
             </div>
 
         </div>
     </div>
-</nav>
+</div>
+
+<style>
+
+    .modal-content{
+        border-radius: 30px;
+    }
+
+    .modal-dialog {
+        max-width: 70vw !important;
+    }
+
+    .modal-body {
+        min-height: 80vh !important;
+    }
+
+</style>
