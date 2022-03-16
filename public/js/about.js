@@ -1,0 +1,3 @@
+const aboutModule = (function () {
+    return {}
+})()
