@@ -1,0 +1,66 @@
+:root {
+    --primary: #6f42c1
+
+}
+
+.primary {
+    color: var(--primary);
+}
+
+@font-face {
+    font-family: 'Fredoka-Light';
+    src: url('/font/Fredoka-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Fredoka-Medium';
+    src: url('/font/Fredoka-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fredoka';
+    src: url('/font/Fredoka-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fredoka-SemiBold';
+    src: url('/font/Fredoka-SemiBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fredoka-Bold';
+    src: url('/font/Fredoka-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.fredoka-lg {
+    font-family: 'Fredoka-Light', Fallback, sans-serif;
+}
+
+.fredoka-med {
+    font-family: 'Fredoka-Medium', Fallback, sans-serif;
+}
+
+.fredoka-semi {
+    font-family: 'Fredoka-SemiBold', Fallback, sans-serif;
+}
+
+.fredoka-bd {
+    font-family: 'Fredoka-Bold', Fallback, sans-serif;
+}
+
+body {
+    font-family: 'Fredoka', 'Fredoka-Light', 'Fredoka-Medium', 'Fredoka-SemiBold', 'Fredoka-Bold', Fallback, sans-serif;
+    height: 100vh;
+    width: 100%;
+}
