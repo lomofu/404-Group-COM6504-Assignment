@@ -1,0 +1,68 @@
+/** @format */
+
+body {
+  height: 100vh;
+  width: 100%;
+}
+
+.navbar {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.gradient {
+  background: #3a1c71; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    -60deg,
+    #9b6f4e,
+    #be6069,
+    #3a1c71
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    -60deg,
+    #9b6f4e,
+    #be6069,
+    #3a1c71
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  min-height: 40vh;
+  max-height: 40vh;
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.list-group-item:last-child {
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.list-group-item {
+  border: none;
+  border-radius: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+  transition: background-color 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.list-group-item:hover {
+  background-color: rgba(125, 73, 215, 0.88);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.mycard {
+  transition: background-color,
+    box-shadow 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.mycard:hover {
+  background-color: rgba(125, 73, 215, 0.88) !important;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%) !important;
+  transition: background-color,
+    box-shadow 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
+}

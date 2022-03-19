@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/story.css">
+    <title>Mission!</title>
+</head>
+<body>
+<!--nav-->
+<%- include('public/nav'); %>
+<header class="gradient shadow-lg d-flex align-items-center">
+    <div class="container">
+        <h1 class="fredoka-semi text-white text-center">Stories</h1>
+        <div class="row justify-content-center">
+            <section class="text-white w-50">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias aperiam atque consequatur
+                deleniti
+                doloremque facilis id ipsa maiores obcaecati odio quasi repudiandae tempora tenetur unde, vitae
+                voluptatibus.
+                Aut, dolor!
+            </section>
+        </div>
+    </div>
+    </div>
+
+</header>
+
+<main class="w-100 d-flex flex-column align-items-center container mt-4">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-2 d-flex justify-content-end px-0">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button id="list-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <button id="grid-btn" type="button" class="btn btn-primary">
+                        <i class="bi bi-grid-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <ul id="list-container" class="row list-group mt-3 d-none">
+            <!-- dynamic render-->
+        </ul>
+
+        <div id="grid-container" class="row">
+            <!-- dynamic render-->
+        </div>
+
+        <nav class="mt-3 row">
+            <ul class="pagination justify-content-end p-0">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</main>
+
+
+<%- include("public/script", { util: true, api:true }); %>
+<script src="/js/story.js"></script>
+<script>
+    const {jq, router} = constantModule;
+    const {loadScript} = utilModule;
+    const {useNav} = navModule;
+    const {useChangeType, useList, useGrid} = storyModule1;
+    const {storyApis} = apis;
+
+    loadScript(jq, async () => {
+        useNav();
+        const data = await api();
+
+        const type = useChangeType({
+            list: () => useList(data),
+            grid: () => useGrid(data)
+        });
+
+        $('#list-btn').click(() => type.now = 0);
+        $('#grid-btn').click(() => type.now = 1);
+
+        storyApis.getStoryList();
+
+        async function api() {
+            return [
+                {
+                    title: "h1",
+                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
+                    createTime: "09/02/2022",
+                    author: "u know",
+                    rooms: 0
+                },
+                {
+                    title: "h2",
+                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
+                    createTime: "09/02/2022",
+                    author: "u know",
+                    rooms: 2
+                },
+                {
+                    title: "h3",
+                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
+                    createTime: "09/02/2022",
+                    author: "u know",
+                    rooms: 0
+                },
+                {
+                    title: "h4",
+                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
+                    createTime: "09/02/2022",
+                    author: "u know"
+                },
+                {
+                    title: "h5",
+                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
+                    createTime: "09/02/2022",
+                    author: "u know",
+                    rooms: 3
+                }
+            ]
+        }
+
+
+    });
+</script>
