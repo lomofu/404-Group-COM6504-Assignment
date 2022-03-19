@@ -11,6 +11,10 @@
     color: var(--primary);
 }
 
+.bg-purple{
+    background: var(--primary);
+}
+
 @font-face {
     font-family: 'Fredoka-Light';
     src: url('/font/Fredoka-Light.woff') format('woff');
