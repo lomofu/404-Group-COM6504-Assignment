@@ -83,6 +83,14 @@ function onListening() {
     debug('Server Listening on ' + bind);
 }
 
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+});
+var socket_module = require('../socket/index');
+socket_module.init(io, app);
+
+
+
 function banner() {
     console.log(` ___   ___  ________  ___   ___     
 |\\  \\ |\\  \\|\\   __  \\|\\  \\ |\\  \\    
