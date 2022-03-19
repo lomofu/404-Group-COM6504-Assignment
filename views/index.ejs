@@ -14,11 +14,10 @@
 <main class="h-100 w-100 d-flex flex-column justify-content-center align-items-center container">
     <div class="container" style="margin-bottom: 10%">
         <div class="row">
-
             <!-- intro card-->
             <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
                 <ul class="cards">
-                    <li class="card">
+                    <li class="card-dy">
                         <h1>Real-Time Chatting</h1>
                         <p>
                             - Access relevant rooms with your partners for a story
@@ -28,7 +27,7 @@
                             <br>- Searching for relevant Google Knowledge Graph
                         </p>
                     </li>
-                    <li class="card">
+                    <li class="card-dy">
                         <h1>Mission Stories</h1>
                         <p>
                             - Create a new story including:
@@ -40,13 +39,13 @@
                             <br>- Wait for people to explore your story!
                         </p>
                     </li>
-                    <li class="card">
+                    <li class="card-dy">
                         <h1>Knowledge Graph</h1>
                         <p>- Enter a keyword to search when analysing a story
                             <br>- Show you the relevant content in the Google Knowledge Graph
                         </p>
                     </li>
-                    <li class="card">
+                    <li class="card-dy">
                         <h1>Find Key Point</h1>
                         <p>
                             - Combine the various information in the story
@@ -71,12 +70,14 @@
 <script src="/js/index.js"></script>
 <script>
     const {jq, router} = constantModule;
-    const {loadScript, useNav} = utilModule;
+    const {loadScript} = utilModule;
+    const {useNav} = navModule;
     const {useCards} = indexModule;
 
     loadScript(jq, () => {
         useNav();
         useCards();
+
     })
 </script>
 </body>

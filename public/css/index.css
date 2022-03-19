@@ -21,18 +21,24 @@ body {
 }
 
 .cards {
+    width: 100%;
     position: relative;
     list-style-type: none;
     padding: 0;
     margin: 20% auto 0;
 }
 
-p{
+i {
+    color: var(--primary);
+    font-size: 32px;
+}
+
+p {
     font-size: 0.8rem;
 }
 
-.card {
-    width: 75vw;
+.card-dy {
+    width: 100%;
     height: 50vh;
     position: absolute;
     top: 0;
