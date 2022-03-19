@@ -10,7 +10,7 @@ const indexModule = (function () {
         const createAnimation = () => setInterval(() => $('.card--next').first().trigger('click'), 4000);
         $.fn.commentCards = function () {
             return this.each(function () {
-                let $this = $(this), $cards = $this.find('.card'), $current = $cards.filter('.card--current'), $next;
+                let $this = $(this), $cards = $this.find('.card-dy'), $current = $cards.filter('.card--current'), $next;
                 $cards.on('click', function () {
                     if (!$current.is(this)) {
                         $cards.removeClass('card--current card--out card--next');

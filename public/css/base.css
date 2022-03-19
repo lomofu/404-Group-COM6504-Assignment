@@ -1,9 +1,13 @@
 :root {
-    --primary: #6f42c1
-
+    --primary: #6f42c1;
+    --gray: rgba(0, 0, 0, 0.30);
 }
 
 .primary {
+    color: var(--primary);
+}
+
+.text-purple{
     color: var(--primary);
 }
 
