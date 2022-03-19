@@ -12,7 +12,9 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mongoose": "^6.2.7",
     "morgan": "~1.9.1",
+    "prettier": "^2.6.0",
     "socket.io": "^4.4.1"
   }
 }
