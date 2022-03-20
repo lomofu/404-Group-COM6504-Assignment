@@ -1,6 +1,15 @@
+<<<<<<< Updated upstream
 const storyModule = (function () {
+<<<<<<< Updated upstream
 
     // story class
+=======
+=======
+const newStoryModule = (function () {
+
+    // story class
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     class Story {
         title;
         author;
