@@ -1,0 +1,94 @@
+/** @format */
+
+#room-screen {
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#google-kl {
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: unset;
+}
+
+#google-btn {
+    position: absolute;
+    right: 0;
+    width: 80px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 2rem 0 0 2rem;
+}
+
+#room-btn {
+    width: 80px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 0 2rem 2rem 0;
+    z-index: 9999;
+}
+
+#nav-tabContent {
+    height: 93vh;
+}
+
+#nav-tab {
+    height: 3rem;
+}
+
+
+.message {
+    color: black;
+    background: lightgray;
+    line-height: 26px;
+    border-radius: 10px;
+    display: inline-block;
+    position: relative
+}
+
+i {
+    font-size: 24px;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    color: white;
+    background: var(--primary);
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--primary);
+}
+
+#room-btn:hover,
+#google-btn:hover {
+    color: var(--primary);
+    background: white;
+}
+
+#room-btn:focus,
+#google-btn:focus {
+    box-shadow: 0 0 0 0;
+}
+
+
+#send-msg-btn:hover,
+#google-search-btn:hover {
+    color: white;
+    background: var(--primary);
+}
+
+#chat-history,
+#google-cards {
+    height: 93%;
+}
+
+#chat-input,
+#google-search {
+    height: 7%;
+}
