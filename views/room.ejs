@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/room.css">
+    <title>Mission! Room | <%= roomId %> </title>
+</head>
+<body>
+<!-- room button-->
+<button id="room-btn" class="btn fixed-top mt-5 room-btn" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasLeft">
+    Room
+</button>
+
+<!--room detail and leave button-->
+<div class="offcanvas offcanvas-start ps-5" tabindex="-1" id="offcanvasLeft">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Room Details</h5>
+    </div>
+    <div class="offcanvas-body pt-5">
+        <p>You are in Room 1004</p>
+        <i class="bi bi-box-arrow-left" type="button"></i>
+    </div>
+</div>
+
+<!--main screen-->
+<div class="row gx-0 vh-100 w-100">
+    <div class="col-md-9 px-0">
+        <div class="row mx-0 h-100 flex-nowrap">
+            <!-- drawer screen-->
+            <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
+                <button id="google-btn" class="btn mt-5" type="button">
+                    Search
+                </button>
+            </div>
+
+            <!-- google knowledge graph-->
+            <div id="google-kl" class="d-none vh-100 col-0 p-3">
+                <!-- keyword search input area-->
+                <div id="google-search" class="input-group">
+                    <input type="text" class="form-control" placeholder="search from google knowledge graph"/>
+                    <button class="btn btn-outline-secondary" type="button" id="google-search-btn">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                <!-- search result cards-->
+                <div id="google-cards" class="overflow-scroll">
+                    <div class="card w-100 my-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sheffield</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Link to WebPage</a>
+                        </div>
+                    </div>
+
+                    <div class="card w-100 my-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sheffield</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Link to WebPage</a>
+                        </div>
+                    </div>
+
+                    <div class="card w-100 mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sheffield</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Link to WebPage</a>
+                        </div>
+                    </div>
+                    <div class="card w-100 mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Sheffield</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Link to WebPage</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- chat and members screen-->
+    <div class="col-md-3 shadow-lg">
+        <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
+            <!-- chat screen-->
+            <div class="tab-pane fade show active h-100 py-3" id="nav-chat" role="tabpanel">
+                <!-- chat history screen-->
+                <div id="chat-history" class="overflow-scroll">
+                    <!-- todo-->
+                    <div class="pb-3">
+                        <div class="text-end">
+                            <span class="text-purple fw-bold">Luna</span>
+                            <span class="ps-2 text-black-50 fs-6">10:10 AM, Today</span>
+                        </div>
+                        <div class="message p-3 text-start">
+                            Hi, how are you? How is the project coming along?
+                        </div>
+                    </div>
+                    <div class="pb-3">
+                        <div class="text-start">
+                            <span class="text-purple fw-bold">Lomo</span>
+                            <span class="ps-2 text-black-50">10:12 AM, Today</span>
+                        </div>
+                        <div class="message p-3 text-start">Are we meeting today?</div>
+                    </div>
+
+                    <div class="pb-3">
+                        <div class="text-end">
+                            <span class="text-purple fw-bold">Luna</span>
+                            <span class="ps-2 text-black-50 fs-6">10:10 AM, Today</span>
+                        </div>
+                        <div class="message p-3 text-start">
+                            Hi, how are you? How is the project coming along?
+                        </div>
+                    </div>
+                    <div class="pb-3">
+                        <div class="text-start">
+                            <span class="text-purple fw-bold">Lomo</span>
+                            <span class="ps-2 text-black-50">10:12 AM, Today</span>
+                        </div>
+                        <div class="message p-3 text-start">Are we meeting today?</div>
+                    </div>
+                    <div class="pb-3">
+                        <div class="text-end">
+                            <span class="text-purple fw-bold">Luna</span>
+                            <span class="ps-2 text-black-50 fs-6">10:10 AM, Today</span>
+                        </div>
+                        <div class="message p-3 text-start">
+                            Hi, how are you? How is the project coming along?
+                        </div>
+                    </div>
+                    <div class="pb-3">
+                        <div class="text-start">
+                            <span class="text-purple fw-bold">Lomo</span>
+                            <span class="ps-2 text-black-50">10:12 AM, Today</span>
+                        </div>
+                        <div class="message p-3 text-start">Are we meeting today?</div>
+                    </div>
+
+                </div>
+
+                <!-- chat input -->
+                <div id="chat-input" class="input-group ">
+                    <input type="text" class="form-control" placeholder="input something to say..."/>
+                    <button class="btn btn-outline-secondary" type="button" id="send-msg-btn">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- members screen-->
+            <div class="tab-pane fade h-100 py-3" id="nav-members" role="tabpanel">
+                <h3>Room 4001</h3>
+                <div class="p-3">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- chat and members nav-->
+        <div class="nav w-100 d-flex justify-content-around nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active col" id="nav-chat-btn" data-bs-toggle="tab"
+                    data-bs-target="#nav-chat" type="button" role="tab">
+                <i class="bi bi-chat-right-dots "></i>
+            </button>
+            <button class="nav-link col" id="nav-members-btn" data-bs-toggle="tab"
+                    data-bs-target="#nav-members"
+                    type="button" role="tab">
+                <i class="bi bi-person-fill"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<%- include("public/script", { util: true, api:true, notStory:true }); %>
+<script src="/js/room.js"></script>
+<script>
+    const {jq} = constantModule;
+    const {loadScript} = utilModule;
+    const {useRoom} = roomModule;
+
+    loadScript(jq, () => {
+        useRoom();
+    })
+
+</script>
+</body>
+</html>
