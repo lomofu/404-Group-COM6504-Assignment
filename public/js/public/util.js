@@ -31,7 +31,15 @@ const utilModule = (function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   };
 
+  const useTimeFormat = (date) =>
+    `${date.getDate()}/${
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1
+    }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+
   return {
     loadScript,
+    useTimeFormat,
   };
 })();

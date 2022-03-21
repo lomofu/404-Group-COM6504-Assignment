@@ -1,94 +1,100 @@
 /** @format */
 
 #room-screen {
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #google-kl {
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: unset;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: unset;
 }
 
 #google-btn {
-    position: absolute;
-    right: 0;
-    width: 80px;
-    height: 50px;
-    background: var(--primary);
-    color: white;
-    border-radius: 2rem 0 0 2rem;
+  position: absolute;
+  right: 0;
+  width: 80px;
+  height: 50px;
+  background: var(--primary);
+  color: white;
+  border-radius: 2rem 0 0 2rem;
 }
 
 #room-btn {
-    width: 80px;
-    height: 50px;
-    background: var(--primary);
-    color: white;
-    border-radius: 0 2rem 2rem 0;
-    z-index: 9999;
+  width: 80px;
+  height: 50px;
+  background: var(--primary);
+  color: white;
+  border-radius: 0 2rem 2rem 0;
+  z-index: 9999;
 }
 
 #nav-tabContent {
-    height: 93vh;
+  flex: 1 0 auto;
+  overflow: auto;
+  height: 0;
 }
-
-#nav-tab {
-    height: 3rem;
+#chat-history,
+#nav-members {
+  flex: 1 0 auto;
+  overflow: auto;
+  height: 0;
 }
-
 
 .message {
-    color: black;
-    background: lightgray;
-    line-height: 26px;
-    border-radius: 10px;
-    display: inline-block;
-    position: relative
+  color: black;
+  background: lightgray;
+  line-height: 26px;
+  border-radius: 10px;
+  display: inline-block;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.sender {
+  color: white;
+  background: var(--primary);
 }
 
 i {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-    color: white;
-    background: var(--primary);
+  color: white;
+  background: var(--primary);
 }
 
 .nav-link {
-    color: black;
+  color: black;
 }
 
 .nav-link:hover,
 .nav-link:focus {
-    color: var(--primary);
+  color: var(--primary);
 }
 
 #room-btn:hover,
 #google-btn:hover {
-    color: var(--primary);
-    background: white;
+  color: var(--primary);
+  background: white;
 }
 
 #room-btn:focus,
 #google-btn:focus {
-    box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
 }
-
 
 #send-msg-btn:hover,
 #google-search-btn:hover {
-    color: white;
-    background: var(--primary);
+  color: white;
+  background: var(--primary);
 }
 
-#chat-history,
 #google-cards {
-    height: 93%;
+  height: 93%;
 }
 
-#chat-input,
 #google-search {
-    height: 7%;
+  height: 7%;
 }

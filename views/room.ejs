@@ -7,6 +7,29 @@
     <title>Mission! Room | <%= roomId %> </title>
 </head>
 <body>
+
+<div class="modal modal fade" id="usernameModal" data-bs-backdrop="static" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Give yourself a name</h5>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Username:</label>
+                    <input type="text" class="form-control" id="username-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="username-close-btn">Close
+                </button>
+                <button type="button" class="btn btn-primary" id="username-confirm-btn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- room button-->
 <button id="room-btn" class="btn fixed-top mt-5 room-btn" type="button" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasLeft">
@@ -25,7 +48,7 @@
 </div>
 
 <!--main screen-->
-<div class="row gx-0 vh-100 w-100">
+<main class="row gx-0 vh-100 w-100">
     <div class="col-md-9 px-0">
         <div class="row mx-0 h-100 flex-nowrap">
             <!-- drawer screen-->
@@ -50,7 +73,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Sheffield</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
                             <a href="#" class="card-link">Link to WebPage</a>
                         </div>
                     </div>
@@ -59,7 +83,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Sheffield</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
                             <a href="#" class="card-link">Link to WebPage</a>
                         </div>
                     </div>
@@ -68,7 +93,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Sheffield</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
                             <a href="#" class="card-link">Link to WebPage</a>
                         </div>
                     </div>
@@ -76,7 +102,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Sheffield</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
                             <a href="#" class="card-link">Link to WebPage</a>
                         </div>
                     </div>
@@ -87,68 +114,20 @@
     </div>
 
     <!-- chat and members screen-->
-    <div class="col-md-3 shadow-lg">
+    <div class="col-md-3 shadow-lg d-flex flex-column justify-content-between">
         <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
             <!-- chat screen-->
-            <div class="tab-pane fade show active h-100 py-3" id="nav-chat" role="tabpanel">
+            <div class="h-100 d-flex flex-column justify-content-between tab-pane fade show active py-3" id="nav-chat"
+                 role="tabpanel">
+                <h5>History Chats</h5>
                 <!-- chat history screen-->
-                <div id="chat-history" class="overflow-scroll">
-                    <!-- todo-->
-                    <div class="pb-3">
-                        <div class="text-end">
-                            <span class="text-purple fw-bold">Luna</span>
-                            <span class="ps-2 text-black-50 fs-6">10:10 AM, Today</span>
-                        </div>
-                        <div class="message p-3 text-start">
-                            Hi, how are you? How is the project coming along?
-                        </div>
-                    </div>
-                    <div class="pb-3">
-                        <div class="text-start">
-                            <span class="text-purple fw-bold">Lomo</span>
-                            <span class="ps-2 text-black-50">10:12 AM, Today</span>
-                        </div>
-                        <div class="message p-3 text-start">Are we meeting today?</div>
-                    </div>
-
-                    <div class="pb-3">
-                        <div class="text-end">
-                            <span class="text-purple fw-bold">Luna</span>
-                            <span class="ps-2 text-black-50 fs-6">10:10 AM, Today</span>
-                        </div>
-                        <div class="message p-3 text-start">
-                            Hi, how are you? How is the project coming along?
-                        </div>
-                    </div>
-                    <div class="pb-3">
-                        <div class="text-start">
-                            <span class="text-purple fw-bold">Lomo</span>
-                            <span class="ps-2 text-black-50">10:12 AM, Today</span>
-                        </div>
-                        <div class="message p-3 text-start">Are we meeting today?</div>
-                    </div>
-                    <div class="pb-3">
-                        <div class="text-end">
-                            <span class="text-purple fw-bold">Luna</span>
-                            <span class="ps-2 text-black-50 fs-6">10:10 AM, Today</span>
-                        </div>
-                        <div class="message p-3 text-start">
-                            Hi, how are you? How is the project coming along?
-                        </div>
-                    </div>
-                    <div class="pb-3">
-                        <div class="text-start">
-                            <span class="text-purple fw-bold">Lomo</span>
-                            <span class="ps-2 text-black-50">10:12 AM, Today</span>
-                        </div>
-                        <div class="message p-3 text-start">Are we meeting today?</div>
-                    </div>
-
+                <div id="chat-history" class="p-3">
+                    <!-- dynamically render-->
                 </div>
 
                 <!-- chat input -->
-                <div id="chat-input" class="input-group ">
-                    <input type="text" class="form-control" placeholder="input something to say..."/>
+                <div class="input-group mt-2">
+                    <input id="chat-input" type="text" class="form-control" placeholder="input something to say..."/>
                     <button class="btn btn-outline-secondary" type="button" id="send-msg-btn">
                         <i class="bi bi-send-fill"></i>
                     </button>
@@ -177,19 +156,24 @@
             </button>
         </div>
     </div>
-</div>
+</main>
 
 <%- include("public/script", { util: true, api:true, notStory:true }); %>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/room.js"></script>
 <script>
     const {jq} = constantModule;
-    const {loadScript} = utilModule;
-    const {useRoom} = roomModule;
-
-    loadScript(jq, () => {
-        useRoom();
-    })
-
+    const {loadScript, useTimeFormat} = utilModule;
+    const {useRoom, usernameModal, useSocket} = roomModule;
+    const roomId = window.location.pathname.split('/').filter(e => e !== '' && e !== 'room');
+    if (roomId.length === 1) {
+        loadScript(jq, () => {
+            useRoom();
+            usernameModal((username) => useSocket(roomId, username));
+        })
+    } else {
+        alert('path is invalid, please make sure it is the form of /room/roomId ');
+    }
 </script>
 </body>
 </html>
