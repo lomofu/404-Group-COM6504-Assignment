@@ -3,9 +3,9 @@
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const mongoose = require("./config/dbConfig");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+require("./config/dbConfig");
 
 const publicRouter = require("./routes/public");
 const indexRouter = require("./routes/view");
@@ -24,11 +24,12 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../")));
 
 app.use("/", indexRouter);
 app.use("/public", publicRouter);
 app.use("/users", usersRouter);
-app.use('/api/story',storyRouter);
+app.use("/api/story", storyRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
