@@ -11,6 +11,7 @@ const story = new Schema({
   image: { type: String, required: true, max: 100 },
   createTime: { type: String, required: true },
   delete: { type: Boolean, required: true },
+  rooms: { type: Number, required: true },
 });
 
 story.set("toObject", { getters: true, virtuals: true });

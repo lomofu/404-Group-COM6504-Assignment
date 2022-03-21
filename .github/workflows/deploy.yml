@@ -18,7 +18,7 @@ env:
   DOCKER_TOKEN: f1089bbc-4e69-4c80-a986-9cb483e5983f
 
 jobs:
-  Build-Frontend-App:
+  Build-Mission-App:
     if: ${{ contains(github.event.head_commit.message, '[build]') }}
     runs-on: ubuntu-latest
     steps:
