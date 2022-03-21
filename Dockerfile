@@ -10,5 +10,5 @@ WORKDIR /app
 
 EXPOSE 3000
 
-ENTRYPOINT exec npm run start
+ENTRYPOINT exec npm run test
 
