@@ -17,10 +17,10 @@ mongoose
   .then(
     () => {
       console.log(
-        `Connected successfully! Connect DB: ${config.mongodb_config.connect}`,
+        `💻 Connected to DB: ${config.mongodb_config.connect} successfully!`,
       );
     },
-    (err) => console.error("error!" + err),
+    (err) => console.error("❌ error!" + err),
   );
 
 module.exports = mongoose;
