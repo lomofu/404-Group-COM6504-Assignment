@@ -1,26 +1,32 @@
 /** @format */
 
-let Story = require("../model/story");
+const StorySchema = require("../model/story");
 const format = require("../util/dateformat");
+const logger = require("../util/logger");
 
 module.exports = {
   async save({ title, author, description, image }) {
-    const story = new Story({
+    const story = new StorySchema({
       title,
       author,
       description,
       image,
-      createTime:format(new Date()),
+      createTime: format(new Date()),
       delete: false,
+      rooms: 0,
     });
-    console.log("received: " + story);
+
+    logger.info(`received: ${story}`);
+
     try {
       const result = await story.save();
-      console.log(`insert new story : ${result._id}`);
       return result._id;
     } catch (e) {
-      console.error(e);
+      logger.error(`received: ${e}`);
       throw new Error("Could not insert data!");
     }
+  },
+  getStoryList() {
+    return StorySchema.find();
   },
 };
