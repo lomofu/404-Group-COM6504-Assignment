@@ -1,4 +1,5 @@
 const navModule = (function () {
+    // nav router
     const _useRouter = () => {
         const {location: {pathname}} = window;
         router.forEach(e => {
@@ -15,8 +16,9 @@ const navModule = (function () {
         });
     }
 
+    // create new story modal
     const _useStoryModal = () => {
-        const {useCreateStoryModal, resetStoryModel} = storyModule
+        const {useCreateStoryModal, resetStoryModel} = newStoryModule
         const myModalEl = document.getElementById('storyModal');
         myModalEl.addEventListener('show.bs.modal', () => useCreateStoryModal());
         myModalEl.addEventListener('hidden.bs.modal', () => resetStoryModel());

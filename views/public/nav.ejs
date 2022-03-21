@@ -1,3 +1,4 @@
+<!--nav-->
 <nav id="nav-bar" class="navbar navbar-expand-lg navbar-dark position-fixed fixed-top" style="z-index: 999">
     <div class="container">
         <!-- logo -->
@@ -7,12 +8,10 @@
             </a>
             <h2 class="my-auto d-lg-none text-light fst-normal">Mission<span class="purple">!</span></h2>
         </div>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul id="nav" class="navbar-nav">
                 <!--render by js see@util.js-->
@@ -25,7 +24,8 @@
                     <input class="form-control me-lg-3 mb-3 mb-lg-0 col" type="search" placeholder="Search a story"
                            aria-label="Search">
                     <button class="btn btn-outline-light me-3 col-12 col-lg-3" data-bs-toggle="modal"
-                            data-bs-target="#storyModal">Create a Story
+                            data-bs-target="#storyModal">
+                        Create a Story
                     </button>
                 </div>
             </div>
@@ -33,15 +33,107 @@
     </div>
 </nav>
 
+<<<<<<< Updated upstream
+<!--Progress Modal-->
+<!--<div class="modal fade" id="progressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"-->
+<!--     aria-labelledby="progressModalLabel" aria-hidden="true">-->
+<!--    <div class="progress" id="progressBar">-->
+<!--        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"-->
+<!--             aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        6876-->
+<!--    </div>-->
 
-<!-- Modal -->
-<div class="modal fade" id="storyModal" tabindex="-1" aria-labelledby="storyModalLabel" aria-hidden="true">
-    <div class="modal-dialog align-items-center justify-content-center">
-        <div class="modal-content">
+<!--</div>-->
 
-            <div class="modal-body">
-                <div>
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+<!-- Story Modal -->
+<div class="modal fade" id="storyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="storyTitleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="border-radius: 2rem">
+            <!-- close button-->
+            <div class="d-flex justify-content-end p-3">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container">
+                <!--  modal title-->
+                <h1 class="text-black text-center" id="modalTitle">Create New Story</h1>
 
+                <!-- modal content-->
+                <div class="row my-5">
+                    <!-- new story input group-->
+                    <form class="col-xl-6 col-lg-10 px-xl-5 p-3 needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="story-title-input" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="story-title-input" placeholder="Story Title"
+                                   required/>
+                            <div class="invalid-feedback">
+                                Please input story title
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="story-author-input" class="form-label">Author</label>
+                            <input type="text" class="form-control" id="story-author-input" placeholder="Author Name"
+                                   required/>
+                            <div class="invalid-feedback">
+                                Please input author name
+                            </div>
+                        </div>
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+
+                        <div class="mb-3">
+                            <label for="story-image-input" class="form-label">Image</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <select class="form-select" id="story-image-select">
+                                        <option selected value="1">File</option>
+                                        <option value="2">URL</option>
+                                    </select>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="story-image-input"
+                                           placeholder="Image URL" required/>
+                                    <div class="invalid-feedback">
+                                        Please upload the image
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="story-desc-input" class="form-label">Description</label>
+                            <textarea type="text" class="form-control" id="story-desc-input"
+                                      placeholder="Story Description" style="height: 100px;resize: none"
+                                      required></textarea>
+                            <div class="invalid-feedback">
+                                Please input story description
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn bg-purple text-white" type="submit">Submit</button>
+                        </div>
+                    </form>
+
+                    <!-- new story overview group-->
+                    <div class="col-xl-6 col-lg-10 px-xl-5 p-3">
+                        <div class="card w-100 shadow-lg p-xl-5 p-3" style="border-radius: 2rem">
+                            <img id="story-img" class="w-100 pb-2"
+                                 src="/img/default-img.jpg" style="height: 30vh;object-fit: cover"/>
+                            <span id="story-title-overview" class="py-2">Title</span>
+                            <span id="story-author-overview" class="py-2">@Author</span>
+                            <span id="story-desc-overview" class="py-2">Story Description</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -49,18 +141,47 @@
     </div>
 </div>
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+<style>
+>>>>>>> Stashed changes
+
+
+
 <style>
 
-    .modal-content{
-        border-radius: 30px;
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        border: 1px solid #aaaaaa;
+        border-radius: 10px;
+        -webkit-appearance: none
     }
-
-    .modal-dialog {
-        max-width: 70vw !important;
-    }
-
-    .modal-body {
-        min-height: 80vh !important;
-    }
-
 </style>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+
+<<<<<<< Updated upstream
+    })()
+</script>
+=======
+</style>
+=======
+
+<style>
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        border: 1px solid #aaaaaa;
+        border-radius: 10px;
+        -webkit-appearance: none
+    }
+</style>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes

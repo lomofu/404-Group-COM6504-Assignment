@@ -4,7 +4,11 @@
 
 <script src="/js/public/constant.js"></script>
 <script src="/js/public/nav.js"></script>
+
+<% if (!locals.notStory) { %>
 <script src="/js/public/story.js"></script>
+<% } %>
+
 <% if (locals.util) { %>
     <script src="/js/public/util.js"></script>
 <% } %>
