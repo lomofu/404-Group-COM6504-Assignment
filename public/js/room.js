@@ -4,11 +4,19 @@
  * @author Lixuan Lou
  * @date 2022/3/19
  */
-
 const roomModule = (function () {
-  const useRoom = () => {
-    let flag = false;
+  const emojiList = [
+    { name: "happy", src: "/img/emoji/happy.webp" },
+    {
+      name: "happy",
+      src: "/img/emoji/kiss.webp",
+    },
+    { name: "happy", src: "/img/emoji/smile.webp" },
+  ];
 
+  const useRoom = () => {
+    _render();
+    let flag = false;
     const $screen = $("#room-screen");
     const $google = $("#google-kl");
 
@@ -30,12 +38,14 @@ const roomModule = (function () {
         $google.addClass("col-0 d-none");
       }
     });
+  };
 
-    $("#toast-btn").click(() => {
-      console.log(1);
-      const toast = new bootstrap.Toast($("#welcomeToast"));
-      toast.show();
-    });
+  const _render = () => {
+    emojiList.forEach(({ name, src }) =>
+      $("#emoji-box").append(`
+       <img width="50" height="50" src="${src}" alt="${name}">
+      `),
+    );
   };
 
   const usernameModal = (success) => {
@@ -64,13 +74,12 @@ const roomModule = (function () {
   };
 
   const useSocket = (roomId, name) => {
+    const $chat = $("#chat-history");
     const socket = io();
+
     socket.on("connect", () => {
-      console.log(roomId, name);
       socket.emit("create or join", roomId, name);
     });
-
-    const $chat = $("#chat-history");
 
     socket.on("joined", (username) => {
       $chat.append(`
@@ -118,6 +127,21 @@ const roomModule = (function () {
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     });
 
+    socket.on("received_emoji", (username, message) => {
+      $chat.append(`
+    <div class="pb-3">
+        <div class="text-start">
+            <span class="text-purple fw-bold">${username}</span>
+            <span class="ps-2 text-black-50">
+                ${useTimeFormat(new Date())}
+            </span>
+        </div>
+        <img width="60" height="60" src="${message}" />
+    </div>`);
+      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
+    });
+
+    // chat send message event
     $("#send-msg-btn").click(() => {
       const message = $("#chat-input").val();
       const username = window.localStorage.getItem(`${roomId}-username`);
@@ -140,6 +164,27 @@ const roomModule = (function () {
         $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
         socket.emit("send_chat", roomId, username, message);
       }
+    });
+
+    //chat send emoji
+    $("#emoji-box img").click(function () {
+      const { src } = this;
+      const username = window.localStorage.getItem(`${roomId}-username`);
+      $chat.append(`
+            <div class="pb-3">
+                <div class="text-end">
+                    <span class="text-purple fw-bold">${username}</span>
+                    <span class="ps-2 text-black-50">
+                        ${useTimeFormat(new Date())}
+                    </span>
+                </div>
+                <div class="d-flex justify-content-end w-100">
+                    <img height="60" width="60" src="${src}">
+                </div>
+              </div>
+            </div>`);
+      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
+      socket.emit("send_emoji", roomId, username, src);
     });
   };
 

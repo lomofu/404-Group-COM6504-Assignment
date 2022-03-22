@@ -128,6 +128,18 @@
                 <!-- chat input -->
                 <div class="input-group mt-2">
                     <input id="chat-input" type="text" class="form-control" placeholder="input something to say..."/>
+
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <i class="bi bi-emoji-laughing"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <div id="emoji-box" class="d-flex p-2">
+                                <!--dynamically render-->
+                            </div>
+                        </ul>
+                    </div>
                     <button class="btn btn-outline-secondary" type="button" id="send-msg-btn">
                         <i class="bi bi-send-fill"></i>
                     </button>
