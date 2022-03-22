@@ -18,10 +18,14 @@ const navModule = (function () {
 
     // create new story modal
     const _useStoryModal = () => {
-        const {useCreateStoryModal, resetStoryModel} = newStoryModule
+        const {useCreateStoryModal, resetStoryModel, storyInputCheckModel} = newStoryModule
         const myModalEl = document.getElementById('storyModal');
         myModalEl.addEventListener('show.bs.modal', () => useCreateStoryModal());
         myModalEl.addEventListener('hidden.bs.modal', () => resetStoryModel());
+
+        $('#story-title-input').keydown(() => storyInputCheckModel($('#story-title-input'),$('#story-title-count'),50));
+        $('#story-author-input').keydown(() => storyInputCheckModel($('#story-author-input'),$('#story-author-count'),20));
+        $('#story-desc-input').keydown(() => storyInputCheckModel($('#story-desc-input'),$('#story-desc-count'),200));
     }
 
     const useNav = () => {
@@ -33,3 +37,4 @@ const navModule = (function () {
         useNav
     }
 })();
+

@@ -8,6 +8,15 @@ const newStoryModule = (function () {
     desc;
   }
 
+  const formConstraint = [
+    { dom: "#title", limit: 30, desc: "" },
+    { name: "#author", limit: 30 },
+    {
+      name: "#desc",
+      limit: 30,
+    },
+  ];
+
   // input overview
   const title = document.getElementById("story-title-input");
   const author = document.getElementById("story-author-input");
@@ -30,9 +39,14 @@ const newStoryModule = (function () {
     descOV.textContent = e.target.value;
   });
 
+  const _checkConstraint = () => {
+    formConstraint.forEach((e) => {
+      $(e.dom).val() <= e.limit;
+    });
+  };
+
   // progress event
   const _progress = () => {
-    console.log(111);
     const progressModal = bootstrap.Modal.getOrCreateInstance(
       document.getElementById("progressModal"),
     );
@@ -55,6 +69,7 @@ const newStoryModule = (function () {
         story.desc = desc.value;
         console.log(story);
         _progress();
+        _checkConstraint();
       }
       form.classList.add("was-validated");
     },
@@ -103,8 +118,24 @@ const newStoryModule = (function () {
     }
   };
 
+  // create new story input limitation
+  const storyInputCheckModel = (input, count, limit) => {
+    count.text(" (" + input.val().length + "/" + limit + ") ");
+    if (input.val().length <= limit) {
+      count.addClass("text-black-50");
+      count.removeClass("text-danger");
+      input.removeClass("is-invalid");
+      return;
+    }
+    count.removeClass("text-black-50");
+    count.addClass("text-danger");
+    input.addClass("is-invalid");
+
+  };
+
   return {
     useCreateStoryModal,
     resetStoryModel,
+    storyInputCheckModel,
   };
 })();
