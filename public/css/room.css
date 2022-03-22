@@ -33,6 +33,7 @@
   overflow: auto;
   height: 0;
 }
+
 #chat-history,
 #nav-members {
   flex: 1 0 auto;
@@ -53,6 +54,11 @@
 .sender {
   color: white;
   background: var(--primary);
+}
+
+#emoji-box > img:hover {
+  background-color: var(--primary);
+  cursor: pointer;
 }
 
 i {

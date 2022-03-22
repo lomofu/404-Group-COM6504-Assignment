@@ -28,6 +28,11 @@ module.exports = (server) => {
         socket.broadcast.to(roomId).emit("received_chat", name, message);
       });
 
+      socket.on("send_emoji", (roomId, name, message) => {
+        socket.join(roomId);
+        socket.broadcast.to(roomId).emit("received_emoji", name, message);
+      });
+
       socket.on("disconnect", () => {
         console.log(cache.get(socket.id));
         const { roomId, name } = cache.get(socket.id);
