@@ -69,28 +69,22 @@
 </main>
 
 
-<%- include("public/script", { util: true, api:true }); %>
-<script src="/js/story.js"></script>
-<script>
-    const {jq, router} = constantModule;
-    const {loadScript} = utilModule;
-    const {useNav} = navModule;
-    const {useChangeType, useList, useGrid} = storyModule1;
-    const {storyApis} = apis;
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
+    import {story} from "/js/public/api.js";
+    import {useChangeType} from "/js/view/story.js";
 
     loadScript(jq, async () => {
         useNav();
         const data = await api();
 
-        const type = useChangeType({
-            list: () => useList(data),
-            grid: () => useGrid(data)
-        });
+        const type = useChangeType(data);
 
-        $('#list-btn').click(() => type.now = 0);
-        $('#grid-btn').click(() => type.now = 1);
-
-        storyApis.getStoryList();
+        $('#list-btn').click(() => type.value = 0);
+        $('#grid-btn').click(() => type.value = 1);
 
         async function api() {
             return [
@@ -135,7 +129,5 @@
                 }
             ]
         }
-
-
     });
 </script>

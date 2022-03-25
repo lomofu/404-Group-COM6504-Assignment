@@ -4,42 +4,44 @@
  * @desc
  * @create 18/Mar/2022 12:50
  */
+export const useChangeType = (data) => {
+  if (!data) {
+    data = [];
+  }
 
-const storyModule1 = (function () {
-  const useChangeType = ({ list, grid }) => {
-    const type = {
-      now: -1,
-    };
-
-    Object.defineProperty(type, "now", {
-      get() {
-        return this._now;
-      },
-      set(val) {
-        if (this._now !== 0 && val === 0) list();
-        if (this._now !== 1 && val === 1) grid();
-        this._now = val;
-      },
-    });
-
-    type.now = 0;
-
-    return type;
+  const type = {
+    value: -1,
   };
 
-  const useList = (list) => {
-    if (!list || (list.length && list.length <= 0)) {
-      return;
-    }
-    const $listContainer = $("#list-container");
-    const $gridContainer = $("#grid-container");
+  Object.defineProperty(type, "value", {
+    get() {
+      return this._value;
+    },
+    set(val) {
+      if (this._value !== 0 && val === 0) _useList(data);
+      if (this._value !== 1 && val === 1) _useGrid(data);
+      this._value = val;
+    },
+  });
 
-    $gridContainer.fadeOut();
-    $gridContainer.addClass("d-none");
-    $listContainer.empty();
+  type.value = 0;
 
-    list.forEach(({ title, image, author, description, createTime, rooms }) => {
-      $listContainer.append(`
+  return type;
+};
+
+const _useList = (list) => {
+  if (!list || (list.length && list.length <= 0)) {
+    return;
+  }
+  const $listContainer = $("#list-container");
+  const $gridContainer = $("#grid-container");
+
+  $gridContainer.fadeOut();
+  $gridContainer.addClass("d-none");
+  $listContainer.empty();
+
+  list.forEach(({ title, image, author, description, createTime, rooms }) => {
+    $listContainer.append(`
              <li class="list-group-item d-flex p-3">
                 <img src="${image}"
                      width="150"
@@ -61,26 +63,26 @@ const storyModule1 = (function () {
                     </div>
                 </div>
             </li>`);
-    });
+  });
 
-    $listContainer.removeClass("d-none");
-    $listContainer.hide().fadeIn();
-  };
+  $listContainer.removeClass("d-none");
+  $listContainer.hide().fadeIn();
+};
 
-  const useGrid = (list) => {
-    if (!list || (list.length && list.length <= 0)) {
-      return;
-    }
+const _useGrid = (list) => {
+  if (!list || (list.length && list.length <= 0)) {
+    return;
+  }
 
-    const $listContainer = $("#list-container");
-    const $gridContainer = $("#grid-container");
+  const $listContainer = $("#list-container");
+  const $gridContainer = $("#grid-container");
 
-    $listContainer.fadeOut();
-    $listContainer.addClass("d-none");
-    $gridContainer.empty();
+  $listContainer.fadeOut();
+  $listContainer.addClass("d-none");
+  $gridContainer.empty();
 
-    list.forEach(({ title, image, author, description, createTime, rooms }) => {
-      $gridContainer.append(`<div class="col-3 mt-4">
+  list.forEach(({ title, image, author, description, createTime, rooms }) => {
+    $gridContainer.append(`<div class="col-3 mt-4">
                         <div class="card mycard">
                             <img src="${image}" class="card-img-top">
                             <div class="card-body">
@@ -98,11 +100,8 @@ const storyModule1 = (function () {
                             </div>
                         </div>
                     </div>`);
-    });
+  });
 
-    $gridContainer.removeClass("d-none");
-    $gridContainer.hide().fadeIn();
-  };
-
-  return { useChangeType, useList, useGrid };
-})();
+  $gridContainer.removeClass("d-none");
+  $gridContainer.hide().fadeIn();
+};

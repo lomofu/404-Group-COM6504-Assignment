@@ -170,18 +170,21 @@
     </div>
 </main>
 
-<%- include("public/script", { util: true, api:true, notStory:true }); %>
+<%- include("public/script"); %>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/room.js"></script>
-<script>
-    const {jq} = constantModule;
-    const {loadScript, useTimeFormat} = utilModule;
-    const {useRoom, usernameModal, useSocket} = roomModule;
-    const roomId = window.location.pathname.split('/').filter(e => e !== '' && e !== 'room');
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useRoom, usernameModal, useSocket} from "/js/view/room.js";
+
+    const roomId = window.location.pathname
+        .split("/")
+        .filter((e) => e !== "" && e !== "room");
+
     if (roomId.length === 1) {
         loadScript(jq, () => {
             useRoom();
-            usernameModal((username) => useSocket(roomId, username));
+            usernameModal((username) => useSocket(username));
         })
     } else {
         alert('path is invalid, please make sure it is the form of /room/roomId ');

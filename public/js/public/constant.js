@@ -1,12 +1,14 @@
 /**
- @author lomofu
- @desc
- @create 11/Mar/2022 16:17
+ * @format
+ * @author lomofu
+ * @desc
+ * @create 11/Mar/2022 16:17
  */
-const constantModule = (function () {
-    const router = [{path: '/', name: "Home"}, {path: '/story', name: "Story"}, {path: '/about', name: "About"},]
+export const jq =
+  "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js";
 
-    return {
-        jq: 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js', router
-    }
-})()
+export const router = [
+  { path: "/", name: "Home" },
+  { path: "/story", name: "Story" },
+  { path: "/about", name: "About" },
+];

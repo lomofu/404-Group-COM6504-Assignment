@@ -65,14 +65,12 @@
     </div>
 </main>
 
-<%- include("public/script", { util: true }); %>
-<script src="/js/index.js"></script>
-<script src="/js/about.js"></script>
-<script>
-    const {jq, router} = constantModule;
-    const {loadScript} = utilModule;
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
 
-    const {useNav} = navModule;
     loadScript(jq, () => {
         useNav();
     })
