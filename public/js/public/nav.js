@@ -1,5 +1,6 @@
 /** @format */
 import { router } from "/js/public/constant.js";
+import { useCreateStoryModal, resetStoryModel } from "/js/public/story.js";
 
 const _useRouter = () => {
   const {
@@ -26,7 +27,6 @@ const _useRouter = () => {
 
 // create new story modal
 const _useStoryModal = () => {
-  const { useCreateStoryModal, resetStoryModel } = newStoryModule;
   const myModalEl = document.getElementById("storyModal");
   myModalEl.addEventListener("show.bs.modal", () => useCreateStoryModal());
   myModalEl.addEventListener("hidden.bs.modal", () => resetStoryModel());
