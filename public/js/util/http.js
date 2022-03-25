@@ -4,7 +4,7 @@
  * @desc
  * @create 19/Mar/2022 16:41
  */
-import axios from "https://cdn.skypack.dev/axios";
+import axios from "https://cdn.skypack.dev/pin/axios@v0.26.1-3c1TUCVdnljWzSKyoXbP/mode=imports,min/optimized/axios.js";
 
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";

@@ -1,111 +1,141 @@
+/** @format */
+
 body {
-    background: #3A1C71; /* fallback for old browsers */
-    background: -webkit-linear-gradient(-60deg, #9b6f4e, #be6069, #3A1C71); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(-60deg, #9b6f4e, #be6069, #3A1C71); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    height: 100vh;
-    width: 100%;
+  background: #3a1c71; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    -60deg,
+    #9b6f4e,
+    #be6069,
+    #3a1c71
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    -60deg,
+    #9b6f4e,
+    #be6069,
+    #3a1c71
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+  width: 100%;
 }
 
 .navbar {
-    background: rgba(0, 0, 0, 0.30);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .logo {
-    font-size: calc(1.375rem + 5vw);
+  font-size: calc(1.375rem + 5vw);
 }
 
 .logo-shadow {
-    text-shadow: 5px 5px #635e5ef7;
+  text-shadow: 5px 5px #635e5ef7;
 }
 
 .cards {
-    width: 100%;
-    position: relative;
-    list-style-type: none;
-    padding: 0;
-    margin: 20% auto 0;
+  width: 100%;
+  position: relative;
+  list-style-type: none;
+  padding: 0;
+  margin: 20% auto 0;
 }
 
 i {
-    color: var(--primary);
-    font-size: 32px;
+  color: var(--primary);
+  font-size: 32px;
 }
 
 p {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .card-dy {
-    width: 100%;
-    height: 50vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    background: #ccc;
-    border-radius: 30px;
-    padding: 40px;
-    transform: translateY(0) rotate(4deg) translateX(25px) scale(1);
-    transform-origin: 0 0;
-    transition: transform 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8) 0.1s,
+  width: 100%;
+  height: 50vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: #ccc;
+  border-radius: 30px;
+  padding: 40px;
+  transform: translateY(0) rotate(4deg) translateX(25px) scale(1);
+  transform-origin: 0 0;
+  transition: transform 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8) 0.1s,
     background 0.4s linear;
-    user-select: none;
-    overflow: hidden;
+  user-select: none;
+  overflow: hidden;
 }
 
 .card-last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .card--next {
-    z-index: 5;
-    transform: translateY(-25px) rotate(4deg) translateX(25px) scale(1);
+  z-index: 5;
+  transform: translateY(-25px) rotate(4deg) translateX(25px) scale(1);
 }
 
 .card--out {
-    animation: card-out 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8);
-    transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95);
-    z-index: 1;
-    background: #bbb;
+  animation: card-out 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8);
+  transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95);
+  z-index: 1;
+  background: #bbb;
 }
 
 .card--current {
-    cursor: auto;
-    user-select: auto;
-    position: relative;
-    z-index: 10;
-    opacity: 1;
-    background: #eee;
-    transform: rotate(-1deg) translateX(0%) scale(1);
+  cursor: auto;
+  user-select: auto;
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  background: #eee;
+  transform: rotate(-1deg) translateX(0%) scale(1);
+}
+
+.typing {
+  width: 62%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #6932cc;
+  animation: typing 2s steps(12, end), cursor 1s steps(12, end) infinite;
 }
 
 @keyframes gradient {
-    0% {
-        background-position: 0 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0 50%;
-    }
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
 
 @keyframes card-out {
-    0% {
-        z-index: 20;
-        transform: translateY(0px) rotate(-4deg);
-    }
-    50% {
-        transform: translateY(-120%) rotate(-5deg) translateX(-40px);
-    }
-    80% {
-        z-index: 1;
-    }
-    100% {
-        transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95);
-    }
+  0% {
+    z-index: 20;
+    transform: translateY(0px) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-120%) rotate(-5deg) translateX(-40px);
+  }
+  80% {
+    z-index: 1;
+  }
+  100% {
+    transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95);
+  }
 }
 
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+@keyframes cursor {
+  50% {
+    border-color: transparent;
+  }
+}

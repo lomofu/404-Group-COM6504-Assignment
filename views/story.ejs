@@ -86,6 +86,8 @@
         $('#list-btn').click(() => type.value = 0);
         $('#grid-btn').click(() => type.value = 1);
 
+        story.getStoryList()
+
         async function api() {
             return [
                 {
