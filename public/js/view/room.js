@@ -122,7 +122,7 @@ export const useSocket = (name) => {
 
   socket.on("received_chat", (username, message) => {
     $chat.append(`
-    <div class="pb-3">
+    <div class="pb-3 slide-top">
         <div class="text-start">
             <span class="text-purple fw-bold">${username}</span>
             <span class="ps-2 text-black-50">${useTimeFormat(new Date())}</span>
@@ -134,7 +134,7 @@ export const useSocket = (name) => {
 
   socket.on("received_emoji", (username, message) => {
     $chat.append(`
-    <div class="pb-3">
+    <div class="pb-3 slide-top">
         <div class="text-start">
             <span class="text-purple fw-bold">${username}</span>
             <span class="ps-2 text-black-50">
@@ -152,7 +152,7 @@ export const useSocket = (name) => {
     const username = window.localStorage.getItem(`${roomId}-username`);
     if (message) {
       $chat.append(`
-            <div class="pb-3">
+            <div class="pb-3 slide-top">
                 <div class="text-end">
                     <span class="text-purple fw-bold">${username}</span>
                     <span class="ps-2 text-black-50">

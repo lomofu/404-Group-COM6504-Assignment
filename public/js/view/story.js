@@ -18,6 +18,7 @@ export const useChangeType = (data) => {
       return this._value;
     },
     set(val) {
+      if (this._value === val) return;
       if (this._value !== 0 && val === 0) _useList(data);
       if (this._value !== 1 && val === 1) _useGrid(data);
       this._value = val;
