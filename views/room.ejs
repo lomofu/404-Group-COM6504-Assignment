@@ -4,6 +4,7 @@
     <%- include('public/header'); %>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/room.css">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css">
     <title>Mission! Room | <%= roomId %> </title>
 </head>
 <body>
@@ -61,53 +62,12 @@
             <!-- google knowledge graph-->
             <div id="google-kl" class="d-none vh-100 col-0 p-3">
                 <!-- keyword search input area-->
-                <div id="google-search" class="input-group">
-                    <input type="text" class="form-control" placeholder="search from google knowledge graph"/>
-                    <button class="btn btn-outline-secondary" type="button" id="google-search-btn">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
+
+                <input id="google-kl-input" type="text" class="form-control"
+                       placeholder="search from google knowledge graph" onkeydown="widgeInit()"/>
+
                 <!-- search result cards-->
-                <div id="google-cards" class="overflow-scroll">
-                    <div class="card w-100 my-2">
-                        <div class="card-body">
-                            <h5 class="card-title">Sheffield</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="card-link">Link to WebPage</a>
-                        </div>
-                    </div>
-
-                    <div class="card w-100 my-2">
-                        <div class="card-body">
-                            <h5 class="card-title">Sheffield</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="card-link">Link to WebPage</a>
-                        </div>
-                    </div>
-
-                    <div class="card w-100 mb-2">
-                        <div class="card-body">
-                            <h5 class="card-title">Sheffield</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="card-link">Link to WebPage</a>
-                        </div>
-                    </div>
-                    <div class="card w-100 mb-2">
-                        <div class="card-body">
-                            <h5 class="card-title">Sheffield</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Place</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="card-link">Link to WebPage</a>
-                        </div>
-                    </div>
-
+                <div id="google-cards" class="overflow-auto">
                 </div>
             </div>
         </div>
@@ -172,6 +132,8 @@
 
 <%- include("public/script"); %>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/public/googleKLGraph.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
 <script type="module">
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
@@ -189,6 +151,7 @@
     } else {
         alert('path is invalid, please make sure it is the form of /room/roomId ');
     }
+
 </script>
 </body>
 </html>
