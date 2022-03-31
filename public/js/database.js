@@ -6,6 +6,7 @@ import * as idb from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
 let db;
 const DB_NAME = 'db_mission';
 const CHAT_STORE_NAME = 'chatdb';
+const KLG_STORE_NAME= 'klgdb'
 
 /**
  * it inits the database
@@ -22,6 +23,13 @@ async function initDatabase() {
                     chatDataBase.createIndex('chat','chat',{unique:false,multiEntry:true});
                     chatDataBase.createIndex('username','username',{unique:false,multiEntry:true});
                 }
+                if (!upgradeDb.objectStoreNames.contains(KLG_STORE_NAME)) {
+                    let KLGDataBase = upgradeDb.createObjectStore(KLG_STORE_NAME,
+                        {keyPath: 'id', autoIncrement: true});
+                    KLGDataBase.createIndex('roomId','roomId',{unique:false,multiEntry:false});
+                    KLGDataBase.createIndex('row','row',{unique:false,multiEntry:true});
+                }
+
             }
         });
 
@@ -45,6 +53,22 @@ async function storeChatData(chatObject) {
     } else localStorage.setItem(chatObject.sum, JSON.stringify(chatObject));
 }
 
+async function storeKLGData(KLGObject) {
+    console.log("inserting: " + JSON.stringify(KLGObject));
+    if (!db) await initDatabase();
+    if (db) {
+        try {
+            let tx = await db.transaction(KLG_STORE_NAME, "readwrite");
+            let store = await tx.objectStore(KLG_STORE_NAME);
+            await store.put(KLGObject);
+            await tx.complete;
+            console.log("added item to the store! " + JSON.stringify(KLGObject));
+        } catch (error) {
+            console.log("error: I could not store the element. Reason: " + error);
+        }
+    } else localStorage.setItem(KLGObject.sum, JSON.stringify(KLGObject));
+}
+
 
 async function getChatData(roomId) {
     if (!db) await initDatabase();
@@ -57,20 +81,33 @@ async function getChatData(roomId) {
             let readingsList = await index.getAll(IDBKeyRange.only(roomId));
             await tx.complete;
             return readingsList;
-            // let max;
-            // for (let elem of readingsList){
-            //     console.log(elem)
-            // }
         } catch (e) {
             console.log(e);
         }
+    }
+}
 
-
+async function getKLGData(roomId) {
+    if (!db) await initDatabase();
+    if (db) {
+        try {
+            console.log("fetching: " + roomId);
+            let tx = await db.transaction(KLG_STORE_NAME, "readonly");
+            let store = await tx.objectStore(KLG_STORE_NAME);
+            let index = await store.index("roomId");
+            let readingsList = await index.getAll(IDBKeyRange.only(roomId));
+            await tx.complete;
+            return readingsList;
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 
 
 window.missionIndexDB = {
     storeChatData,
-    getChatData
+    getChatData,
+    storeKLGData,
+    getKLGData
 };
