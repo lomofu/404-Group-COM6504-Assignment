@@ -1,0 +1,24 @@
+/** @format */
+
+body {
+  height: 100vh;
+  width: 100%;
+}
+
+/*nav*/
+.navbar {
+  background: #ffffff;
+}
+
+.nav-link {
+  color: #6c757d !important;
+}
+
+.nav-link:hover {
+  color: #34383a !important;
+}
+
+.btn-outline-light {
+  color: #34383a !important;
+  border-color: #6c757d !important;
+}
