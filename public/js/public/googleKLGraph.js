@@ -27,7 +27,7 @@ const selectItem = (event) => {
     <div class="card-body">
         <h5 class="card-title">${row.name}</h5>
         <p class="card-text">${row.rc}</p>
-        <a href="${row.qc}" class="card-link">Link to WebPage</a>
+        <a href="${row.qc}" class="card-link" target="_blank">Link to WebPage</a>
     </div>
 </div>
     `);
