@@ -7,6 +7,23 @@
 #google-kl {
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: unset;
+    display: flex;
+    flex-direction: column;
+}
+
+#google-cards {
+    flex: 1 0 auto;
+    overflow: auto;
+    height: 0;
+}
+
+.card-text {
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
 }
 
 #google-btn {

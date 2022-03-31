@@ -4,7 +4,10 @@
  * @date 2022/3/27
  */
 
-const apiKey= 'AIzaSyAG7w627q-djB4gTTahssufwNOImRqdYKM';
+const apiKey = 'AIzaSyAG7w627q-djB4gTTahssufwNOImRqdYKM';
+const roomId = window.location.pathname
+    .split("/")
+    .filter((e) => e !== "" && e !== "room")[0];
 
 /**
  * displays the Google Graph widget
