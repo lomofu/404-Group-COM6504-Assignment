@@ -26,17 +26,17 @@ const widgeInit = () => {
 const selectItem = async (event) => {
     let row = event.row;
     let KLGHistory = await missionIndexDB.getKLGData(roomId);
-    let id=0;
+    let cardId=0;
     let exist = false;
     for (let elm of KLGHistory) {
         if(row.name==elm.row.name){
-            id = elm.id;
+            cardId = elm.id;
             exist = true;
         }
     }
-    if(id==0){
+    if(cardId==0){
         await missionIndexDB.storeKLGData({roomId: roomId, row: row});
-        id = KLGHistory.length + 1;
+        cardId = KLGHistory.length + 1;
     }
 
 
