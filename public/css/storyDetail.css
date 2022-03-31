@@ -6,6 +6,17 @@ body {
 }
 
 /*nav*/
+.navbar > .container > .d-inline-flex > .text-light {
+  color: #34383a !important;
+}
+
+.navbar-toggler {
+  background-repeat: no-repeat;
+  background-image: url("../img/list.svg") !important;
+  background-size: 100% 100%;
+  background-position: center;
+}
+
 .navbar {
   background: #ffffff;
 }
@@ -21,4 +32,21 @@ body {
 .btn-outline-light {
   color: #34383a !important;
   border-color: #6c757d !important;
+}
+
+/*story*/
+#create-room-btn{
+  border-color: #3a1c71;
+  background-color: white;
+  color: #3a1c71;
+}
+
+#create-room-btn:hover{
+  border-color: white;
+  background-color: #3a1c71;
+  color: white;
+}
+
+#create-room-btn:focus {
+  box-shadow: 0 0 0 0.25rem #3a1c71;
 }
