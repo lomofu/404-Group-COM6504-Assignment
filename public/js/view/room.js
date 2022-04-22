@@ -40,7 +40,6 @@ const _render = async () => {
        </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-
     if(elm.type==1){
       $chat.append(`
          <div class="pb-3 slide-top">
@@ -54,7 +53,6 @@ const _render = async () => {
          </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-
     if(elm.type==2){
       $chat.append(`
          <div class="pb-3 slide-top">
@@ -73,7 +71,6 @@ const _render = async () => {
          </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-
     if(elm.type==3){
       $chat.append(`
          <div class="pb-3">
@@ -90,7 +87,6 @@ const _render = async () => {
          </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-
     if(elm.type==4){
       $chat.append(`
          <div class="joined-info-box">
@@ -105,7 +101,6 @@ const _render = async () => {
             </p>
          </div>`);
     }
-
     if(elm.type==5){
       $chat.append(`
          <div class="joined-info-box">
@@ -120,6 +115,20 @@ const _render = async () => {
             </p>
          </div>`);
     }
+  }
+
+  let KLGHistory = await missionIndexDB.getKLGData(roomId);
+  for(let elm of KLGHistory){
+    $('#google-cards').append(`
+      <div class="card w-100 my-2">
+          <div class="card-body">
+              <h5 class="card-title">${elm.row.name}</h5>
+              <p class="card-text">${elm.row.rc}</p>
+              <a href="${elm.row.qc}" class="card-link" target="_blank">Link to WebPage</a>
+          </div>
+      </div>
+    `);
+    $('#google-kl-input').val("");
   }
 
 };
