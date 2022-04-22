@@ -13,7 +13,7 @@ router.get("/list", async (req, res) => {
     console.log(e);
     res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
   }
-});
+})
 
 router.post("/", async (req, res) => {
   const { title, author, description, image } = req.body;

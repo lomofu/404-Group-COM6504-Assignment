@@ -15,7 +15,7 @@
       "description": "Local server"
     },
     {
-      "url": "https:/mission.lomofu.com",
+      "url": "http:/mission.lomofu.com",
       "description": "Testing server"
     }
   ],
