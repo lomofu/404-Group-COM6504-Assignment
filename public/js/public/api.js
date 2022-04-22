@@ -8,7 +8,7 @@ import http from "/js/util/http.js";
 
 export const story = {
   getStoryList() {
-    return http.get("api/stories");
+    return http.get("api/story/list");
   },
   createStory({ title, author, description, image }) {
     return http.post("api/story", {

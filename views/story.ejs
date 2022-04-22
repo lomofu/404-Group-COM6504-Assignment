@@ -78,62 +78,11 @@
 
     loadScript(jq, async () => {
         useNav();
-        const data = await api();
 
+        const {data} = await story.getStoryList();
         const type = useChangeType(data);
 
         $('#list-btn').click(() => type.value = 0);
         $('#grid-btn').click(() => type.value = 1);
-
-        story.getStoryList()
-
-        async function api() {
-            return [
-                {
-                    id: "1111",
-                    title: "h1",
-                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
-                    createTime: "09/02/2022",
-                    author: "u know",
-                    rooms: 0
-                },
-                {
-                    id: "2222",
-                    title: "h2",
-                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
-                    createTime: "09/02/2022",
-                    author: "u know",
-                    rooms: 2
-                },
-                {
-                    id: "3333",
-                    title: "h3",
-                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
-                    createTime: "09/02/2022",
-                    author: "u know",
-                    rooms: 0
-                },
-                {
-                    id: "4444",
-                    title: "h4",
-                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
-                    createTime: "09/02/2022",
-                    author: "u know"
-                },
-                {
-                    id: "5555",
-                    title: "h5",
-                    image: "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
-                    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eius harum illo modi necessitatibus reprehenderit vitae? A amet cumque esse est illum laudantium maiores minima, quasi saepe, tempore velit voluptatem.",
-                    createTime: "09/02/2022",
-                    author: "u know",
-                    rooms: 3
-                }
-            ]
-        }
     });
 </script>

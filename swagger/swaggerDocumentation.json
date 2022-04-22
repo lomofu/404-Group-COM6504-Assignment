@@ -192,7 +192,7 @@
       "image": {
         "type": "string",
         "description": "image url or uploaded",
-        "example": "/Desktop/library.jpg"
+        "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
       },
       "description": {
         "type": "string",
