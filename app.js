@@ -19,7 +19,7 @@ const app = express();
 
 // swagger
 const openApiDocumentation = require('./swagger/swaggerDocumentation.json');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
+app.use('/api', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
