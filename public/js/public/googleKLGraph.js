@@ -26,22 +26,24 @@ const widgeInit = () => {
 const selectItem = async (event) => {
     let row = event.row;
     let KLGHistory = await missionIndexDB.getKLGData(roomId);
-    let cardId=0;
+    let cardId = 0;
     let exist = false;
     for (let elm of KLGHistory) {
-        if(row.name==elm.row.name){
+        if (row.name === elm.row.name) {
             cardId = elm.id;
             exist = true;
         }
     }
-    if(cardId==0){
+    if (cardId !== 0) {
+       $('#'+cardId).css('color','purple');
+       $('#google-kl-input').click(()=>{
+           $('#'+cardId).css('color','black');
+       });
+    } else {
         await missionIndexDB.storeKLGData({roomId: roomId, row: row});
         cardId = KLGHistory.length + 1;
-    }
-
-
-    $('#google-cards').prepend(`
-<div class="card w-100 my-2">
+        $('#google-cards').prepend(`
+<div id="${cardId}" class="card w-100 my-2">
     <div class="card-body">
         <h5 class="card-title">${row.name}</h5>
         <p class="card-text">${row.rc}</p>
@@ -49,5 +51,7 @@ const selectItem = async (event) => {
     </div>
 </div>
     `);
+    }
+
     $('#google-kl-input').val("");
 }

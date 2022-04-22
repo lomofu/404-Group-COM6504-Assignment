@@ -29,7 +29,7 @@ const _render = async () => {
   const $chat = $("#chat-history");
   let chatHistory = await missionIndexDB.getChatData(roomId);
   for(let elm of chatHistory){
-    if(elm.type==0){
+    if(elm.type===0){
       $chat.append(`
        <div class="pb-3 slide-top">
            <div class="text-start">
@@ -40,7 +40,7 @@ const _render = async () => {
        </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type==1){
+    if(elm.type===1){
       $chat.append(`
          <div class="pb-3 slide-top">
              <div class="text-start">
@@ -53,7 +53,7 @@ const _render = async () => {
          </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type==2){
+    if(elm.type===2){
       $chat.append(`
          <div class="pb-3 slide-top">
              <div class="text-end">
@@ -71,7 +71,7 @@ const _render = async () => {
          </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type==3){
+    if(elm.type===3){
       $chat.append(`
          <div class="pb-3">
              <div class="text-end">
@@ -87,7 +87,7 @@ const _render = async () => {
          </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type==4){
+    if(elm.type===4){
       $chat.append(`
          <div class="joined-info-box">
             <p class="text-center my-0">
@@ -101,7 +101,7 @@ const _render = async () => {
             </p>
          </div>`);
     }
-    if(elm.type==5){
+    if(elm.type===5){
       $chat.append(`
          <div class="joined-info-box">
             <p class="text-center my-0">
@@ -120,7 +120,7 @@ const _render = async () => {
   let KLGHistory = await missionIndexDB.getKLGData(roomId);
   for(let elm of KLGHistory){
     $('#google-cards').append(`
-      <div class="card w-100 my-2">
+      <div id="${elm.id}" class="card w-100 my-2">
           <div class="card-body">
               <h5 class="card-title">${elm.row.name}</h5>
               <p class="card-text">${elm.row.rc}</p>
