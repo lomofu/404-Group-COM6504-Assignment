@@ -15,6 +15,10 @@ router.get("/story", (req, res) => {
   res.render("story", { path: "Story" });
 });
 
+router.get("/storyDetail", (req, res) => {
+  res.render("storyDetail", { path: "StoryDetail" });
+});
+
 router.get("/room/:roomId", (req, res) => {
   res.render("room", { roomId: req.params["roomId"] });
 });
