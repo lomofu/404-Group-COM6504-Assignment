@@ -5,6 +5,7 @@ const router = express.Router();
 const service = require("../service/storyService");
 const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
 
+// get story list
 router.get("/list", async (req, res) => {
   try {
     const list = await service.getStoryList();
@@ -15,6 +16,7 @@ router.get("/list", async (req, res) => {
   }
 })
 
+// create new story
 router.post("/", async (req, res) => {
   const { title, author, description, image } = req.body;
 
@@ -60,5 +62,20 @@ router.post("/", async (req, res) => {
       );
   }
 });
+
+
+// get story details
+router.get("/", async (req, res) => {
+  const {id} = req.query;
+
+  try {
+    const details = await service.getStoryDetail(id);
+    res.json(details);
+  } catch (e) {
+    console.log(e);
+    res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
+  }
+})
+
 
 module.exports = router;

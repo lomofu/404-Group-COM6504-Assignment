@@ -77,6 +77,66 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "story"
+        ],
+        "description": "get story details by id",
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/id"
+          },
+          "allowEmptyValue": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully get story details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Story"
+                },
+                "example": {
+                  "id": "6262fe1cdbcd4061deb52a6b",
+                  "title": "Find clues in Sheffield Library",
+                  "author": "Luna",
+                  "image": "/Desktop/library.jpg",
+                  "description": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Miss the title value"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error, insert failed! Please try again!"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/story/list": {
@@ -115,6 +175,11 @@
   },
   "components": {
     "schemas": {
+      "id": {
+        "type": "string",
+        "description": "story id",
+        "example": "6262fe1cdbcd4061deb52a6b"
+      },
       "title": {
         "type": "string",
         "description": "story title",

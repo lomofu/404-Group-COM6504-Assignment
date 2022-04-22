@@ -29,4 +29,10 @@ module.exports = {
   getStoryList() {
     return StorySchema.find();
   },
+  getStoryDetail(id){
+    if (id){
+      return StorySchema.findById(id);
+    }
+    throw new Error("Id should not be empty");
+  }
 };
