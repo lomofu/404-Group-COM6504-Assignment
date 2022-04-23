@@ -1,6 +1,6 @@
 'use strict';
 
-var wrapIdbValue = require('./wrap-idb-value.cjs');
+var wrapIdbValue = require('./wrap-idb-value.d.ts');
 
 const advanceMethodProps = ['continue', 'continuePrimaryKey', 'advance'];
 const methodMap = {};
