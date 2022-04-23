@@ -49,11 +49,12 @@
 </div>
 
 <!--main screen-->
-<main class="row gx-0 vh-100 w-100">
+<main class="row gx-0 vh-100 w-100 overflow-hidden">
     <div class="col-md-9 px-0">
         <div class="row mx-0 h-100 flex-nowrap">
             <!-- drawer screen-->
             <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
+                <canvas id="main-canvas" class="w-100 h-100"></canvas>
                 <button id="google-btn" class="btn mt-5" type="button">
                     Search
                 </button>
