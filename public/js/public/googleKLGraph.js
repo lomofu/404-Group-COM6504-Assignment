@@ -32,14 +32,13 @@ const selectItem = async (event) => {
         if (row.name === elm.row.name) {
             cardId = elm.id;
             exist = true;
+            $('#' + cardId).css('color', 'purple');
+            $('#google-kl-input').click(() => {
+                $('#' + cardId).css('color', 'black');
+            });
         }
     }
-    if (cardId !== 0) {
-       $('#'+cardId).css('color','purple');
-       $('#google-kl-input').click(()=>{
-           $('#'+cardId).css('color','black');
-       });
-    } else {
+    if (cardId === 0) {
         await missionIndexDB.storeKLGData({roomId: roomId, row: row});
         cardId = KLGHistory.length + 1;
         $('#google-cards').prepend(`

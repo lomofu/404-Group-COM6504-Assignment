@@ -119,8 +119,9 @@ const _render = async () => {
   }
 
   let KLGHistory = await missionIndexDB.getKLGData(roomId);
-  for (let elm of KLGHistory) {
-    $("#google-cards").prepend(`
+
+  for(let elm of KLGHistory){
+    $('#google-cards').prepend(`
       <div id="${elm.id}" class="card w-100 my-2">
           <div class="card-body">
               <h5 class="card-title">${elm.row.name}</h5>
