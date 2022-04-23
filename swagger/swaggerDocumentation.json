@@ -30,7 +30,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Story"
+                "$ref": "#/components/schemas/StoryUpload"
               }
             }
           },
@@ -45,7 +45,7 @@
                   "$ref": "#/components/schemas/Success"
                 },
                 "example": {
-                  "id": "623f4276936d27eccd4a2d42"
+                  "id": "62631d670c7594c8a76559a6"
                 }
               }
             }
@@ -88,7 +88,7 @@
           "in": "query",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/id"
+            "$ref": "#/components/schemas/_id"
           },
           "allowEmptyValue": true
         }],
@@ -101,11 +101,15 @@
                   "$ref": "#/components/schemas/Story"
                 },
                 "example": {
-                  "id": "6262fe1cdbcd4061deb52a6b",
+                  "_id": "62631d670c7594c8a76559a6",
                   "title": "Find clues in Sheffield Library",
                   "author": "Luna",
-                  "image": "/Desktop/library.jpg",
-                  "description": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
+                  "description": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it.",
+                  "image": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                  "createTime": "22/04/2022 22:25",
+                  "delete": false,
+                  "rooms": 0,
+                  "__v": 0
                 }
               }
             }
@@ -118,7 +122,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss the title value"
+                  "message": "Miss values"
                 }
               }
             }
@@ -175,10 +179,10 @@
   },
   "components": {
     "schemas": {
-      "id": {
+      "_id": {
         "type": "string",
         "description": "story id",
-        "example": "6262fe1cdbcd4061deb52a6b"
+        "example": "62631d670c7594c8a76559a6"
       },
       "title": {
         "type": "string",
@@ -189,17 +193,61 @@
         "type": "string",
         "example": "Luna"
       },
-      "image": {
-        "type": "string",
-        "description": "image url or uploaded",
-        "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
-      },
       "description": {
         "type": "string",
         "description": "story description",
         "example": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
       },
+      "image": {
+        "type": "string",
+        "description": "image url or uploaded",
+        "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
+      },
+      "createTime": {
+        "type": "string",
+        "description": "story create time",
+        "example": "22/04/2022 22:25"
+      },
+      "delete": {
+        "type": "boolean",
+        "description": "story delete state",
+        "example": "false"
+      },
+      "rooms": {
+        "type": "number",
+        "description": "story rooms",
+        "example": "0"
+      },
       "Story": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/_id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "author": {
+            "$ref": "#/components/schemas/author"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
+          },
+          "createTime": {
+            "$ref": "#/components/schemas/createTime"
+          },
+          "delete": {
+            "$ref": "#/components/schemas/delete"
+          },
+          "rooms": {
+            "$ref": "#/components/schemas/rooms"
+          }
+        }
+      },
+      "StoryUpload": {
         "type": "object",
         "properties": {
           "title": {
@@ -208,11 +256,11 @@
           "author": {
             "$ref": "#/components/schemas/author"
           },
-          "image": {
-            "$ref": "#/components/schemas/image"
-          },
           "description": {
             "$ref": "#/components/schemas/description"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
           }
         }
       },
