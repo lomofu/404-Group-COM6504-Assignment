@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/storyDetail.css">
+    <title>Mission!</title>
+</head>
+<body>
+<!--nav-->
+<%- include('public/nav'); %>
+<header>
+    <div id="empty-container"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6 p-3">
+                <img id="story-detail-img"
+                     src="/img/default-img.jpg"
+                     height="400"
+                     class="card-img-top shadow-lg">
+            </div>
+            <div class="col-12 col-lg-6 pt-3">
+                <div id="story-detail-title" class="fs-2 card-title"></div>
+                <div id="story-detail-author" class="fs-4 card-title"></div>
+                <p id="story-detail-desc" class="card-text">
+                </p>
+                <a id="create-room-btn" href="#" class="btn btn-primary">Create a Room</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="w-100 d-flex flex-column align-items-center container mt-4 bg-purple vh-100">
+
+</main>
+
+
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
+    import {story} from "/js/public/api.js";
+    import {initView} from "/js/view/storyDetail.js";
+
+    loadScript(jq, async () => {
+        useNav();
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('storyId');
+        const {data} = await story.getStoryDetail(id);
+        console.log(data);
+        initView(data);
+    });
+</script>
