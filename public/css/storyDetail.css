@@ -1,56 +1,68 @@
 /** @format */
 
 body {
-  height: 100vh;
-  width: 100%;
+    height: 100vh;
+    width: 100%;
 }
 
 /*nav*/
 .navbar > .container > .d-inline-flex > .text-light {
-  color: #34383a !important;
+    color: #34383a !important;
 }
 
 .navbar-toggler {
-  background-repeat: no-repeat;
-  background-image: url("../img/list.svg") !important;
-  background-size: 100% 100%;
-  background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../img/list.svg") !important;
+    background-size: 100% 100%;
+    background-position: center;
 }
 
 .navbar {
-  background: #ffffff;
+    background: #ffffff;
 }
 
 .nav-link {
-  color: #6c757d !important;
+    color: #6c757d !important;
 }
 
 .nav-link:hover {
-  color: #34383a !important;
+    color: #34383a !important;
 }
 
 .btn-outline-light {
-  color: #34383a !important;
-  border-color: #6c757d !important;
+    color: #34383a !important;
+    border-color: #6c757d !important;
 }
 
 /*story*/
-#create-room-btn{
-  border-color: #3a1c71;
-  background-color: white;
-  color: #3a1c71;
+#story-detail-author, .modal-title {
+    color: purple;
 }
 
-#create-room-btn:hover{
-  border-color: white;
-  background-color: #3a1c71;
-  color: white;
+#story-detail-title, #story-detail-author {
+    min-height: 40px;
 }
 
-#create-room-btn:focus {
-  box-shadow: 0 0 0 0.25rem #3a1c71;
+.card:hover {
+    color: purple;
 }
 
-#story-detail-title,#story-detail-author{
-  height: 40px;
+.btn-purple {
+    background-color: purple;
+    border-color: purple;
+    color: white;
 }
+
+.btn-purple:hover {
+    background-color: white;
+    border-color: purple;
+    color: purple;
+}
+
+.btn-purple:focus {
+    background-color: purple;
+    border-color: purple;
+    color: white;
+    box-shadow: 0 0 0 0;
+}
+

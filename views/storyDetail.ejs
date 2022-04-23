@@ -21,35 +21,69 @@
             </div>
             <div class="col-12 col-lg-6 pt-3">
                 <div id="story-detail-title" class="fs-2 card-title"></div>
-                <div id="story-detail-author" class="fs-4 card-title"></div>
-                <p id="story-detail-desc" class="card-text">
+                <div id="story-detail-author" class="fs-4"></div>
+                <p id="story-detail-desc" class="fs-5 card-text">
                 </p>
-                <a id="create-room-btn" href="#" class="btn btn-primary">Create a Room</a>
+                <a id="create-room-btn" href="#" class="btn btn-purple" data-bs-toggle="modal"
+                   data-bs-target="#create-room-modal">Create a Room</a>
             </div>
         </div>
     </div>
 </header>
 
-<main class="w-100 d-flex flex-column align-items-center container mt-4 bg-purple vh-100">
+<main class="w-100 d-flex flex-column align-items-center container mt-4 vh-100">
+    <div class="fs-3 px-3 w-100 text-start">Room List</div>
+    <div id="room-list-container" class="w-100">
 
+    </div>
 </main>
 
+<!-- Modal -->
+<div class="modal fade" id="create-room-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title fs-4">Create New Room</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="fs-5 p-2">Room Name</div>
+                <input id="room-name-input" type="text">
+                <div class="fs-5 p-2">Room Description (Optional)</div>
+                <input id="room-desc-input" type="text">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-purple">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <%- include("public/script"); %>
 <script type="module">
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
     import {useNav} from "/js/public/nav.js";
-    import {story} from "/js/public/api.js";
-    import {initView} from "/js/view/storyDetail.js";
+    import {story, room} from "/js/public/api.js";
+    import {initView, createRoom} from "/js/view/storyDetail.js";
 
     loadScript(jq, async () => {
         useNav();
+
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('storyId');
-        const {data} = await story.getStoryDetail(id);
-        console.log(data);
-        initView(data);
+
+        const storyDetail = await story.getStoryDetail(id);
+        const roomList = await room.getRoomList(id);
+        initView(storyDetail, roomList);
+
+        const createRoomModal = document.getElementById("create-room-modal");
+        createRoomModal.addEventListener("show.bs.modal", () => {
+            $('#room-name-input').val("");
+            $('#room-desc-input').val("");
+        });
     });
 </script>
