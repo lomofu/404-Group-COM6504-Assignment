@@ -24,7 +24,7 @@ export const useChangeType = (data) => {
         },
     });
 
-    type.value = 0;
+    type.value = 1;
 
     return type;
 };
@@ -47,7 +47,7 @@ const _useList = (list) => {
                      width="150"
                      height="150"
                      class="rounded">
-                <div class="ms-3 d-flex flex-column justify-content-between">
+                <div class="ms-3 d-flex flex-column justify-content-between w-100">
                     <div class="d-flex justify-content-between">
                         <h1>${title}</h1>
                         <h3>@${author}</h3>
@@ -106,7 +106,7 @@ const _useGrid = (list) => {
                     </div>`);
     });
 
-    $('#list-container li').click(function () {
+    $('#grid-container .card').click(function () {
         click(this.id);
     });
 
@@ -114,4 +114,4 @@ const _useGrid = (list) => {
     $gridContainer.hide().fadeIn();
 };
 
-const click = (id) => window.location.replace(`/storyDetail?storyId=${id}`);
+const click = (id) => window.location.href = `/storyDetail?storyId=${id}`;

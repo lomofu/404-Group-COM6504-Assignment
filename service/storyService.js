@@ -26,13 +26,25 @@ module.exports = {
       throw new Error("Could not insert data!");
     }
   },
-  getStoryList() {
-    return StorySchema.find();
+  async getStoryList() {
+    const result = await StorySchema.find();
+    return result.map((e) => ({
+      id: e._id,
+      author: e.author,
+      createTime: e.createTime,
+      description: e.description,
+      image: e.image,
+      rooms: e.rooms,
+      title: e.title,
+    }));
   },
-  getStoryDetail(id){
-    if (id){
+  getStoryDetail(id) {
+    if (id) {
       return StorySchema.findById(id);
     }
-    throw new Error("Id should not be empty");
-  }
+    throw new Error({
+      code: 400,
+      message: "Id should not be empty",
+    });
+  },
 };

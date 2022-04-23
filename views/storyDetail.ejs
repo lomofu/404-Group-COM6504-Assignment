@@ -14,19 +14,15 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-6 p-3">
-                <img id="story-img"
-                     src="https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
+                <img id="story-detail-img"
+                     src="/img/default-img.jpg"
+                     height="400"
                      class="card-img-top shadow-lg">
             </div>
             <div class="col-12 col-lg-6 pt-3">
-                <div id="story-title" class="fs-2 card-title">Story Title</div>
-                <div id="story-author" class="fs-4 card-title">@Story Author</div>
-                <p id="story-desc" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-                    ipsam, pariatur illum odit beatae numquam ab fuga voluptas sequi maxime praesentium, atque amet
-                    doloribus nostrum, eveniet aliquam perferendis perspiciatis repellat?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Eligendiipsam, pariatur illum odit beatae numquam ab fuga voluptas
-                    sequi maxime praesentium, atque amet doloribus nostrum, eveniet aliquam perferendis perspiciatis
-                    repellat?
+                <div id="story-detail-title" class="fs-2 card-title"></div>
+                <div id="story-detail-author" class="fs-4 card-title"></div>
+                <p id="story-detail-desc" class="card-text">
                 </p>
                 <a id="create-room-btn" href="#" class="btn btn-primary">Create a Room</a>
             </div>
@@ -44,12 +40,16 @@
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
     import {useNav} from "/js/public/nav.js";
+    import {story} from "/js/public/api.js";
     import {initView} from "/js/view/storyDetail.js";
 
     loadScript(jq, async () => {
         useNav();
-        initView();
-
-
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('storyId');
+        const {data} = await story.getStoryDetail(id);
+        console.log(data);
+        initView(data);
     });
 </script>
