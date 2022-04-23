@@ -14,7 +14,7 @@ router.get("/list", async (req, res) => {
     console.log(e);
     res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
   }
-})
+});
 
 // create new story
 router.post("/", async (req, res) => {
@@ -63,19 +63,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-
 // get story details
-router.get("/", async (req, res) => {
-  const {id} = req.query;
+router.get("/", async (req, res, next) => {
+  const { id } = req.query;
 
   try {
     const details = await service.getStoryDetail(id);
     res.json(details);
   } catch (e) {
-    console.log(e);
-    res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
+    next(e);
   }
-})
-
+});
 
 module.exports = router;

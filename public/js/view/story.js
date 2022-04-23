@@ -106,7 +106,7 @@ const _useGrid = (list) => {
                     </div>`);
     });
 
-    $('#list-container li').click(function () {
+    $('#grid-container .card').click(function () {
         click(this.id);
     });
 

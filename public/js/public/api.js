@@ -1,6 +1,6 @@
 /**
  * @format
- * @author lomofu
+ * @author Jiaqi Fu, Lixuan Lou
  * @desc
  * @create 19/Mar/2022 17:00
  */
@@ -16,6 +16,13 @@ export const story = {
       author,
       description,
       image,
+    });
+  },
+  getStoryDetail(id) {
+    return http.get("api/story", {
+      params: {
+        id,
+      },
     });
   },
 };

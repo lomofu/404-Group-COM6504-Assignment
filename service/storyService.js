@@ -42,6 +42,9 @@ module.exports = {
     if (id) {
       return StorySchema.findById(id);
     }
-    throw new Error("Id should not be empty");
+    throw new Error({
+      code: 400,
+      message: "Id should not be empty",
+    });
   },
 };
