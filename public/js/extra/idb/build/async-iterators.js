@@ -1,4 +1,4 @@
-import { r as replaceTraps, i as instanceOfAny, a as reverseTransformCache, u as unwrap } from './wrap-idb-value.d.ts';
+import { r as replaceTraps, i as instanceOfAny, a as reverseTransformCache, u as unwrap } from './wrap-idb-value.js';
 
 const advanceMethodProps = ['continue', 'continuePrimaryKey', 'advance'];
 const methodMap = {};
