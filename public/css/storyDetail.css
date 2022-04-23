@@ -50,3 +50,7 @@ body {
 #create-room-btn:focus {
   box-shadow: 0 0 0 0.25rem #3a1c71;
 }
+
+#story-detail-title,#story-detail-author{
+  height: 40px;
+}
