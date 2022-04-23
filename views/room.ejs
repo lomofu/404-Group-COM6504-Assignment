@@ -130,7 +130,6 @@
 </main>
 
 <%- include("public/script"); %>
-<script src="/js/database.js" type="module"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/public/googleKLGraph.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
@@ -138,10 +137,19 @@
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
     import {useRoom, usernameModal, useSocket} from "/js/view/room.js";
+    import { useDao } from "/js/db/dao.js";
 
     const roomId = window.location.pathname
         .split("/")
         .filter((e) => e !== "" && e !== "room");
+
+    const { KLGDao } = await useDao();
+    const {getKLGData, storeKLGData} = KLGDao;
+
+    window.myGoogleKLG = {
+        getKLGData,
+        storeKLGData
+    }
 
     if (roomId.length === 1) {
         loadScript(jq, () => {

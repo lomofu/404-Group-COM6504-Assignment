@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var wrapIdbValue = require('./wrap-idb-value.d.ts');
+var wrapIdbValue = require('./wrap-idb-value.cjs');
 
 /**
  * Open a database.

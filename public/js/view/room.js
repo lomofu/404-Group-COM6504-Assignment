@@ -6,6 +6,7 @@
  */
 import { useTimeFormat } from "/js/util/util.js";
 import { useCanvas } from "/js/canvas.js";
+import { useDao } from "/js/db/dao.js";
 
 const roomId = window.location.pathname
   .split("/")
@@ -20,6 +21,11 @@ const emojiList = [
   { name: "happy", src: "/img/emoji/smile.webp" },
 ];
 
+const { chatDao, KLGDao } = await useDao();
+
+const { getChatData, storeChatData } = chatDao;
+const { getKLGData} = KLGDao;
+
 const _render = async () => {
   emojiList.forEach(({ name, src }) =>
     $("#emoji-box").append(`
@@ -28,7 +34,7 @@ const _render = async () => {
   );
 
   const $chat = $("#chat-history");
-  let chatHistory = await missionIndexDB.getChatData(roomId);
+  let chatHistory = await getChatData(roomId);
   for (let elm of chatHistory) {
     if (elm.type === 0) {
       $chat.append(`
@@ -118,10 +124,10 @@ const _render = async () => {
     }
   }
 
-  let KLGHistory = await missionIndexDB.getKLGData(roomId);
+  let KLGHistory = await getKLGData(roomId);
 
-  for(let elm of KLGHistory){
-    $('#google-cards').prepend(`
+  for (let elm of KLGHistory) {
+    $("#google-cards").prepend(`
       <div id="${elm.id}" class="card w-100 my-2">
           <div class="card-body">
               <h5 class="card-title">${elm.row.name}</h5>
@@ -200,7 +206,7 @@ export const useSocket = (name) => {
   });
 
   socket.on("joined", (username) => {
-    missionIndexDB.storeChatData({
+    storeChatData({
       roomId: roomId,
       chat: "",
       username: username,
@@ -222,7 +228,7 @@ export const useSocket = (name) => {
   });
 
   socket.on("left", (username) => {
-    missionIndexDB.storeChatData({
+    storeChatData({
       roomId: roomId,
       chat: "",
       username: username,
@@ -248,7 +254,7 @@ export const useSocket = (name) => {
   );
 
   socket.on("received_chat", (username, message) => {
-    missionIndexDB.storeChatData({
+    storeChatData({
       roomId: roomId,
       chat: message,
       username: username,
@@ -269,7 +275,7 @@ export const useSocket = (name) => {
   });
 
   socket.on("received_emoji", (username, message) => {
-    missionIndexDB.storeChatData({
+    storeChatData({
       roomId: roomId,
       chat: message,
       username: username,
@@ -293,7 +299,7 @@ export const useSocket = (name) => {
   $("#send-msg-btn").click(() => {
     const message = $("#chat-input").val();
     const username = window.localStorage.getItem(`${roomId}-username`);
-    missionIndexDB.storeChatData({
+    storeChatData({
       roomId: roomId,
       chat: message,
       username: username,
@@ -325,7 +331,7 @@ export const useSocket = (name) => {
   $("#emoji-box img").click(function () {
     const { src } = this;
     const username = window.localStorage.getItem(`${roomId}-username`);
-    missionIndexDB.storeChatData({
+    storeChatData({
       roomId: roomId,
       chat: src,
       username: username,
