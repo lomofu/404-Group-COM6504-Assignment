@@ -39,8 +39,7 @@ module.exports = {
         });
     }, addStoryRooms(id) {
         if (id) {
-            const {data} = StorySchema.findById(id);
-            return data.rooms;
+            return StorySchema.findById(id);
         }
         throw new Error({
             code: 400, message: "Id should not be empty",
