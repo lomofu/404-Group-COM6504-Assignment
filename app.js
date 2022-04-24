@@ -12,7 +12,6 @@ require("./config/dbConfig");
 
 const publicRouter = require("./routes/public");
 const indexRouter = require("./routes/view");
-const usersRouter = require("./routes/users");
 const storyRouter = require("./routes/story");
 const roomRouter = require("./routes/room");
 
@@ -36,7 +35,6 @@ app.use(express.static(path.join(__dirname, "../")));
 
 app.use("/", indexRouter);
 app.use("/public", publicRouter);
-app.use("/users", usersRouter);
 app.use("/api/story", storyRouter);
 app.use("/api/room", roomRouter);
 

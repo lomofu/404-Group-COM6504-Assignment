@@ -24,7 +24,7 @@
                 <div id="story-detail-author" class="fs-4"></div>
                 <p id="story-detail-desc" class="fs-5 card-text">
                 </p>
-                <a id="create-room-btn" href="#" class="btn btn-purple" data-bs-toggle="modal"
+                <a id="create-room-modal-btn" href="#" class="btn btn-purple" data-bs-toggle="modal"
                    data-bs-target="#create-room-modal">Create a Room</a>
             </div>
         </div>
@@ -52,16 +52,16 @@
                     <div class="fs-5 p-2">Room Name</div>
                     <div id="room-name-limit" class="text-center"></div>
                 </div>
-                <input id="room-name-input" type="text">
+                <input id="create-room-name-input" class="form-control" type="text">
                 <div class="d-flex flex-row justify-content-between align-items-center">
                     <div class="fs-5 p-2">Room Description (Optional)</div>
                     <div id="room-desc-limit"></div>
                 </div>
-                <input id="room-desc-input" type="text">
+                <input id="create-room-desc-input" class="form-control" type="text">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="create-btn" type="button" class="btn btn-purple">Create</button>
+                <button id="create-room-btn" type="button" class="btn btn-purple">Create</button>
             </div>
         </div>
     </div>

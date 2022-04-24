@@ -70,15 +70,5 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-router.get("/add/rooms", async (req, res, next) => {
-    const {id} = req.query;
-
-    try {
-        const rooms = await service.addStoryRooms(id);
-        res.json(rooms);
-    } catch (e) {
-        next(e);
-    }
-});
 
 module.exports = router;

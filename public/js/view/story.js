@@ -42,7 +42,7 @@ const _useList = (list) => {
 
     list.forEach(({id, title, image, author, description, createTime, rooms}) => {
         $listContainer.append(`
-             <li id="${id}" class="list-group-item d-flex p-3">
+             <li id="${id}" class="list-group-item d-flex p-3 shadow-sm">
                 <img src="${image}"
                      width="150"
                      height="150"
@@ -86,8 +86,8 @@ const _useGrid = (list) => {
     $gridContainer.empty();
 
     list.forEach(({id, title, image, author, description, createTime, rooms}) => {
-        $gridContainer.append(`<div class="col-3 mt-4">
-                        <div id="${id}" class="card mycard" onclick="loadStoryDetails(this.id)">
+        $gridContainer.append(`<div class="col-xl-3 col-lg-4 col-md-5 mt-4">
+                        <div id="${id}" class="card mycard border-0 shadow-sm" onclick="loadStoryDetails(this.id)">
                             <img src="${image}" class="card-img-top">
                             <div class="card-body">
                                 <div class="card-title d-flex justify-content-between align-items-center">

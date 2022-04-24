@@ -15,6 +15,10 @@ router.get("/story", (req, res) => {
   res.render("story", { path: "Story" });
 });
 
+router.get("/createStory", (req, res) => {
+  res.render("createStory", { path: "createStory" });
+});
+
 router.get("/storyDetail", (req, res) => {
   res.render("storyDetail", { path: "StoryDetail" });
 });
