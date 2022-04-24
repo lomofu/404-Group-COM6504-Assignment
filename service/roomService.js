@@ -27,7 +27,7 @@ module.exports = {
       const result = await room.save();
       const story = await StorySchema.findById(storyId);
       story.rooms += 1;
-      await StorySchema.updateOne(story);
+      await story.save();
       return result._id;
     } catch (e) {
       logger.error(`received: ${e}`);
