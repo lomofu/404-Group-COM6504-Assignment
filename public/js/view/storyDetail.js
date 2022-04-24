@@ -116,8 +116,6 @@ const _addListener = () => {
             const name = $('#room-name-input').val();
             let desc = $('#room-desc-input').val();
             const {data} = await room.createRoom({storyId, name, desc});
-            const result = await story.addStoryRooms(storyId);
-            console.log(result);
             bootstrap.Modal.getInstance(createRoomModal).hide();
             window.open('/room/' + data);
         }

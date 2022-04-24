@@ -6,6 +6,7 @@
  */
 
 const RoomSchema = require("../model/room");
+const StorySchema = require("../model/story");
 const format = require("../util/dateformat");
 const logger = require("../util/logger");
 
@@ -24,6 +25,9 @@ module.exports = {
 
     try {
       const result = await room.save();
+      const story = await StorySchema.findById(storyId);
+      story.rooms += 1;
+      await StorySchema.updateOne(story);
       return result._id;
     } catch (e) {
       logger.error(`received: ${e}`);

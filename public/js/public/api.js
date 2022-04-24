@@ -25,13 +25,6 @@ export const story = {
       },
     });
   },
-  addStoryRooms(id){
-    return http.get("api/story/add/rooms",{
-      params:{
-        id,
-      },
-    });
-  },
 };
 export const room = {
   getRoomList(storyId) {

@@ -37,12 +37,5 @@ module.exports = {
         throw new Error({
             code: 400, message: "Id should not be empty",
         });
-    }, addStoryRooms(id) {
-        if (id) {
-            return StorySchema.findById(id);
-        }
-        throw new Error({
-            code: 400, message: "Id should not be empty",
-        });
     }
 };
