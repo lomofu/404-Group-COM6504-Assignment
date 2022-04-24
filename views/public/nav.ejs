@@ -24,8 +24,7 @@
                     <input class="form-control me-lg-3 mb-3 mb-lg-0 col" type="search" placeholder="Search a story"
                            aria-label="Search">
 
-                    <button class="btn btn-outline-light me-3 col-12 col-lg-3" data-bs-toggle="modal"
-                            data-bs-target="#new-story-modal">
+                    <button class="btn btn-outline-light me-3 col-12 col-lg-3" onclick="{window.location.href='/createStory'}">
                         Create a Story
                     </button>
                 </div>
@@ -33,4 +32,3 @@
         </div>
     </div>
 </nav>
-<%- include("create-story"); %>
