@@ -36,6 +36,7 @@ const _initStoryDetails = async () => {
   $("#story-detail-author").text("@" + data.author);
   $("#story-detail-desc").text(data.description);
   $("#story-detail-img").attr("src", data.image);
+  $("#rooms-number").text(data.rooms);
 };
 
 const _initRoomList = async () => {
@@ -120,8 +121,8 @@ const _addListener = () => {
       $("#create-room-desc-input").val().length < 100
     ) {
       const name = $("#create-room-name-input").val();
-      let desc = $("#create-room-desc-input").val();
-      const { data } = await room.createRoom({ storyId, name, desc });
+      const description = $("#create-room-desc-input").val();
+      const { data } = await room.createRoom({ storyId, name, description });
       bootstrap.Modal.getInstance(createRoomModal).hide();
       window.open("/room/" + data);
     }

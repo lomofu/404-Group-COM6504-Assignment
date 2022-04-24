@@ -27,7 +27,7 @@ module.exports = {
       const result = await room.save();
       const story = await StorySchema.findById(storyId);
       story.rooms += 1;
-      await StorySchema.updateOne(story);
+      await story.save();
       return result._id;
     } catch (e) {
       logger.error(`received: ${e}`);
@@ -48,14 +48,14 @@ module.exports = {
   async getRoomDetail(id) {
     if (id) {
       const result = await RoomSchema.findById(id);
-      return result.map((e) => ({
-        id: e._id,
-        storyId: e.storyId,
-        name: e.name,
-        description: e.description,
-        createTime: e.createTime,
-        members: e.members,
-      }));
+      return {
+        id: result._id,
+        storyId: result.storyId,
+        name: result.name,
+        description: result.description,
+        createTime: result.createTime,
+        members: result.members,
+      };
     }
     throw new Error({
       code: 400,
