@@ -36,8 +36,11 @@
         <span>Room List</span>
         <span id="rooms-number" class="ms-3 text-black-50">0</span>
     </div>
-    <div id="room-list-container" class="w-100 pb-5">
-
+    <div id="room-list-container" class="w-100">
+        <div class="w-100 bg-light px-3 py-5">
+            <h4 class="text-black-50 text-center">Empty list</h4>
+            <h4 class="text-black-50 text-center"> Create new room</h4>
+        </div>
     </div>
 </main>
 
@@ -79,6 +82,6 @@
 
     loadScript(jq, async () => {
         useNav();
-        initView();
+        initView("<%= storyId %>");
     });
 </script>

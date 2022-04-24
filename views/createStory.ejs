@@ -14,8 +14,8 @@
     <!--    <h4 class="card-subtitle mb-2 text-white-50 text-center">Post your mission here</h4>-->
     <div class="card w-75 p-4">
         <div class="card-body">
-            <div class="row align-items-stretc">
-                <form id="story-form" class="needs-validation col-8" >
+            <div class="row align-items-center justify-content-center">
+                <form id="story-form" class="needs-validation col-11 col-lg-8" >
                     <div class="mb-3">
                         <div class="d-flex flex-row justify-content-between align-items-center">
                             <label for="story-title-input" class="form-label">Title</label>
@@ -62,10 +62,12 @@
                                   placeholder="Story Description" style="height: 100px;resize: none"></textarea>
                     </div>
                 </form>
-                <img class="col-4 img-bg" src="/img/story-intro-bg.png" alt="background">
+                <img class="col-4 img-bg d-none d-lg-flex" src="/img/story-intro-bg.png" alt="background">
             </div>
+            <div class="pt-5 pb-3 d-flex justify-content-around align-items-center">
             <button id="preview-btn" type="button" class="btn btn-primary btn-purple">Preview</button>
             <button type="button" class="btn btn-secondary" onclick="{window.location.href='/'}">Cancel</button>
+            </div>
         </div>
     </div>
 </div>

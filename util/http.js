@@ -14,4 +14,7 @@ module.exports = {
     code: 500,
     message: (val) => `Server Error, ${val} `,
   },
+  ERROR_PAGE: {
+    code: 501,
+  },
 };
