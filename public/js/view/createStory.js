@@ -130,7 +130,7 @@ const _createStory = async () => {
       window.location.href = "/story";
     });
     $("#go-story-btn").click(() => {
-      window.location.href = "/storyDetail?storyId=" + data;
+      window.location.href = "/storyDetail/" + data;
     });
   }
 };
