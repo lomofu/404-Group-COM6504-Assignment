@@ -7,9 +7,10 @@
 
 import { story, room } from "/js/public/api.js";
 
-const storyId = new URLSearchParams(window.location.search).get("storyId");
+let storyId;
 
-export const initView = () => {
+export const initView = (id) => {
+  storyId = id;
   const navHeight = $("#nav-bar").outerHeight();
 
   $("#empty-container").css("height", `${navHeight + 20}px`);
@@ -26,17 +27,21 @@ export const initView = () => {
   });
 
   _initStoryDetails();
-  _initRoomList();
   _addListener();
 };
 
 const _initStoryDetails = async () => {
-  const { data } = await story.getStoryDetail(storyId);
-  $("#story-detail-title").text(data.title);
-  $("#story-detail-author").text("@" + data.author);
-  $("#story-detail-desc").text(data.description);
-  $("#story-detail-img").attr("src", data.image);
-  $("#rooms-number").text(data.rooms);
+  try {
+    const { data } = await story.getStoryDetail(storyId);
+    $("#story-detail-title").text(data.title);
+    $("#story-detail-author").text("@" + data.author);
+    $("#story-detail-desc").text(data.description);
+    $("#story-detail-img").attr("src", data.image);
+    $("#rooms-number").text(data.rooms);
+    if (data.rooms > 0) {
+      _initRoomList();
+    }
+  } catch (e) {}
 };
 
 const _initRoomList = async () => {

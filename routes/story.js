@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/storyService");
 const {BAD_REQUEST, SERVER_ERROR} = require("../util/http");
+const Exception = require("../util/exception");
 
 // get story list
 router.get("/list", async (req, res) => {
@@ -60,6 +61,7 @@ router.post("/", async (req, res) => {
 
 // get story details
 router.get("/", async (req, res, next) => {
+
     const {id} = req.query;
 
     try {
