@@ -152,7 +152,7 @@
     }
 
     if (roomId.length === 1) {
-        loadScript(jq, () => {
+        loadScript(jq, async () => {
             useRoom();
             usernameModal((username) => useSocket(username));
         })

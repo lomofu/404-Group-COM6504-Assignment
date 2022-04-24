@@ -6,6 +6,7 @@ const DB_NAME = "db_mission";
 
 export const CHAT_STORE_NAME = "chatdb";
 export const KLG_STORE_NAME = "klgdb";
+export const ANNOTATION_STORE_NAME = "annotationdb";
 export let db;
 
 /**
@@ -49,6 +50,22 @@ export async function initDatabase() {
             multiEntry: true,
           });
         }
+
+        if (!upgradeDb.objectStoreNames.contains(ANNOTATION_STORE_NAME)) {
+          let annotationDataBase = upgradeDb.createObjectStore(ANNOTATION_STORE_NAME, {
+            keyPath: "id",
+            autoIncrement: true,
+          });
+          annotationDataBase.createIndex("roomId", "roomId", {
+            unique: false,
+            multiEntry: false,
+          });
+          annotationDataBase.createIndex("annotation", "annotation", {
+            unique: false,
+            multiEntry: true,
+          });
+        }
+
       },
     });
   }

@@ -8,6 +8,8 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/roomService");
+const storyService =
+require("../service/storyService");
 const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
 
 // get room list
@@ -62,6 +64,30 @@ router.get("/", async (req, res, next) => {
   try {
     const details = await service.getRoomDetail(id);
     res.json(details);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/detail", async (req, res, next) => {
+  const { id } = req.query;
+
+  try {
+    const room = await service.getRoomDetail(id);
+
+    const { storyId } = room;
+
+    const story = await storyService.getStoryDetail(storyId);
+
+    res.json({
+      roomId: id,
+      roomName: room.name,
+      roomCreateTime: room.createTime,
+      storyId: story._id,
+      storyTitle: story.title,
+      imageUrl:story.image
+
+    });
   } catch (e) {
     next(e);
   }

@@ -7,6 +7,7 @@
 import { useTimeFormat } from "/js/util/util.js";
 import { useCanvas } from "/js/canvas.js";
 import { useDao } from "/js/db/dao.js";
+import { room } from "/js/public/api.js";
 
 const roomId = window.location.pathname
   .split("/")
@@ -24,7 +25,7 @@ const emojiList = [
 const { chatDao, KLGDao } = await useDao();
 
 const { getChatData, storeChatData } = chatDao;
-const { getKLGData} = KLGDao;
+const { getKLGData } = KLGDao;
 
 const _render = async () => {
   emojiList.forEach(({ name, src }) =>
@@ -33,6 +34,12 @@ const _render = async () => {
        `),
   );
 
+  _renderChatHistory();
+
+  _renderKLGraph();
+};
+
+async function _renderChatHistory() {
   const $chat = $("#chat-history");
   let chatHistory = await getChatData(roomId);
   for (let elm of chatHistory) {
@@ -123,9 +130,10 @@ const _render = async () => {
          </div>`);
     }
   }
+}
 
+async function _renderKLGraph() {
   let KLGHistory = await getKLGData(roomId);
-
   for (let elm of KLGHistory) {
     $("#google-cards").prepend(`
       <div id="${elm.id}" class="card w-100 my-2">
@@ -138,10 +146,10 @@ const _render = async () => {
     `);
     $("#google-kl-input").val("");
   }
-};
+}
 
-export const useRoom = () => {
-  _render();
+export const useRoom = async () => {
+  await _render();
   let flag = false;
   const $screen = $("#room-screen");
   const $google = $("#google-kl");
@@ -195,14 +203,10 @@ export const useSocket = (name) => {
   const $chat = $("#chat-history");
   const socket = io();
 
-  socket.on("connect", () => {
+  socket.on("connect", async () => {
     socket.emit("create or join", roomId, name);
-    useCanvas(
-      roomId,
-      name,
-      socket,
-      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    );
+    const { data } = await room.getRoomDetail(roomId);
+    await useCanvas(roomId, name, socket, data.imageUrl);
   });
 
   socket.on("joined", (username) => {
