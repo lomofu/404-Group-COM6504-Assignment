@@ -19,11 +19,11 @@ let socket;
 export const useCanvas = (roomId, username, sct, imageURL) => {
   canvas = $("#main-canvas");
   room = roomId;
-  userId = name;
+  userId = username;
   socket = sct;
 
   _initImage(imageURL);
-  _initEvents();
+  _initEvents(room, userId, socket);
 };
 
 const _initImage = (imageURL) => {
@@ -70,7 +70,7 @@ function drawImageScaled(img, canvas, ctx) {
   ctx.drawImage(img, 0, 0, img.width, img.height);
 }
 
-const _initEvents = () => {
+const _initEvents = (room, userId, socket) => {
   let flag = false;
   let prevX = 0;
   let prevY = 0;
@@ -107,8 +107,24 @@ const _initEvents = () => {
           lineOption.color,
           lineOption.thickness,
         );
+        socket.emit('draw', room, userId, canvas.width, canvas.height, prevX, prevY, currX, currY, lineOption.color, lineOption.thickness);
       }
     }
+  });
+
+  socket.on('draw', function (room, userId, width, height, prev_X, prev_Y, curr_X, curr_Y, color_, thickness_) {
+    let ctx = canvas[0].getContext('2d');
+    _draw(
+        ctx,
+        width,
+        height,
+        prev_X,
+        prev_Y,
+        curr_X,
+        curr_Y,
+        color_,
+        thickness_,
+    );
   });
 };
 
@@ -131,7 +147,6 @@ const _draw = (
   color,
   thickness,
 ) => {
-  debugger;
   //get the ration between the current canvas and the one it has been used to draw on the other comuter
   let ratioX = canvas.width / canvasWidth;
   let ratioY = canvas.height / canvasHeight;
@@ -147,6 +162,7 @@ const _draw = (
   ctx.strokeStyle = color;
   ctx.lineWidth = thickness;
   ctx.stroke();
+  ctx.beginPath();
 };
 
 // export function initCanvas(sckt, imageUrl, roomId, name) {
