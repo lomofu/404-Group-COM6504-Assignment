@@ -117,8 +117,22 @@ const _createStory = async () => {
   const author = $("#story-author-input").val();
   const image = $("#story-image-input").val();
   const description = $("#story-desc-input").val();
-  const { data } = await story.createStory({ title, author, description, image });
-    console.log(data);
+  const { data } = await story.createStory({
+    title,
+    author,
+    description,
+    image,
+  });
+  if (data) {
+    $("#preview-story-card").addClass("d-none");
+    $("#create-success-card").removeClass("d-none");
+    $("#go-list-btn").click(() => {
+      window.location.href = "/story";
+    });
+    $("#go-story-btn").click(() => {
+      window.location.href = "/storyDetail?storyId=" + data;
+    });
+  }
 };
 
 const _checkImage = (url) => {
