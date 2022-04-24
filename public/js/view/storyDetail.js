@@ -78,8 +78,8 @@ const _addListener = () => {
 
     const createRoomModal = document.getElementById("create-room-modal");
     createRoomModal.addEventListener('show.bs.modal', () => {
-        $('#room-name-input').val("").css('color', 'black');
-        $('#room-desc-input').val("").css('color', 'black');
+        $('#create-room-name-input').val("").css('color', 'black');
+        $('#create-room-desc-input').val("").css('color', 'black');
         $('#room-name-limit').text("");
         $('#room-desc-limit').text("");
     });
@@ -87,34 +87,34 @@ const _addListener = () => {
         _initRoomList();
     });
 
-    $('#room-name-input').keydown(() => {
-        $('#room-name-limit').text("(" + $('#room-name-input').val().length + "/30)");
-        if ($('#room-name-input').val().length > 30) {
-            $('#room-name-input').css('color', 'red');
+    $('#create-room-name-input').keydown(() => {
+        $('#room-name-limit').text("(" + $('#create-room-name-input').val().length + "/30)");
+        if ($('#create-room-name-input').val().length > 30) {
+            $('#create-room-name-input').css('color', 'red');
             $('#room-name-limit').css('color', 'red');
         } else {
-            $('#room-name-input').css('color', 'black');
+            $('#create-room-name-input').css('color', 'black');
             $('#room-name-limit').css('color', 'gray');
         }
     });
 
-    $('#room-desc-input').keydown(() => {
-        $('#room-desc-limit').text("(" + $('#room-desc-input').val().length + "/100)");
-        if ($('#room-desc-input').val().length > 100) {
-            $('#room-desc-input').css('color', 'red');
+    $('#create-room-desc-input').keydown(() => {
+        $('#room-desc-limit').text("(" + $('#create-room-desc-input').val().length + "/100)");
+        if ($('#create-room-desc-input').val().length > 100) {
+            $('#create-room-desc-input').css('color', 'red');
             $('#room-desc-limit').css('color', 'red');
         } else {
-            $('#room-desc-input').css('color', 'black');
+            $('#create-room-desc-input').css('color', 'black');
             $('#room-desc-limit').css('color', 'gray');
         }
     });
 
     $('#create-btn').click(async () => {
-        if ($('#room-name-input').val().length === 0) {
+        if ($('#create-room-name-input').val().length === 0) {
             $('#room-name-limit').text("Empty!").css('color', 'red');
-        } else if ($('#room-name-input').val().length < 30 && $('#room-desc-input').val().length < 100) {
-            const name = $('#room-name-input').val();
-            let desc = $('#room-desc-input').val();
+        } else if ($('#create-room-name-input').val().length < 30 && $('#create-room-desc-input').val().length < 100) {
+            const name = $('#create-room-name-input').val();
+            let desc = $('#create-room-desc-input').val();
             const {data} = await room.createRoom({storyId, name, desc});
             bootstrap.Modal.getInstance(createRoomModal).hide();
             window.open('/room/' + data);
