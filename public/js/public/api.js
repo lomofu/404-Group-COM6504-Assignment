@@ -26,6 +26,7 @@ export const story = {
     });
   },
 };
+
 export const room = {
   getRoomList(storyId) {
     return http.get("api/room/list",{
@@ -42,7 +43,7 @@ export const room = {
     });
   },
   getRoomDetail(id) {
-    return http.get("api/room", {
+    return http.get("api/room/detail", {
       params: {
         id,
       },

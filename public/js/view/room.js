@@ -5,8 +5,9 @@
  * @date 2022/3/19
  */
 import { useTimeFormat } from "/js/util/util.js";
-import { useCanvas, draw } from "/js/canvas.js";
+import { useCanvas } from "/js/canvas.js";
 import { useDao } from "/js/db/dao.js";
+import { room } from "/js/public/api.js";
 
 const roomId = window.location.pathname
   .split("/")
@@ -21,11 +22,10 @@ const emojiList = [
   { name: "happy", src: "/img/emoji/smile.webp" },
 ];
 
-const { chatDao, KLGDao, annotationDao } = await useDao();
+const { chatDao, KLGDao } = await useDao();
 
 const { getChatData, storeChatData } = chatDao;
 const { getKLGData } = KLGDao;
-const { getAnnotationData } = annotationDao;
 
 const _render = async () => {
   emojiList.forEach(({ name, src }) =>
@@ -34,9 +34,9 @@ const _render = async () => {
        `),
   );
 
-  await _renderChatHistory();
+  _renderChatHistory();
 
-  await _renderKLGraph();
+  _renderKLGraph();
 };
 
 async function _renderChatHistory() {
@@ -148,17 +148,8 @@ async function _renderKLGraph() {
   }
 }
 
-async function _renderCanvas(name, socket, imageURL) {
-  useCanvas(roomId, name, socket, imageURL);
-
-  let annotationHistory = await getAnnotationData(roomId);
-  for (let elm of annotationHistory) {
-    draw(elm.prevX, elm.prevY, elm.currX, elm.currY, elm.color, elm.thickness);
-  }
-}
-
-export const useRoom = () => {
-  _render();
+export const useRoom = async () => {
+  await _render();
   let flag = false;
   const $screen = $("#room-screen");
   const $google = $("#google-kl");
@@ -214,12 +205,8 @@ export const useSocket = (name) => {
 
   socket.on("connect", async () => {
     socket.emit("create or join", roomId, name);
-
-    await _renderCanvas(
-      name,
-      socket,
-      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    );
+    const { data } = await room.getRoomDetail(roomId);
+    await useCanvas(roomId, name, socket, data.imageUrl);
   });
 
   socket.on("joined", (username) => {

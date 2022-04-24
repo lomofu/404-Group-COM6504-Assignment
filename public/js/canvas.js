@@ -44,6 +44,7 @@ const _initImage = (imageURL) => {
     cvx.width = canvas.width = img.width * ratio;
     cvx.height = canvas.height = img.height * ratio;
     drawImageScaled(img, cvx, ctx);
+    _initDraws();
   };
   img.src = imageURL;
 };
@@ -104,7 +105,6 @@ const _initEvents = (room, userId, socket, imageURL) => {
           lineOption.color,
           lineOption.thickness,
         );
-
         storeAnnotationData({
           roomId: room,
           url: imageURL,
@@ -122,7 +122,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
   });
 
   socket.on(
-    "draw",
+    "received_draw",
     function (
       room,
       userId,
@@ -135,6 +135,18 @@ const _initEvents = (room, userId, socket, imageURL) => {
       color_,
       thickness_,
     ) {
+      storeAnnotationData({
+        roomId: room,
+        url: imageURL,
+        canvasWidth: canvas.width,
+        canvasHeight: canvas.height,
+        prevX: prev_X,
+        prevY: prev_Y,
+        currX: curr_X,
+        currY: curr_Y,
+        color: lineOption.color,
+        thickness: lineOption.thickness,
+      });
       let ctx = canvas[0].getContext("2d");
       _draw(
         ctx,
@@ -159,6 +171,24 @@ function getMousePos(canvas, evt) {
   };
 }
 
+const _initDraws = async () => {
+  let annotationHistory = await getAnnotationData(roomId);
+
+  for (let elm of annotationHistory) {
+    _draw(
+      ctx,
+      canvas.width,
+      canvas.height,
+      elm.prevX,
+      elm.prevY,
+      elm.currX,
+      elm.currY,
+      elm.color,
+      elm.thickness,
+    );
+  }
+};
+
 const _draw = (
   ctx,
   canvasWidth,
@@ -170,7 +200,6 @@ const _draw = (
   color,
   thickness,
 ) => {
-  debugger
   //get the ration between the current canvas and the one it has been used to draw on the other comuter
   let ratioX = canvas.width / canvasWidth;
   let ratioY = canvas.height / canvasHeight;
@@ -187,18 +216,4 @@ const _draw = (
   ctx.lineWidth = thickness;
   ctx.stroke();
   ctx.beginPath();
-};
-
-export const draw = (prevX, prevY, currX, currY, color, thickness) => {
-  _draw(
-    ctx,
-    canvas.width,
-    canvas.height,
-    prevX,
-    prevY,
-    currX,
-    currY,
-    color,
-    thickness,
-  );
 };
