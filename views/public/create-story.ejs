@@ -1,0 +1,166 @@
+<!-- Story Modal -->
+<div class="modal fade overflow-hidden" id="new-story-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg story-form-card">
+        <div class="modal-content">
+            <div class="modal-header border-0 align-items-start ">
+                <div>
+                    <h4 class="modal-title fredoka-semi" id="staticBackdropLabel">Create A Story Now!</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body row align-items-stretch">
+                <form id="story-form" class="needs-validation col-8" novalidate>
+                    <div class="mb-3">
+                        <label for="story-title-input" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="story-title-input"
+                               placeholder="Story Title"
+                               required/>
+                        <div class="invalid-feedback">
+                            Please input story title
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="story-author-input" class="form-label">Author</label>
+                        <input type="text" class="form-control" id="story-author-input"
+                               placeholder="Author Name"
+                               required/>
+                        <div class="invalid-feedback">
+                            Please input author name
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="story-image-input" class="form-label">Image</label>
+                        <div class="row">
+                            <div class="col-4">
+                                <select class="form-select" id="story-image-select">
+                                    <option selected value="1">File</option>
+                                    <option value="2">URL</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="story-image-input"
+                                       placeholder="Image URL" required/>
+                                <div class="invalid-feedback">
+                                    Please upload the image
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="story-desc-input" class="form-label">Description</label>
+                        <textarea type="text" class="form-control" id="story-description-input"
+                                  placeholder="Story Description" style="height: 100px;resize: none"
+                                  required></textarea>
+                        <div class="invalid-feedback">
+                            Please input story description
+                        </div>
+                    </div>
+                </form>
+                <img class="col-4 img-bg" src="/img/story-intro-bg.png" alt="background">
+            </div>
+            <div class="modal-footer border-0 justify-content-start">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="preview-btn" type="button" class="btn btn-primary">Preview</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="preview-story-card modal-dialog modal-dialog-centered flip-vertical-fwd">
+        <div class="modal-content">
+            <img id="static-image" class="card-img-top"
+                 height="200"
+                 style="object-fit: cover"
+                 src="/img/default-img.jpg">
+            <div class="card-body">
+                <div class="mb-3 row">
+                    <label for="static-id" class="col-sm-3 col-form-label">Room ID</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext" id="static-id"
+                               value="email@example.com">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="static-title" class="col-sm-3 col-form-label">Title</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext" id="static-title"
+                               value="email@example.com">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="static-author" class="col-sm-3 col-form-label">Author</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly class="form-control-plaintext" id="static-author"
+                               value="email@example.com">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="static-description" class="col-sm-3 col-form-label">Description</label>
+                    <div class="col-sm-9">
+                    <textarea type="text" class="form-control-plaintext"
+                              id="static-description"
+                              style="height: 100px;resize: none;background: none"
+                              readonly>xxxxx</textarea>
+                    </div>
+                </div>
+
+                <div class="mt-5 mx-1 row justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary close-btn col-3" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button id="back-btn" class="btn btn-outline-light col-3">Back</button>
+                    <button id="create-btn" class="btn btn-outline-info col-3">Create</button>
+                    <button id="go-btn" class="btn btn-outline-info col-4">Go To The Room</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .img-bg {
+        object-fit: contain;
+    }
+
+    .story-form-card {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .preview-story-card {
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .preview-story-card > .modal-content {
+        color: white;
+        background: #9124ff; /* fallback for old browsers */
+        background: -webkit-linear-gradient(-45deg, #d065fc, #9124ff); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(-45deg, #d065fc, #9124ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .preview-story-card > .modal-content > .card-body > .mb-3 > .col-sm-9 > .form-control-plaintext {
+        color: white;
+    }
+
+    #story-img {
+        width: 100%;
+        height: 30vh;
+        object-fit: cover;
+    }
+
+    .close-btn {
+        display: none;
+    }
+
+    #go-btn {
+        display: none;
+    }
+</style>

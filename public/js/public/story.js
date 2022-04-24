@@ -4,99 +4,114 @@ class Story {
   title;
   author;
   image;
-  desc;
+  description;
 }
 
-// input overview
-const title = document.getElementById("story-title-input");
-const author = document.getElementById("story-author-input");
-const image = document.getElementById("story-image-input");
-const desc = document.getElementById("story-desc-input");
+let story;
 
-const titleOV = document.getElementById("story-title-overview");
-const authorOV = document.getElementById("story-author-overview");
-const descOV = document.getElementById("story-desc-overview");
-
-title.addEventListener("keyup", (e) => {
-  titleOV.textContent = e.target.value;
-});
-
-author.addEventListener("keyup", (e) => {
-  authorOV.textContent = "@" + e.target.value;
-});
-
-desc.addEventListener("keyup", (e) => {
-  descOV.textContent = e.target.value;
-});
-
-// progress event
-const _progress = () => {
-  const progressModal = bootstrap.Modal.getOrCreateInstance(
-    document.getElementById("progressModal"),
-  );
-  console.log(progressModal);
-  progressModal.show();
+const _bindInputEvent = () => {
+  Reflect.ownKeys(story).forEach((key) => {
+    $(`#story-${key}-input`).keyup(function () {
+      story[key] = $(this).val();
+    });
+  });
 };
 
-// submit event
-const form = document.querySelectorAll(".needs-validation")[0];
-form.addEventListener(
-  "submit",
-  function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (form.checkValidity()) {
-      let story = new Story();
-      story.title = title.value;
-      story.author = author.value;
-      story.image = image.value;
-      story.desc = desc.value;
-      console.log(story);
-      _progress();
+const _create = () => {
+  story = new Story();
+  Reflect.ownKeys(story).forEach((key) => {
+    Object.defineProperty(story, key, {
+      get() {
+        return this._key;
+      },
+      set(newVal) {
+        if (this._key === newVal) return;
+        if (key !== "image") {
+          $(`#static-${key}`).val(newVal);
+        } else {
+          $(`#static-${key}`).attr("src", newVal);
+        }
+
+        this._key = newVal;
+      },
+    });
+  });
+  _bindInputEvent();
+};
+
+const _reset = () => {
+  const $storyFormCard = $(".story-form-card");
+
+  $storyFormCard.removeClass("flip-vertical-fwd-reverse");
+  $storyFormCard.css("display", "flex");
+  $(".preview-story-card").hide();
+
+  $("#create-btn").show();
+  $("#back-btn").show();
+  $(".close-btn").hide();
+  $("#go-btn").hide();
+
+  Reflect.ownKeys(story).forEach((key) => {
+    $(`#story-${key}-input`).val("");
+    if (key !== "image") {
+      $(`#static-${key}`).val("");
+    } else {
+      $(`#static-${key}`).attr("src", "/img/default-img.jpg");
     }
-    form.classList.add("was-validated");
-  },
-  false,
-);
+  });
 
-// modal creat event
-export const useCreateStoryModal = () => {};
+  story = null;
+};
 
-// modal close event
-export const resetStoryModel = () => {
-  const $title = $("#story-title-input");
-  const $author = $("#story-author-input");
-  const $image = $("#story-image-input");
-  const $desc = $("#story-desc-input");
-  const $image_select = $("#story-image-select");
+const _submitEvent = () => {
+  console.log(story);
+  const { title, description, image, author } = story;
 
-  const $title_ov = $("#story-title-overview");
-  const $author_ov = $("#story-author-overview");
-  const $image_ov = $("#story-image-overview");
-  const $desc_ov = $("#story-desc-overview");
-
-  // reset input value and state
-  $title.val("");
-  $author.val("");
-  $image.val("");
-  $desc.val("");
-  $image_select.val("1");
-
-  $title.removeClass("is-invalid");
-  $author.removeClass("is-invalid");
-  $image.removeClass("is-invalid");
-  $desc.removeClass("is-invalid");
-
-  // reset overview value
-  $title_ov.text("Title");
-  $author_ov.text("Author");
-  $image_ov.src("/img/image_default.jpg");
-  $desc_ov.text("Story Description");
-
-  // reset form state
-  const form = document.querySelectorAll(".was-validated")[0];
-  if (form) {
-    form.classList.remove("was-validated");
-    form.classList.add("need-validated");
+  if (!title) {
+    //todo
+    return false;
   }
+
+  if (!description) {
+    //todo
+    return false;
+  }
+
+  if (!image) {
+    //todo
+    return false;
+  }
+
+  if (!author) {
+    //todo
+    return false;
+  }
+};
+
+export const useCreateStoryModal = () => {
+  const $newStoryModal = $("#new-story-modal");
+  const $storyFormCard = $(".story-form-card");
+
+  $newStoryModal.on("show.bs.modal", () => _create());
+
+  $newStoryModal.on("hidden.bs.modal", () => _reset());
+
+  $("#preview-btn").click(() => {
+    $(".story-form-card").hide();
+    $(".preview-story-card").css("display", "flex");
+  });
+
+  $("#back-btn").click(() => {
+    $(".preview-story-card").hide();
+    $storyFormCard.addClass("flip-vertical-fwd-reverse");
+    $storyFormCard.css("display", "flex");
+  });
+
+  $("#create-btn").click(function () {
+    $(".close-btn").fadeIn();
+    $("#go-btn").fadeIn();
+
+    $(this).fadeOut();
+    $("#back-btn").fadeOut();
+  });
 };

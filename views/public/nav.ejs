@@ -23,8 +23,9 @@
                 <div class="row">
                     <input class="form-control me-lg-3 mb-3 mb-lg-0 col" type="search" placeholder="Search a story"
                            aria-label="Search">
+
                     <button class="btn btn-outline-light me-3 col-12 col-lg-3" data-bs-toggle="modal"
-                            data-bs-target="#storyModal">
+                            data-bs-target="#new-story-modal">
                         Create a Story
                     </button>
                 </div>
@@ -32,101 +33,4 @@
         </div>
     </div>
 </nav>
-
-<!-- Story Modal -->
-<div class="modal fade" id="storyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-     aria-labelledby="storyTitleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content" style="border-radius: 2rem">
-            <!-- close button-->
-            <div class="d-flex justify-content-end p-3">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="container">
-                <!--  modal title-->
-                <h1 class="text-black text-center" id="modalTitle">Create New Story</h1>
-
-                <!-- modal content-->
-                <div class="row my-5">
-                    <!-- new story input group-->
-                    <form class="col-xl-6 col-lg-10 px-xl-5 p-3 needs-validation" novalidate>
-                        <div class="mb-3">
-                            <label for="story-title-input" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="story-title-input" placeholder="Story Title"
-                                   required/>
-                            <div class="invalid-feedback">
-                                Please input story title
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="story-author-input" class="form-label">Author</label>
-                            <input type="text" class="form-control" id="story-author-input" placeholder="Author Name"
-                                   required/>
-                            <div class="invalid-feedback">
-                                Please input author name
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="story-image-input" class="form-label">Image</label>
-                            <div class="row">
-                                <div class="col-4">
-                                    <select class="form-select" id="story-image-select">
-                                        <option selected value="1">File</option>
-                                        <option value="2">URL</option>
-                                    </select>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" class="form-control" id="story-image-input"
-                                           placeholder="Image URL" required/>
-                                    <div class="invalid-feedback">
-                                        Please upload the image
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="story-desc-input" class="form-label">Description</label>
-                            <textarea type="text" class="form-control" id="story-desc-input"
-                                      placeholder="Story Description" style="height: 100px;resize: none"
-                                      required></textarea>
-                            <div class="invalid-feedback">
-                                Please input story description
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <button class="btn bg-purple text-white" type="submit">Submit</button>
-                        </div>
-                    </form>
-
-                    <!-- new story overview group-->
-                    <div class="col-xl-6 col-lg-10 px-xl-5 p-3">
-                        <div class="card w-100 shadow-lg p-xl-5 p-3" style="border-radius: 2rem">
-                            <img id="story-img" class="w-100 pb-2"
-                                 src="/img/default-img.jpg" style="height: 30vh;object-fit: cover"/>
-                            <span id="story-title-overview" class="py-2">Title</span>
-                            <span id="story-author-overview" class="py-2">@Author</span>
-                            <span id="story-desc-overview" class="py-2">Story Description</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<style>
-
-    input {
-        padding: 10px;
-        width: 100%;
-        font-size: 17px;
-        border: 1px solid #aaaaaa;
-        border-radius: 10px;
-        -webkit-appearance: none
-    }
-</style>
+<%- include("create-story"); %>
