@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/about.css">
+    <title>Mission!</title>
+</head>
+<body>
+<%- include('public/nav'); %>
+<div style="height: 25vh"></div>
+<main id="about" class="h-100 d-flex flex-column justify-content-center align-items-center slide-top">
+    <div class="container py-5">
+        <div class="row justify-content-center align-content-center h-100">
+            <div class="card w-80 px-5">
+                <h1 class="tittle fredoka-semi text-center mb-md-5 mb-4 slide-top">Features</h1>
+
+                <div class="row slide-top">
+                    <div class="col-lg-6 d-flex flex-column justify-content-center">
+                        <h3>Real-time Communication</h3>
+                        <p class="mt-2">Different users can create different chat rooms and communicate in
+                            real
+                            time in the same chat room.</p>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="advantage_left1 text-center">
+                            <img src="img/feature1.jpg" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row slide-top">
+                    <div class="col-lg-6">
+                        <div class="advantage_left1 text-center">
+                            <img src="img/feature2.jpg" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex flex-column justify-content-center">
+                        <h3>Knowledge Sharing</h3>
+                        <p class="mt-2">Users can upload colorful user stories to share their knowledge and
+                            life
+                            experiences. The uploaded story will be viewed and discussed by all other
+                            users</p>
+                    </div>
+                </div>
+
+
+                <div class="row slide-top">
+                    <div class="col-lg-6 d-flex flex-column justify-content-center">
+                        <h3>Taking Notes</h3>
+                        <p class="mt-2">Users can make notes by commenting on specific stories. Your notes will be
+                            invisible by others who are not in the chat room</p>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="advantage_left1 text-center">
+                            <img src="img/feature3.jpg" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
+
+    loadScript(jq, () => {
+        useNav();
+    })
+</script>
+</body>
+
+</html>

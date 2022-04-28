@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/room.css">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css">
+    <title>Mission! Room | <%= roomId %> </title>
+</head>
+<body>
+
+<div class="modal modal fade" id="usernameModal" data-bs-backdrop="static" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Give yourself a name</h5>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Username:</label>
+                    <input type="text" class="form-control" id="username-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="username-close-btn">Close
+                </button>
+                <button type="button" class="btn btn-primary" id="username-confirm-btn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- room button-->
+<button id="room-btn" class="btn fixed-top mt-5 room-btn" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasLeft">
+    Room
+</button>
+
+<!--room detail and leave button-->
+<div class="offcanvas offcanvas-start ps-5" tabindex="-1" id="offcanvasLeft">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Room Details</h5>
+    </div>
+    <div class="offcanvas-body pt-5">
+        <p>You are in Room 1004</p>
+        <i class="bi bi-box-arrow-left" type="button"></i>
+    </div>
+</div>
+
+<!--main screen-->
+<main class="row gx-0 vh-100 w-100 overflow-hidden">
+    <div class="col-md-9 px-0">
+        <div class="row mx-0 h-100 flex-nowrap">
+            <!-- drawer screen-->
+            <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
+                <canvas id="main-canvas" class="w-100 h-100"></canvas>
+                <button id="google-btn" class="btn mt-5" type="button">
+                    Search
+                </button>
+            </div>
+
+            <!-- google knowledge graph-->
+            <div id="google-kl" class="d-none vh-100 col-0 p-3">
+                <!-- keyword search input area-->
+                <input id="google-kl-input" type="text" class="form-control"
+                       placeholder="search from google knowledge graph" onkeydown="widgeInit()"/>
+                <!-- search result cards-->
+                <div id="google-cards">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- chat and members screen-->
+    <div class="col-md-3 shadow-lg d-flex flex-column justify-content-between">
+        <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
+            <!-- chat screen-->
+            <div class="h-100 d-flex flex-column justify-content-between tab-pane fade show active py-3" id="nav-chat"
+                 role="tabpanel">
+                <h5>History Chats</h5>
+                <!-- chat history screen-->
+                <div id="chat-history" class="p-3">
+                    <!-- dynamically render-->
+                </div>
+
+                <!-- chat input -->
+                <div class="input-group mt-2">
+                    <input id="chat-input" type="text" class="form-control" placeholder="input something to say..."/>
+
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <i class="bi bi-emoji-laughing"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <div id="emoji-box" class="d-flex p-2">
+                                <!--dynamically render-->
+                            </div>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline-secondary" type="button" id="send-msg-btn">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- members screen-->
+            <div class="tab-pane fade h-100 py-3" id="nav-members" role="tabpanel">
+                <h3>Room 4001</h3>
+                <div class="p-3">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- chat and members nav-->
+        <div class="nav w-100 d-flex justify-content-around nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active col" id="nav-chat-btn" data-bs-toggle="tab"
+                    data-bs-target="#nav-chat" type="button" role="tab">
+                <i class="bi bi-chat-right-dots "></i>
+            </button>
+            <button class="nav-link col" id="nav-members-btn" data-bs-toggle="tab"
+                    data-bs-target="#nav-members"
+                    type="button" role="tab">
+                <i class="bi bi-person-fill"></i>
+            </button>
+        </div>
+    </div>
+</main>
+
+<%- include("public/script"); %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/public/googleKLGraph.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useRoom, usernameModal, useSocket} from "/js/view/room.js";
+    import { useDao } from "/js/db/dao.js";
+
+    const roomId = window.location.pathname
+        .split("/")
+        .filter((e) => e !== "" && e !== "room");
+
+    const { KLGDao } = await useDao();
+    const {getKLGData, storeKLGData} = KLGDao;
+
+    window.myGoogleKLG = {
+        getKLGData,
+        storeKLGData
+    }
+
+    if (roomId.length === 1) {
+        loadScript(jq, async () => {
+            useRoom();
+            usernameModal((username) => useSocket(username));
+        })
+    } else {
+        alert('path is invalid, please make sure it is the form of /room/roomId ');
+    }
+
+</script>
+</body>
+</html>

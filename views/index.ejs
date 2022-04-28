@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>Mission!</title>
+</head>
+<body>
+
+<!--nav-->
+<%- include('public/nav'); %>
+
+<main class="h-100 w-100 d-flex flex-column justify-content-center align-items-center container">
+    <div class="container" style="margin-bottom: 10%">
+        <div class="row">
+            <!-- intro card-->
+            <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+                <ul class="cards">
+                    <li class="card-dy">
+                        <h1>Real-Time Chatting</h1>
+                        <p>
+                            - Access relevant rooms with your partners for a story
+                            <br>- Communicate in real time
+                            <br>- Text exchanges
+                            <br>- Drawing in response to images
+                            <br>- Searching for relevant Google Knowledge Graph
+                        </p>
+                    </li>
+                    <li class="card-dy">
+                        <h1>Mission Stories</h1>
+                        <p>
+                            - Create a new story including:
+                            <br>your name
+                            <br>story title
+                            <br>story image
+                            <br>story content
+                            <br>time of publication.
+                            <br>- Wait for people to explore your story!
+                        </p>
+                    </li>
+                    <li class="card-dy">
+                        <h1>Knowledge Graph</h1>
+                        <p>- Enter a keyword to search when analysing a story
+                            <br>- Show you the relevant content in the Google Knowledge Graph
+                        </p>
+                    </li>
+                    <li class="card-dy">
+                        <h1>Find Key Point</h1>
+                        <p>
+                            - Combine the various information in the story
+                            <br>- Work on exploring the details
+                            <br>- Find the breakthrough key points
+                            <br>- Share with your partner
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- logo card only show in lg screen-->
+            <div class="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
+                <div class="typing">
+                    <span class="logo logo-shadow text-light">Mission</span>
+                    <span class="logo logo-shadow primary ms-1">!</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
+    import {useCards} from "/js/view/index.js";
+
+    loadScript(jq, () => {
+        useNav();
+        useCards();
+    })
+</script>
+</body>
+
+</html>

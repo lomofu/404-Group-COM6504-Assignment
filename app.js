@@ -1,44 +1,65 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+/** @format */
+
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const Exception = require("./util/exception");
+
+require("./config/dbConfig");
+require("swagger-jsdoc");
 
 const publicRouter = require("./routes/public");
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require("./routes/view");
+const storyRouter = require("./routes/story");
+const roomRouter = require("./routes/room");
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// swagger
+const openApiDocumentation = require("./swagger/swaggerDocumentation.json");
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
-app.use(logger('dev'));
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../")));
 
-app.use('/', indexRouter);
-app.use('/public', publicRouter);
-app.use('/users', usersRouter);
+app.use("/", indexRouter);
+app.use("/public", publicRouter);
+app.use("/api/story", storyRouter);
+app.use("/api/room", roomRouter);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-    next(createError(404));
+// forward to error handler
+app.use((e, req, res, next) => {
+  if (e) {
+    next(e);
+  }
+  next(new Exception(404, "Page Not Found"));
 });
 
 // error handler
-app.use((err, req, res) => {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use((err, req, res, next) => {
+  // set locals, only providing error in development
+  if (err.code === 404) {
+    next();
+  }
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+  // return as a json
+  res.locals.message = err.message;
+  res.status(err.code);
+  res.json(err.message);
 });
+
+// 404 handler
+app.use((req, res) => res.render("404"));
 
 module.exports = app;

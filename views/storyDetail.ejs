@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/storyDetail.css">
+    <title>Mission!</title>
+</head>
+<body>
+<!--nav-->
+<%- include('public/nav'); %>
+<header>
+    <div id="empty-container"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6 p-3">
+                <img id="story-detail-img"
+                     src="/img/default-img.jpg"
+                     height="400"
+                     class="card-img-top shadow-lg">
+            </div>
+            <div class="col-12 col-lg-6 pt-3">
+                <div id="story-detail-title" class="fs-2 card-title"></div>
+                <div id="story-detail-author" class="fs-4"></div>
+                <p id="story-detail-desc" class="fs-5 card-text">
+                </p>
+                <a id="create-room-modal-btn" href="#" class="btn btn-purple" data-bs-toggle="modal"
+                   data-bs-target="#create-room-modal">Create a Room</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="w-100 d-flex flex-column align-items-center container mt-4">
+    <div class="fs-3 px-3 w-100 text-start">
+        <span>Room List</span>
+        <span id="rooms-number" class="ms-3 text-black-50">0</span>
+    </div>
+    <div id="room-list-container" class="w-100">
+        <div class="w-100 bg-light px-3 py-5">
+            <h4 class="text-black-50 text-center">Empty list</h4>
+            <h4 class="text-black-50 text-center"> Create new room</h4>
+        </div>
+    </div>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="create-room-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title fs-4">Create New Room</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="fs-5 p-2">Room Name</div>
+                    <div id="room-name-limit" class="text-center"></div>
+                </div>
+                <input id="create-room-name-input" class="form-control" type="text">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="fs-5 p-2">Room Description (Optional)</div>
+                    <div id="room-desc-limit"></div>
+                </div>
+                <input id="create-room-desc-input" class="form-control" type="text">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="create-room-btn" type="button" class="btn btn-purple">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
+    import {initView} from "/js/view/storyDetail.js";
+
+    loadScript(jq, async () => {
+        useNav();
+        initView("<%= storyId %>");
+    });
+</script>

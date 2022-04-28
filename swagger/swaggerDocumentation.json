@@ -1,0 +1,296 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "COM6504 Team 404",
+    "description": "The assignment of team 404",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local server"
+    },
+    {
+      "url": "http:/mission.lomofu.com",
+      "description": "Testing server"
+    }
+  ],
+  "paths": {
+    "/api/story": {
+      "post": {
+        "tags": [
+          "story"
+        ],
+        "description": "create a new story",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoryUpload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully create new story",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                },
+                "example": {
+                  "id": "62631d670c7594c8a76559a6"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Miss the title value"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error, insert failed! Please try again!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "story"
+        ],
+        "description": "get story details by id",
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/_id"
+          },
+          "allowEmptyValue": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Successfully get story details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Story"
+                },
+                "example": {
+                  "_id": "62631d670c7594c8a76559a6",
+                  "title": "Find clues in Sheffield Library",
+                  "author": "Luna",
+                  "description": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it.",
+                  "image": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680",
+                  "createTime": "22/04/2022 22:25",
+                  "delete": false,
+                  "rooms": 0,
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Miss values"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error, insert failed! Please try again!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/story/list": {
+      "get": {
+        "tags": [
+          "story"
+        ],
+        "description": "get story list",
+        "responses": {
+          "200": {
+            "description": "Successfully get stories list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoryList"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "_id": {
+        "type": "string",
+        "description": "story id",
+        "example": "62631d670c7594c8a76559a6"
+      },
+      "title": {
+        "type": "string",
+        "description": "story title",
+        "example": "Find clues in Sheffield Library"
+      },
+      "author": {
+        "type": "string",
+        "example": "Luna"
+      },
+      "description": {
+        "type": "string",
+        "description": "story description",
+        "example": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
+      },
+      "image": {
+        "type": "string",
+        "description": "image url or uploaded",
+        "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
+      },
+      "createTime": {
+        "type": "string",
+        "description": "story create time",
+        "example": "22/04/2022 22:25"
+      },
+      "delete": {
+        "type": "boolean",
+        "description": "story delete state",
+        "example": "false"
+      },
+      "rooms": {
+        "type": "number",
+        "description": "story rooms",
+        "example": "0"
+      },
+      "Story": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "$ref": "#/components/schemas/_id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "author": {
+            "$ref": "#/components/schemas/author"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
+          },
+          "createTime": {
+            "$ref": "#/components/schemas/createTime"
+          },
+          "delete": {
+            "$ref": "#/components/schemas/delete"
+          },
+          "rooms": {
+            "$ref": "#/components/schemas/rooms"
+          }
+        }
+      },
+      "StoryUpload": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "author": {
+            "$ref": "#/components/schemas/author"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "image": {
+            "$ref": "#/components/schemas/image"
+          }
+        }
+      },
+      "StoryList": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "story": {
+              "$ref": "#/components/schemas/Story"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "string",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Success": {
+        "type": "string",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
