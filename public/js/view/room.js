@@ -52,7 +52,6 @@ async function _renderChatHistory() {
            </div>
            <div class="message p-3 text-start">${elm.chat}</div>
        </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
     if (elm.type === 1) {
       $chat.append(`
@@ -65,7 +64,6 @@ async function _renderChatHistory() {
              </div>
              <img width="60" height="60" src="${elm.chat}" />
          </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
     if (elm.type === 2) {
       $chat.append(`
@@ -83,7 +81,6 @@ async function _renderChatHistory() {
              </div>
            </div>
          </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
     if (elm.type === 3) {
       $chat.append(`
@@ -99,7 +96,6 @@ async function _renderChatHistory() {
              </div>
            </div>
          </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
     if (elm.type === 4) {
       $chat.append(`
@@ -130,6 +126,8 @@ async function _renderChatHistory() {
          </div>`);
     }
   }
+
+  $chat.animate({ scrollTop: $chat.prop("scrollHeight") });
 }
 
 async function _renderKLGraph() {
