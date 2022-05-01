@@ -5,10 +5,13 @@
  * @date 2022/3/19
  */
 import { useTimeFormat } from "/js/util/util.js";
+import { useCanvas } from "/js/canvas.js";
+import { useDao } from "/js/db/dao.js";
+import { room } from "/js/public/api.js";
 
 const roomId = window.location.pathname
-    .split("/")
-    .filter((e) => e !== "" && e !== "room")[0];
+  .split("/")
+  .filter((e) => e !== "" && e !== "room")[0];
 
 const emojiList = [
   { name: "happy", src: "/img/emoji/happy.webp" },
@@ -19,17 +22,28 @@ const emojiList = [
   { name: "happy", src: "/img/emoji/smile.webp" },
 ];
 
+const { chatDao, KLGDao } = await useDao();
+
+const { getChatData, storeChatData } = chatDao;
+const { getKLGData } = KLGDao;
+
 const _render = async () => {
-  emojiList.forEach(({name, src}) =>
-      $("#emoji-box").append(`
+  emojiList.forEach(({ name, src }) =>
+    $("#emoji-box").append(`
         <img width="50" height="50" src="${src}" alt="${name}">
        `),
   );
 
+  _renderChatHistory();
+
+  _renderKLGraph();
+};
+
+async function _renderChatHistory() {
   const $chat = $("#chat-history");
-  let chatHistory = await missionIndexDB.getChatData(roomId);
-  for(let elm of chatHistory){
-    if(elm.type===0){
+  let chatHistory = await getChatData(roomId);
+  for (let elm of chatHistory) {
+    if (elm.type === 0) {
       $chat.append(`
        <div class="pb-3 slide-top">
            <div class="text-start">
@@ -38,9 +52,8 @@ const _render = async () => {
            </div>
            <div class="message p-3 text-start">${elm.chat}</div>
        </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type===1){
+    if (elm.type === 1) {
       $chat.append(`
          <div class="pb-3 slide-top">
              <div class="text-start">
@@ -51,9 +64,8 @@ const _render = async () => {
              </div>
              <img width="60" height="60" src="${elm.chat}" />
          </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type===2){
+    if (elm.type === 2) {
       $chat.append(`
          <div class="pb-3 slide-top">
              <div class="text-end">
@@ -69,9 +81,8 @@ const _render = async () => {
              </div>
            </div>
          </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type===3){
+    if (elm.type === 3) {
       $chat.append(`
          <div class="pb-3">
              <div class="text-end">
@@ -85,9 +96,8 @@ const _render = async () => {
              </div>
            </div>
          </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     }
-    if(elm.type===4){
+    if (elm.type === 4) {
       $chat.append(`
          <div class="joined-info-box">
             <p class="text-center my-0">
@@ -101,7 +111,7 @@ const _render = async () => {
             </p>
          </div>`);
     }
-    if(elm.type===5){
+    if (elm.type === 5) {
       $chat.append(`
          <div class="joined-info-box">
             <p class="text-center my-0">
@@ -117,9 +127,13 @@ const _render = async () => {
     }
   }
 
-  let KLGHistory = await missionIndexDB.getKLGData(roomId);
-  for(let elm of KLGHistory){
-    $('#google-cards').prepend(`
+  $chat.animate({ scrollTop: $chat.prop("scrollHeight") });
+}
+
+async function _renderKLGraph() {
+  let KLGHistory = await getKLGData(roomId);
+  for (let elm of KLGHistory) {
+    $("#google-cards").prepend(`
       <div id="${elm.id}" class="card w-100 my-2">
           <div class="card-body">
               <h5 class="card-title">${elm.row.name}</h5>
@@ -128,13 +142,12 @@ const _render = async () => {
           </div>
       </div>
     `);
-    $('#google-kl-input').val("");
+    $("#google-kl-input").val("");
   }
+}
 
-};
-
-export const useRoom = () => {
-  _render();
+export const useRoom = async () => {
+  await _render();
   let flag = false;
   const $screen = $("#room-screen");
   const $google = $("#google-kl");
@@ -172,8 +185,8 @@ export const usernameModal = (success) => {
 
   $("#username-confirm-btn").click(() => {
     window.localStorage.setItem(
-        `${roomId}-username`,
-        $("#username-input").val(),
+      `${roomId}-username`,
+      $("#username-input").val(),
     );
     modal.hide();
     success($("#username-input").val());
@@ -188,12 +201,20 @@ export const useSocket = (name) => {
   const $chat = $("#chat-history");
   const socket = io();
 
-  socket.on("connect", () => {
+  socket.on("connect", async () => {
     socket.emit("create or join", roomId, name);
+    const { data } = await room.getRoomDetail(roomId);
+    await useCanvas(roomId, name, socket, data.imageUrl);
   });
 
   socket.on("joined", (username) => {
-    missionIndexDB.storeChatData({roomId:roomId,chat:'',username:username,type:4, date:useTimeFormat(new Date())});
+    storeChatData({
+      roomId: roomId,
+      chat: "",
+      username: username,
+      type: 4,
+      date: useTimeFormat(new Date()),
+    });
     $chat.append(`
        <div class="joined-info-box">
           <p class="text-center my-0">
@@ -209,7 +230,13 @@ export const useSocket = (name) => {
   });
 
   socket.on("left", (username) => {
-    missionIndexDB.storeChatData({roomId:roomId,chat:'',username:username,type:5, date:useTimeFormat(new Date())});
+    storeChatData({
+      roomId: roomId,
+      chat: "",
+      username: username,
+      type: 5,
+      date: useTimeFormat(new Date()),
+    });
     $chat.append(`
        <div class="joined-info-box">
           <p class="text-center my-0">
@@ -225,16 +252,24 @@ export const useSocket = (name) => {
   });
 
   socket.on("disconnect", () =>
-      socket.emit("leave", roomId, window.localStorage.getItem("username")),
+    socket.emit("leave", roomId, window.localStorage.getItem("username")),
   );
 
   socket.on("received_chat", (username, message) => {
-    missionIndexDB.storeChatData({roomId:roomId,chat:message,username:username,type:0, date:useTimeFormat(new Date())});
+    storeChatData({
+      roomId: roomId,
+      chat: message,
+      username: username,
+      type: 0,
+      date: useTimeFormat(new Date()),
+    });
     $chat.append(`
      <div class="pb-3 slide-top">
          <div class="text-start">
              <span class="text-purple fw-bold">${username}</span>
-             <span class="ps-2 text-black-50">${useTimeFormat(new Date())}</span>
+             <span class="ps-2 text-black-50">${useTimeFormat(
+               new Date(),
+             )}</span>
          </div>
          <div class="message p-3 text-start">${message}</div>
      </div>`);
@@ -242,7 +277,13 @@ export const useSocket = (name) => {
   });
 
   socket.on("received_emoji", (username, message) => {
-    missionIndexDB.storeChatData({roomId:roomId,chat:message,username:username,type:1, date:useTimeFormat(new Date())});
+    storeChatData({
+      roomId: roomId,
+      chat: message,
+      username: username,
+      type: 1,
+      date: useTimeFormat(new Date()),
+    });
     $chat.append(`
      <div class="pb-3 slide-top">
          <div class="text-start">
@@ -260,7 +301,13 @@ export const useSocket = (name) => {
   $("#send-msg-btn").click(() => {
     const message = $("#chat-input").val();
     const username = window.localStorage.getItem(`${roomId}-username`);
-    missionIndexDB.storeChatData({roomId:roomId,chat:message,username:username,type:2, date:useTimeFormat(new Date())});
+    storeChatData({
+      roomId: roomId,
+      chat: message,
+      username: username,
+      type: 2,
+      date: useTimeFormat(new Date()),
+    });
     if (message) {
       $chat.append(`
              <div class="pb-3 slide-top">
@@ -286,7 +333,13 @@ export const useSocket = (name) => {
   $("#emoji-box img").click(function () {
     const { src } = this;
     const username = window.localStorage.getItem(`${roomId}-username`);
-    missionIndexDB.storeChatData({roomId:roomId,chat:src,username:username,type:3, date:useTimeFormat(new Date())});
+    storeChatData({
+      roomId: roomId,
+      chat: src,
+      username: username,
+      type: 3,
+      date: useTimeFormat(new Date()),
+    });
     $chat.append(`
              <div class="pb-3">
                  <div class="text-end">

@@ -33,6 +33,11 @@ module.exports = (server) => {
         socket.broadcast.to(roomId).emit("received_emoji", name, message);
       });
 
+      socket.on('draw', (roomId, name, width, height, prevX, prevY, currX, currY, color, thickness) => {
+        socket.join(roomId);
+        socket.broadcast.to(roomId).emit('received_draw', roomId, name, width, height, prevX, prevY, currX, currY, color, thickness);
+      });
+
       socket.on("disconnect", () => {
         console.log(cache.get(socket.id));
         const { roomId, name } = cache.get(socket.id);

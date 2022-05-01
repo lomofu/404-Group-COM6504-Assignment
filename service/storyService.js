@@ -3,6 +3,8 @@
 const StorySchema = require("../model/story");
 const format = require("../util/dateformat");
 const logger = require("../util/logger");
+const Exception = require("../util/exception");
+const { BAD_REQUEST, ERROR_PAGE } = require("../util/http");
 
 module.exports = {
   async save({ title, author, description, image }) {
@@ -38,13 +40,19 @@ module.exports = {
       title: e.title,
     }));
   },
-  getStoryDetail(id) {
+  async getStoryDetail(id) {
     if (id) {
-      return StorySchema.findById(id);
+      try {
+        const data = await StorySchema.findById(id);
+        return data;
+      } catch (e) {
+        throw new Exception(ERROR_PAGE.code, "Story cannot be found");
+      }
     }
-    throw new Error({
-      code: 400,
-      message: "Id should not be empty",
-    });
+
+    throw new Exception(
+      BAD_REQUEST.code,
+      BAD_REQUEST.message("Id should not be empty"),
+    );
   },
 };

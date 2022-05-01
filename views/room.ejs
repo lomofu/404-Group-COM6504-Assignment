@@ -49,11 +49,12 @@
 </div>
 
 <!--main screen-->
-<main class="row gx-0 vh-100 w-100">
+<main class="row gx-0 vh-100 w-100 overflow-hidden">
     <div class="col-md-9 px-0">
         <div class="row mx-0 h-100 flex-nowrap">
             <!-- drawer screen-->
             <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
+                <canvas id="main-canvas" class="w-100 h-100"></canvas>
                 <button id="google-btn" class="btn mt-5" type="button">
                     Search
                 </button>
@@ -129,7 +130,6 @@
 </main>
 
 <%- include("public/script"); %>
-<script src="/js/database.js" type="module"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/public/googleKLGraph.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
@@ -137,13 +137,22 @@
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
     import {useRoom, usernameModal, useSocket} from "/js/view/room.js";
+    import { useDao } from "/js/db/dao.js";
 
     const roomId = window.location.pathname
         .split("/")
         .filter((e) => e !== "" && e !== "room");
 
+    const { KLGDao } = await useDao();
+    const {getKLGData, storeKLGData} = KLGDao;
+
+    window.myGoogleKLG = {
+        getKLGData,
+        storeKLGData
+    }
+
     if (roomId.length === 1) {
-        loadScript(jq, () => {
+        loadScript(jq, async () => {
             useRoom();
             usernameModal((username) => useSocket(username));
         })
