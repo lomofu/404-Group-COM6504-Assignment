@@ -54,6 +54,7 @@ module.exports = {
         name: result.name,
         description: result.description,
         createTime: result.createTime,
+        delete:result.delete,
         members: result.members,
       };
     }
