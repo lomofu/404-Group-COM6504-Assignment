@@ -47,22 +47,4 @@ body {
     color: purple;
 }
 
-.btn-purple {
-    background-color: purple;
-    border-color: purple;
-    color: white;
-}
-
-.btn-purple:hover {
-    background-color: white;
-    border-color: purple;
-    color: purple;
-}
-
-.btn-purple:focus {
-    background-color: purple;
-    border-color: purple;
-    color: white;
-    box-shadow: 0 0 0 0;
-}
 

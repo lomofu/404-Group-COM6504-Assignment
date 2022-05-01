@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('public/header'); %>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/createStory.css">
+    <title>Mission!</title>
+</head>
+<body>
+<%- include('public/nav'); %>
+<div style="height: 10vh"></div>
+<div id="create-story-card" class="w-100 flex-column d-flex justify-content-center align-items-center slide-top">
+    <h3 class="fredoka-semi text-center text-white p-2">Create Your Story Now!</h3>
+    <!--    <h4 class="card-subtitle mb-2 text-white-50 text-center">Post your mission here</h4>-->
+    <div class="card w-75 p-4">
+        <div class="card-body">
+            <div class="row align-items-center justify-content-center">
+                <form id="story-form" class="needs-validation col-11 col-lg-8" >
+                    <div class="mb-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <label for="story-title-input" class="form-label">Title</label>
+                            <div id="story-title-limit"></div>
+                        </div>
+                        <input type="text" class="form-control" id="story-title-input"
+                               placeholder="Story Title"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <label for="story-author-input" class="form-label">Author</label>
+                            <div id="story-author-limit"></div>
+                        </div>
+                        <input type="text" class="form-control" id="story-author-input"
+                               placeholder="Author Name"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <label for="story-image-input" class="form-label">Image</label>
+                            <div id="story-image-limit"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <select class="form-select" id="story-image-select">
+                                    <option selected value="1">File</option>
+                                    <option value="2">URL</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="story-image-input"
+                                       placeholder="Image URL" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <label for="story-desc-input" class="form-label">Description</label>
+                            <div id="story-desc-limit"></div>
+                        </div>
+                        <textarea type="text" class="form-control" id="story-desc-input"
+                                  placeholder="Story Description" style="height: 100px;resize: none"></textarea>
+                    </div>
+                </form>
+                <img class="col-4 img-bg d-none d-lg-flex" src="/img/story-intro-bg.png" alt="background">
+            </div>
+            <div class="pt-5 pb-3 d-flex justify-content-around align-items-center">
+            <button id="preview-btn" type="button" class="btn btn-primary btn-purple">Preview</button>
+            <button type="button" class="btn btn-secondary" onclick="{window.location.href='/'}">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="preview-story-card" class="d-none w-100 flex-column d-flex justify-content-center align-items-center slide-top">
+    <h3 class="fredoka-semi text-center text-white p-2">Story Preview</h3>
+    <div class="card w-75 px-3">
+        <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-6 p-3">
+                        <img id="preview-story-img"
+                             src="/img/default-img.jpg"
+                             height="400"
+                             class="card-img-top shadow-sm">
+                    </div>
+                    <div class="col-12 col-lg-6 pt-3">
+                        <div id="preview-story-title" class="fs-2 card-title">Title</div>
+                        <div id="preview-story-author" class="fs-4">@author</div>
+                        <p id="preview-story-desc" class="fs-5 card-text">
+                            description
+                        </p>
+                    </div>
+            </div>
+
+            <div class="pt-5 pb-3 d-flex justify-content-around align-items-center">
+                <button id="create-btn" class="btn btn-primary btn-purple px-4">Create</button>
+                <button id="back-btn" class="btn btn-secondary px-4">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="create-success-card" class="d-none w-100 flex-column d-flex justify-content-center align-items-center slide-top">
+    <div class="card w-75 px-3">
+        <div class="card-body">
+            <h3 class="fredoka-semi text-center text-black p-2">Create Successful!</h3>
+            <div class="pt-5 pb-3 d-flex justify-content-around align-items-center">
+                <button id="go-list-btn" class="btn btn-primary btn-purple px-4">Go to story list</button>
+                <button id="go-story-btn" class="btn btn-primary btn-purple px-4">Go to story detail</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("public/script"); %>
+<script type="module">
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useNav} from "/js/public/nav.js";
+    import {eventListener} from "/js/view/createStory.js";
+
+    loadScript(jq, () => {
+        useNav();
+        eventListener();
+    })
+</script>
+</body>
+
+</html>

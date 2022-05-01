@@ -35,7 +35,7 @@ module.exports = (server) => {
 
       socket.on('draw', (roomId, name, width, height, prevX, prevY, currX, currY, color, thickness) => {
         socket.join(roomId);
-        io.sockets.to(roomId).emit('draw', roomId, name, width, height, prevX, prevY, currX, currY, color, thickness);
+        socket.broadcast.to(roomId).emit('received_draw', roomId, name, width, height, prevX, prevY, currX, currY, color, thickness);
       });
 
       socket.on("disconnect", () => {
