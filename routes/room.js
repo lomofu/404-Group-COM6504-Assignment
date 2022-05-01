@@ -18,8 +18,7 @@ router.get("/list", async (req, res) => {
     const list = await service.getRoomList(storyId);
     res.json(list);
   } catch (e) {
-    console.log(e);
-    res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
+      next(e);
   }
 });
 
@@ -48,11 +47,7 @@ router.post("/", async (req, res) => {
 
     res.json(id);
   } catch (e) {
-    res
-      .status(SERVER_ERROR.code)
-      .send(
-        SERVER_ERROR.message("Server error, insert failed! Please try again!"),
-      );
+      next(e);
   }
 });
 

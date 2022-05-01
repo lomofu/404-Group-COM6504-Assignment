@@ -49,14 +49,14 @@
             }
           },
           "400": {
-            "description": "Missing parameters",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss the title value"
+                  "message": "Bad Request"
                 }
               }
             }
@@ -69,7 +69,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Server error, insert failed! Please try again!"
+                  "message": "Server error"
                 }
               }
             }
@@ -115,14 +115,14 @@
             }
           },
           "400": {
-            "description": "Missing parameters",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss values"
+                  "message": "Bad Request"
                 }
               }
             }
@@ -135,7 +135,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Server error, insert failed! Please try again!"
+                  "message": "Server error"
                 }
               }
             }
@@ -203,14 +203,14 @@
             }
           },
           "400": {
-            "description": "Missing parameters",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss value"
+                  "message": "Bad Request"
                 }
               }
             }
@@ -223,7 +223,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Server error, insert failed! Please try again!"
+                  "message": "Server error"
                 }
               }
             }
@@ -269,14 +269,14 @@
             }
           },
           "400": {
-            "description": "Missing parameters",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss values"
+                  "message": "Bad Request"
                 }
               }
             }
@@ -289,7 +289,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Server error, insert failed! Please try again!"
+                  "message": "Server error"
                 }
               }
             }
