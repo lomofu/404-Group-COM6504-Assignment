@@ -32,7 +32,7 @@ const widgeInit = () => {
  * @param event the Google Graph widget event {@link https://developers.google.com/knowledge-graph/how-tos/search-widget}
  */
 const selectItem = async (event) => {
-  const socket = io();
+  let socket = window.mySocket;
   let row = event.row;
   let KLGHistory = await myGoogleKLG.getKLGData(roomId);
   let cardId = 0;

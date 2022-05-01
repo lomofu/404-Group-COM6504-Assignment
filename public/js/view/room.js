@@ -300,7 +300,7 @@ export const useSocket = (name) => {
   socket.on("received_KLGraph", async (username, row) => {
     await myGoogleKLG.storeKLGData({ roomId: roomId, row: row });
     let KLGHistory = await myGoogleKLG.getKLGData(roomId);
-    let cardId = KLGHistory.length + 1;
+    let cardId = KLGHistory.length;
     $("#google-cards").prepend(`
       <div id="${cardId}" class="card w-100 my-2">
           <div class="card-body">
@@ -312,6 +312,8 @@ export const useSocket = (name) => {
     `);
     $("#google-kl-input").val("");
   });
+
+  window.mySocket = socket;
 
   // chat send message event
   $("#send-msg-btn").click(() => {
