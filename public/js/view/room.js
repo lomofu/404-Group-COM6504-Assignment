@@ -141,13 +141,16 @@ async function _renderKLGraph() {
 
 const _renderRoomDetail = (data) => {
     console.log(data);
-    const {roomName, roomDescription, storyTitle} = data;
+    const {roomName, roomDescription, roomCreateTime, storyTitle} = data;
     $('#room-detail-title').text(roomName);
-    $('#room-detail-desc').text(roomDescription ?? "-");
+    $('#room-detail-time').text(roomCreateTime);
+    $('#story-detail-title').text(storyTitle);
+    if(roomDescription===""){
+        $('#room-detail-desc').text("(Null)").css('color','gray').css('font-size','1rem');
+    }else {
+        $('#room-detail-desc').text(roomDescription).css('color','black').css('font-size','1.25rem');
+    }
     $('#leave-title').text("Room Name: " + roomName);
-    $('#leave-room-btn').click(() => {
-
-    });
 };
 
 const _useLeaveModal = () => {
