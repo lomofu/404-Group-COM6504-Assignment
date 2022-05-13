@@ -88,17 +88,16 @@ const _useGrid = (list) => {
     list.forEach(({id, title, image, author, description, createTime, rooms}) => {
         $gridContainer.append(`<div class="col-xl-3 col-lg-4 col-md-5 mt-4">
                         <div id="${id}" class="card mycard border-0 shadow-sm">
-                            <img src="${image}" class="card-img-top">
+                            <img src="${image}" class="card-img-top" height="200">
                             <div class="card-body">
                                 <div class="card-title">
                                     <h5 class="grid-title mb-0">${title}</h5>
-                                    
                                 </div>
                                 <h6>@${author}</h6>
                                 <p class="grid-desc card-text">${description}</p>
                             </div>
-                            <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center">
-                                <p>${createTime}</p>
+                            <div class="card-footer bg-transparent border-0 pb-3 d-flex justify-content-between align-items-center">
+                                <div>${createTime}</div>
                                 <div class="d-flex align-items-center">
                                         <i class="bi bi-chat-left-dots"></i>
                                         <span class="ms-2">Rooms</span>
