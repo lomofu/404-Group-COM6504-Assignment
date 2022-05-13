@@ -8,8 +8,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/roomService");
-const storyService =
-require("../service/storyService");
+const storyService = require("../service/storyService");
 const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
 
 // get room list
@@ -19,8 +18,7 @@ router.get("/list", async (req, res) => {
     const list = await service.getRoomList(storyId);
     res.json(list);
   } catch (e) {
-    console.log(e);
-    res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
+      next(e);
   }
 });
 
@@ -49,27 +47,12 @@ router.post("/", async (req, res) => {
 
     res.json(id);
   } catch (e) {
-    res
-      .status(SERVER_ERROR.code)
-      .send(
-        SERVER_ERROR.message("Server error, insert failed! Please try again!"),
-      );
+      next(e);
   }
 });
 
 // get room details
 router.get("/", async (req, res, next) => {
-  const { id } = req.query;
-
-  try {
-    const details = await service.getRoomDetail(id);
-    res.json(details);
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.get("/detail", async (req, res, next) => {
   const { id } = req.query;
 
   try {
@@ -82,11 +65,13 @@ router.get("/detail", async (req, res, next) => {
     res.json({
       roomId: id,
       roomName: room.name,
+      roomDescription: room.description,
       roomCreateTime: room.createTime,
+      roomDelete: room.delete,
+      roomMembers: room.members,
       storyId: story._id,
       storyTitle: story.title,
-      imageUrl:story.image
-
+      imageUrl: story.image,
     });
   } catch (e) {
     next(e);

@@ -22,9 +22,7 @@
   "paths": {
     "/api/story": {
       "post": {
-        "tags": [
-          "story"
-        ],
+        "tags": ["story"],
         "description": "create a new story",
         "requestBody": {
           "content": {
@@ -51,14 +49,14 @@
             }
           },
           "400": {
-            "description": "Missing parameters",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss the title value"
+                  "message": "Bad Request"
                 }
               }
             }
@@ -71,7 +69,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Server error, insert failed! Please try again!"
+                  "message": "Server error"
                 }
               }
             }
@@ -79,19 +77,21 @@
         }
       },
       "get": {
-        "tags": [
-          "story"
-        ],
+        "tags": ["story"],
         "description": "get story details by id",
-        "parameters": [{
-          "name": "id",
-          "in": "query",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/_id"
-          },
-          "allowEmptyValue": true
-        }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "story id",
+              "example": "62631d670c7594c8a76559a6"
+            },
+            "allowEmptyValue": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully get story details",
@@ -115,14 +115,14 @@
             }
           },
           "400": {
-            "description": "Missing parameters",
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Miss values"
+                  "message": "Bad Request"
                 }
               }
             }
@@ -135,7 +135,7 @@
                   "$ref": "#/components/schemas/Error"
                 },
                 "example": {
-                  "message": "Server error, insert failed! Please try again!"
+                  "message": "Server error"
                 }
               }
             }
@@ -145,9 +145,7 @@
     },
     "/api/story/list": {
       "get": {
-        "tags": [
-          "story"
-        ],
+        "tags": ["story"],
         "description": "get story list",
         "responses": {
           "200": {
@@ -175,75 +173,174 @@
           }
         }
       }
+    },
+    "/api/room": {
+      "post": {
+        "tags": ["room"],
+        "description": "create a new room",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomUpload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully create new room",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                },
+                "example": {
+                  "id": "626ea4478e13852ef2d5403f"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Bad Request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["room"],
+        "description": "get room details by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "room id",
+              "example": "626ea4478e13852ef2d5403f"
+            },
+            "allowEmptyValue": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get room details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room"
+                },
+                "example": {
+                  "roomId": "626ea4478e13852ef2d5403f",
+                  "roomName": "Test Room",
+                  "roomDescription": "For test only.",
+                  "roomCreateTime": "1/05/2022 16:16",
+                  "roomDelete": false,
+                  "roomMembers": 0,
+                  "storyId": "626ea008483d2eb1e44c3875",
+                  "storyTitle": "Find clues in Sheffield Library",
+                  "imageUrl": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Bad Request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "_id": {
-        "type": "string",
-        "description": "story id",
-        "example": "62631d670c7594c8a76559a6"
-      },
-      "title": {
-        "type": "string",
-        "description": "story title",
-        "example": "Find clues in Sheffield Library"
-      },
-      "author": {
-        "type": "string",
-        "example": "Luna"
-      },
-      "description": {
-        "type": "string",
-        "description": "story description",
-        "example": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
-      },
-      "image": {
-        "type": "string",
-        "description": "image url or uploaded",
-        "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
-      },
-      "createTime": {
-        "type": "string",
-        "description": "story create time",
-        "example": "22/04/2022 22:25"
-      },
-      "delete": {
-        "type": "boolean",
-        "description": "story delete state",
-        "example": "false"
-      },
-      "rooms": {
-        "type": "number",
-        "description": "story rooms",
-        "example": "0"
-      },
       "Story": {
         "type": "object",
         "properties": {
           "_id": {
-            "$ref": "#/components/schemas/_id"
+            "type": "string",
+            "description": "story id",
+            "example": "62631d670c7594c8a76559a6"
           },
           "title": {
-            "$ref": "#/components/schemas/title"
+            "type": "string",
+            "description": "story title",
+            "example": "Find clues in Sheffield Library"
           },
           "author": {
-            "$ref": "#/components/schemas/author"
+            "type": "string",
+            "example": "Luna"
           },
           "description": {
-            "$ref": "#/components/schemas/description"
+            "type": "string",
+            "description": "story description",
+            "example": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
           },
           "image": {
-            "$ref": "#/components/schemas/image"
+            "type": "string",
+            "description": "image url or uploaded",
+            "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
           },
           "createTime": {
-            "$ref": "#/components/schemas/createTime"
+            "type": "string",
+            "description": "story create time",
+            "example": "22/04/2022 22:25"
           },
           "delete": {
-            "$ref": "#/components/schemas/delete"
+            "type": "boolean",
+            "description": "story delete state",
+            "example": "false"
           },
           "rooms": {
-            "$ref": "#/components/schemas/rooms"
+            "type": "number",
+            "description": "story rooms",
+            "example": "0"
           }
         }
       },
@@ -251,16 +348,23 @@
         "type": "object",
         "properties": {
           "title": {
-            "$ref": "#/components/schemas/title"
+            "type": "string",
+            "description": "story title",
+            "example": "Find clues in Sheffield Library"
           },
           "author": {
-            "$ref": "#/components/schemas/author"
+            "type": "string",
+            "example": "Luna"
           },
           "description": {
-            "$ref": "#/components/schemas/description"
+            "type": "string",
+            "description": "story description",
+            "example": "This is Diamond library at the University of Sheffield. I hid a clue under one of the desks in the library. Please find it."
           },
           "image": {
-            "$ref": "#/components/schemas/image"
+            "type": "string",
+            "description": "image url or uploaded",
+            "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
           }
         }
       },
@@ -271,6 +375,85 @@
           "properties": {
             "story": {
               "$ref": "#/components/schemas/Story"
+            }
+          }
+        }
+      },
+      "Room": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "string",
+            "description": "room id",
+            "example": "626ea4478e13852ef2d5403f"
+          },
+          "storyId": {
+            "type": "string",
+            "description": "story id",
+            "example": "626ea008483d2eb1e44c3875"
+          },
+          "roomName": {
+            "type": "string",
+            "example": "Room1"
+          },
+          "roomDescription": {
+            "type": "string",
+            "description": "room description",
+            "example": "This is a room related to a story."
+          },
+          "roomCreateTime": {
+            "type": "string",
+            "description": "room create time",
+            "example": "22/04/2022 22:25"
+          },
+          "roomDelete": {
+            "type": "boolean",
+            "description": "room delete state",
+            "example": "false"
+          },
+          "roomMembers": {
+            "type": "number",
+            "description": "room members",
+            "example": "0"
+          },
+          "storyTitle": {
+            "type": "string",
+            "description": "story title",
+            "example": "Find clues in Sheffield Library"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "story image url",
+            "example": "https://a0.muscache.com/im/pictures/09efb5fc-7bf1-44c0-b0ef-241a38533e67.jpg?im_w=1680"
+          }
+        }
+      },
+      "RoomUpload": {
+        "type": "object",
+        "properties": {
+          "storyId": {
+            "type": "string",
+            "description": "story id",
+            "example": "626ea008483d2eb1e44c3875"
+          },
+          "name": {
+            "type": "string",
+            "example": "Room1"
+          },
+          "description": {
+            "type": "string",
+            "description": "room description",
+            "example": "This is a room related to a story."
+          }
+        }
+      },
+      "RoomList": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "story": {
+              "$ref": "#/components/schemas/Room"
             }
           }
         }

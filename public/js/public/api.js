@@ -43,7 +43,7 @@ export const room = {
     });
   },
   getRoomDetail(id) {
-    return http.get("api/room/detail", {
+    return http.get("api/room", {
       params: {
         id,
       },
