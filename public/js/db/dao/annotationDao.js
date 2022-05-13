@@ -29,6 +29,18 @@ class annotationDao{
         }
     }
 
+    async deleteAnnotationData(roomId) {
+        try {
+            console.log("Deleting" + roomId);
+            let tx = await db.transaction(ANNOTATION_STORE_NAME, "readwrite");
+            let store = await tx.objectStore(ANNOTATION_STORE_NAME);
+            await store.clear(roomId);
+            await tx.complete;
+        } catch (error) {
+            console.log("error: I could not delete the element. Reason: " + error);
+        }
+    }
+
 }
 
 export default new annotationDao(db);

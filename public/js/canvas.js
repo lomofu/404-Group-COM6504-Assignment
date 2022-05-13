@@ -5,7 +5,7 @@
  */
 import { useDao } from "/js/db/dao.js";
 const { annotationDao } = await useDao();
-const { storeAnnotationData, getAnnotationData } = annotationDao;
+const { storeAnnotationData, getAnnotationData, deleteAnnotationData } = annotationDao;
 
 const lineOption = {
   color: "red",
@@ -27,14 +27,29 @@ export const useCanvas = async (roomId, username, sct, imageURL) => {
   socket = sct;
   _initImage(imageURL);
   _initEvents(room, userId, socket, imageURL);
-  $('.canvas-clear').on('click', function (e) {
+  $('.canvas-clear').on('click', async function (e) {
     let c_width = canvas.width;
     let c_height = canvas.height;
     ctx.clearRect(0, 0, c_width, c_height);
-    // _initImage(imageURL);
-    // _initEvents(room, userId, socket, imageURL);
-    // The original picture will be delete with the annotation, so that the image need to be set again
+    await deleteAnnotationData(roomId)
+    socket.emit('clear', room, userId, c_width, c_height);
+    _initImage(imageURL);
+    _initEvents(room, userId, socket, imageURL);
   });
+
+  // socket.on(
+  //     "received_clear",
+  //     async function (
+  //         room,
+  //         userId,
+  //         width,
+  //         height,
+  //     ) {
+  //       let ctx = canvas[0].getContext("2d");
+  //       ctx.clearRect(0, 0, width, height);
+  //       await deleteAnnotationData(roomId);
+  //     },
+  // );
 };
 
 const _initImage = (imageURL) => {
