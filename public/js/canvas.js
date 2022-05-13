@@ -27,29 +27,29 @@ export const useCanvas = async (roomId, username, sct, imageURL) => {
   socket = sct;
   _initImage(imageURL);
   _initEvents(room, userId, socket, imageURL);
+
+
   $('.canvas-clear').on('click', async function (e) {
-    let c_width = canvas.width;
-    let c_height = canvas.height;
-    ctx.clearRect(0, 0, c_width, c_height);
-    await deleteAnnotationData(roomId)
-    socket.emit('clear', room, userId, c_width, c_height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    socket.emit('clear', room, userId, canvas.width, canvas.height);
+    await deleteAnnotationData(room+userId)
     _initImage(imageURL);
-    _initEvents(room, userId, socket, imageURL);
   });
 
-  // socket.on(
-  //     "received_clear",
-  //     async function (
-  //         room,
-  //         userId,
-  //         width,
-  //         height,
-  //     ) {
-  //       let ctx = canvas[0].getContext("2d");
-  //       ctx.clearRect(0, 0, width, height);
-  //       await deleteAnnotationData(roomId);
-  //     },
-  // );
+  socket.on(
+      "received_clear",
+      function (
+          room,
+          userId,
+          width,
+          height,
+      ) {
+        let ctx = canvas[0].getContext("2d");
+        ctx.clearRect(0, 0, width, height);
+        deleteAnnotationData(room+userId);
+        _initImage(imageURL);
+      },
+  );
 };
 
 const _initImage = (imageURL) => {
@@ -129,7 +129,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
           lineOption.thickness,
         );
         storeAnnotationData({
-          roomId: room,
+          roomId: room+userId,
           url: imageURL,
           canvasWidth: canvas.width,
           canvasHeight: canvas.height,
@@ -159,7 +159,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
       thickness_,
     ) {
       storeAnnotationData({
-        roomId: room,
+        roomId: room+userId,
         url: imageURL,
         canvasWidth: canvas.width,
         canvasHeight: canvas.height,
@@ -195,7 +195,7 @@ function getMousePos(canvas, evt) {
 }
 
 const _initDraws = async () => {
-  let annotationHistory = await getAnnotationData(roomId);
+  let annotationHistory = await getAnnotationData(roomId+userId);
 
   for (let elm of annotationHistory) {
     _draw(

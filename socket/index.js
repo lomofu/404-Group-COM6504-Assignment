@@ -43,10 +43,10 @@ module.exports = (server) => {
         socket.broadcast.to(roomId).emit('received_draw', roomId, name, width, height, prevX, prevY, currX, currY, color, thickness);
       });
 
-      // socket.on('clear', (roomId, name, width, height) => {
-      //   socket.join(roomId);
-      //   socket.broadcast.to(roomId).emit('received_clear', roomId, name, width, height);
-      // });
+      socket.on('clear', (roomId, name, width, height) => {
+        socket.join(roomId);
+        socket.broadcast.to(roomId).emit('received_clear', roomId, name, width, height);
+      });
 
 
 
