@@ -1,6 +1,6 @@
 /**
  * @format
- * @author lomofu
+ * @author lomofu, Lixuan Lou
  * @desc
  * @create 18/Mar/2022 12:50
  */
@@ -42,15 +42,15 @@ const _useList = (list) => {
 
     list.forEach(({id, title, image, author, description, createTime, rooms}) => {
         $listContainer.append(`
-             <li id="${id}" class="list-group-item d-flex p-3 shadow-sm">
+             <li id="${id}" class="list-group-item d-flex p-3 mb-3 shadow-sm">
                 <img src="${image}"
-                     width="150"
-                     height="150"
+                     width="400"
+                     height="200"
                      class="rounded">
                 <div class="ms-3 d-flex flex-column justify-content-between w-100">
                     <div class="d-flex justify-content-between">
-                        <h1>${title}</h1>
-                        <h3>@${author}</h3>
+                        <h3>${title}</h3>
+                        <h5>@${author}</h5>
                     </div>
                     <p class="mb-0">${description}</p>
                     <div class="mt-2 d-flex justify-content-between align-items-center">
