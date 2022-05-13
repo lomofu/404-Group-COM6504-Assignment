@@ -27,6 +27,14 @@ export const useCanvas = async (roomId, username, sct, imageURL) => {
   socket = sct;
   _initImage(imageURL);
   _initEvents(room, userId, socket, imageURL);
+  $('.canvas-clear').on('click', function (e) {
+    let c_width = canvas.width;
+    let c_height = canvas.height;
+    ctx.clearRect(0, 0, c_width, c_height);
+    // _initImage(imageURL);
+    // _initEvents(room, userId, socket, imageURL);
+    // The original picture will be delete with the annotation, so that the image need to be set again
+  });
 };
 
 const _initImage = (imageURL) => {
