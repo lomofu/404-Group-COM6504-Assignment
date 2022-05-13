@@ -34,7 +34,19 @@
     background: var(--primary);
     color: white;
     border-radius: 2rem 0 0 2rem;
-    z-index: 10;
+    z-index: 100;
+}
+
+#clear-btn{
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 80px;
+    height: 50px;
+    background: indianred;
+    color: white;
+    border-radius: 2rem 0 0 2rem;
+    z-index: 100;
 }
 
 .kge-search-picker {
