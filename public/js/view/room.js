@@ -139,6 +139,22 @@ async function _renderKLGraph() {
     }
 }
 
+const _renderRoomDetail = (data) => {
+    console.log(data);
+    const {roomName, roomDescription, storyTitle} = data;
+    $('#room-detail-title').text(roomName);
+    $('#room-detail-desc').text(roomDescription ?? "-");
+    $('#leave-title').text("Room Name: " + roomName);
+    $('#leave-room-btn').click(() => {
+
+    });
+};
+
+const _useLeaveModal = () => {
+    const leaveModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("leaveModal"));
+
+}
+
 export const useRoom = async () => {
     await _render();
     let flag = false;
@@ -195,6 +211,7 @@ export const useSocket = (name) => {
         socket.emit("create or join", roomId, name);
         const {data} = await room.getRoomDetail(roomId);
         await useCanvas(roomId, name, socket, data.imageUrl);
+        _renderRoomDetail(data);
     });
 
     socket.on("joined", (username) => {

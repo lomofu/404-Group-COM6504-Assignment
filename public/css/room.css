@@ -115,7 +115,7 @@ i {
     background: var(--primary);
     color: white;
     border-radius: 0 2rem 2rem 0;
-    z-index: 9999;
+    z-index: 100;
 }
 
 #room-btn:hover,
