@@ -50,13 +50,16 @@
 
 <!--main screen-->
 <main class="row gx-0 vh-100 w-100 overflow-hidden">
-    <div class="col-md-9 px-0">
+    <div class="col-md-9 px-0 vh-100">
         <div class="row mx-0 h-100 flex-nowrap">
             <!-- drawer screen-->
             <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
                 <canvas id="main-canvas" class="w-100 h-100"></canvas>
                 <button id="google-btn" class="btn mt-5" type="button">
                     Search
+                </button>
+                <button id="clear-btn" class="btn mt-5" type="button">
+                    Clear
                 </button>
             </div>
 
@@ -73,7 +76,7 @@
     </div>
 
     <!-- chat and members screen-->
-    <div class="col-md-3 shadow-lg d-flex flex-column justify-content-between">
+    <div class="col-md-3 shadow-lg vh-100 d-flex flex-column justify-content-between">
         <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
             <!-- chat screen-->
             <div class="h-100 d-flex flex-column justify-content-between tab-pane fade show active py-3" id="nav-chat"
