@@ -11,12 +11,23 @@ export const story = {
     return http.get("api/story/list");
   },
   createStory({ title, author, description, image }) {
-    return http.post("api/story", {
-      title,
-      author,
-      description,
-      image,
-    });
+    return http.post(
+      "api/story",
+      {
+        title,
+        author,
+        description,
+        image,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        maxContentLength: 100000000,
+        maxBodyLength: 1000000000,
+      },
+    );
   },
   getStoryDetail(id) {
     return http.get("api/story", {
@@ -29,17 +40,17 @@ export const story = {
 
 export const room = {
   getRoomList(storyId) {
-    return http.get("api/room/list",{
-      params:{
-        storyId
-      }
+    return http.get("api/room/list", {
+      params: {
+        storyId,
+      },
     });
   },
   createRoom({ storyId, name, description }) {
     return http.post("api/room", {
       storyId,
       name,
-      description
+      description,
     });
   },
   getRoomDetail(id) {

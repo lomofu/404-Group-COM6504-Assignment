@@ -8,6 +8,17 @@ import { story } from "/js/public/api.js";
 
 export const eventListener = () => {
   _validSize();
+  $("#story-image-select").on("change", function () {
+    const selectVal = $("#story-image-select").val();
+    if (selectVal === "2") {
+      $("#story-image-url-input").removeClass("d-none");
+      $("#story-image-file-input").addClass("d-none");
+    }
+    if (selectVal === "1") {
+      $("#story-image-url-input").addClass("d-none");
+      $("#story-image-file-input").removeClass("d-none");
+    }
+  });
   $("#preview-btn").click(async () => {
     const flag = await _validPreview();
     if (flag) {
@@ -71,67 +82,126 @@ const _validSize = () => {
 
 const _validPreview = async () => {
   let tag = true;
+  const title = $("#story-title-input").val();
+  const author = $("#story-author-input").val();
+  const desc = $("#story-desc-input").val();
 
-  if ($("#story-title-input").val() === "") {
+  if (title === "") {
     $("#story-title-limit").text("Empty!").css("color", "red");
     tag = false;
   }
-  if ($("#story-title-input").val().length > 40) {
+  if (title.length > 40) {
     tag = false;
   }
 
-  if ($("#story-author-input").val() === "") {
+  if (author === "") {
     $("#story-author-limit").text("Empty!").css("color", "red");
     tag = false;
   }
-  if ($("#story-author-input").val().length > 20) {
+  if (author.length > 20) {
     tag = false;
   }
 
-  if ($("#story-desc-input").val() === "") {
+  if (desc === "") {
     $("#story-desc-limit").text("Empty!").css("color", "red");
     tag = false;
   }
-  if ($("#story-desc-input").val().length > 200) {
+  if (desc.length > 200) {
     tag = false;
   }
 
-  try {
-    await _checkImage($("#story-image-input").val());
-    return tag;
-  } catch (e) {
-    $("#story-image-limit").text("Invalid Link").css("color", "red");
-    tag = false;
+  const selectVal = $("#story-image-select").val();
+  if (selectVal === "1") {
+    const file = document.querySelector("input[type=file]").files[0];
+    try {
+      const fileBase64 = await _getBase64(file);
+      if (_validFileType(fileBase64)) {
+        return tag;
+      } else {
+        $("#story-image-limit").text("Invalid Image File").css("color", "red");
+        tag = false;
+      }
+    } catch (e) {
+      console.log(e);
+      $("#story-image-limit").text("Invalid Image File").css("color", "red");
+      tag = false;
+    }
+  }
+  if (selectVal === "2") {
+    try {
+      await _checkImage($("#story-image-url-input").val());
+      return tag;
+    } catch (e) {
+      $("#story-image-limit").text("Invalid Link").css("color", "red");
+      tag = false;
+    }
   }
 };
 
-const _previewStory = () => {
+const _previewStory = async () => {
   $("#preview-story-title").text($("#story-title-input").val());
   $("#preview-story-author").text("@" + $("#story-author-input").val());
   $("#preview-story-desc").text($("#story-desc-input").val());
-  $("#preview-story-img").attr("src", $("#story-image-input").val());
+  const img = await _getImage();
+  $("#preview-story-img").attr("src", img);
+};
+
+const _getImage = async () => {
+  const selectVal = $("#story-image-select").val();
+  if (selectVal === "1") {
+    const file = document.querySelector("input[type=file]").files[0];
+    const file64 = await _getBase64(file);
+    console.log(file64);
+    return file64;
+  }
+  if (selectVal === "2") {
+    console.log($("#story-image-url-input").val());
+    return $("#story-image-url-input").val();
+  }
+};
+
+const _getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
+const _validFileType = (fileBase64) => {
+  if (fileBase64.substr(5, 6) === "image/") {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const _createStory = async () => {
   const title = $("#story-title-input").val();
   const author = $("#story-author-input").val();
-  const image = $("#story-image-input").val();
+  const image = $("#preview-story-img").attr("src");
   const description = $("#story-desc-input").val();
-  const { data } = await story.createStory({
-    title,
-    author,
-    description,
-    image,
-  });
-  if (data) {
-    $("#preview-story-card").addClass("d-none");
-    $("#create-success-card").removeClass("d-none");
-    $("#go-list-btn").click(() => {
-      window.location.href = "/story";
+  try {
+    const { data } = await story.createStory({
+      title,
+      author,
+      description,
+      image,
     });
-    $("#go-story-btn").click(() => {
-      window.location.href = "/storyDetail/" + data;
-    });
+
+    if (data) {
+      $("#preview-story-card").addClass("d-none");
+      $("#create-success-card").removeClass("d-none");
+      $("#go-list-btn").click(() => {
+        window.location.href = "/story";
+      });
+      $("#go-story-btn").click(() => {
+        window.location.href = "/storyDetail/" + data;
+      });
+    }
+  } catch (e) {
+      console.error(e);
   }
 };
 

@@ -22,7 +22,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    debugger;
     if (response.status === 200) {
       return Promise.resolve(response);
     }
