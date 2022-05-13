@@ -9,7 +9,8 @@
 </head>
 <body>
 
-<div class="modal modal fade" id="usernameModal" data-bs-backdrop="static" tabindex="-1"
+<!--User Name Modal-->
+<div class="modal fade" id="usernameModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -31,6 +32,25 @@
     </div>
 </div>
 
+<!--Leave Modal-->
+<div class="modal fade" id="leaveModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+     aria-labelledby="leave" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>leave the room?</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                <img class="w-100" src="/img/exit.jpg">
+                <button type="button" class="btn btn-primary" id="leave-close-btn" onclick="window.close()">
+                    Close the Page
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- room button-->
 <button id="room-btn" class="btn fixed-top mt-5 room-btn" type="button" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasLeft">
@@ -43,24 +63,33 @@
 
 <!--room detail and leave button-->
 <div class="offcanvas offcanvas-start ps-5" tabindex="-1" id="offcanvasLeft">
-    <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">Room Details</h5>
-    </div>
-    <div class="offcanvas-body pt-5">
-        <p>You are in Room 1004</p>
-        <i class="bi bi-box-arrow-left" type="button"></i>
+
+    <div class="offcanvas-body">
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50">Room Name</div>
+            <h5 id="room-detail-title"></h5>
+        </div>
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50">Room Description</div>
+            <h5 id="room-detail-desc"></h5>
+        </div>
+        <i id="leave-room-btn" class="bi bi-box-arrow-left" type="button"  data-bs-toggle="modal"
+           data-bs-target="#leaveModal"></i>
     </div>
 </div>
 
 <!--main screen-->
 <main class="row gx-0 vh-100 w-100 overflow-hidden">
-    <div class="col-md-9 px-0">
+    <div class="col-md-9 px-0 vh-100">
         <div class="row mx-0 h-100 flex-nowrap">
             <!-- drawer screen-->
             <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
                 <canvas id="main-canvas" class="w-100 h-100"></canvas>
                 <button id="google-btn" class="btn mt-5" type="button">
                     Search
+                </button>
+                <button id="clear-canvas-btn" class="btn mt-5" type="button">
+                    Clear
                 </button>
             </div>
 
@@ -77,7 +106,7 @@
     </div>
 
     <!-- chat and members screen-->
-    <div class="col-md-3 shadow-lg d-flex flex-column justify-content-between">
+    <div class="col-md-3 shadow-lg vh-100 d-flex flex-column justify-content-between">
         <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
             <!-- chat screen-->
             <div class="h-100 d-flex flex-column justify-content-between tab-pane fade show active py-3" id="nav-chat"
@@ -94,7 +123,7 @@
 
                     <div class="btn-group dropup">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                                aria-expanded="false" id="send-emoji-btn">
                             <i class="bi bi-emoji-laughing"></i>
                         </button>
                         <ul class="dropdown-menu">
@@ -141,13 +170,13 @@
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
     import {useRoom, usernameModal, useSocket} from "/js/view/room.js";
-    import { useDao } from "/js/db/dao.js";
+    import {useDao} from "/js/db/dao.js";
 
     const roomId = window.location.pathname
         .split("/")
         .filter((e) => e !== "" && e !== "room");
 
-    const { KLGDao } = await useDao();
+    const {KLGDao} = await useDao();
     const {getKLGData, storeKLGData} = KLGDao;
 
     window.myGoogleKLG = {

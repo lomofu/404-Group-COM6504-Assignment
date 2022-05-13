@@ -26,30 +26,12 @@
     overflow: hidden;
 }
 
-#google-btn {
-    position: absolute;
-    right: 0;
-    width: 80px;
-    height: 50px;
-    background: var(--primary);
-    color: white;
-    border-radius: 2rem 0 0 2rem;
-    z-index: 10;
-}
 
 .kge-search-picker {
     width: 23%;
     z-index: 999;
 }
 
-#room-btn {
-    width: 80px;
-    height: 50px;
-    background: var(--primary);
-    color: white;
-    border-radius: 0 2rem 2rem 0;
-    z-index: 9999;
-}
 
 #nav-tabContent {
     flex: 1 0 auto;
@@ -103,18 +85,58 @@ i {
     color: var(--primary);
 }
 
+
+#google-btn {
+    position: absolute;
+    right: 0;
+    width: 80px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 2rem 0 0 2rem;
+    z-index: 100;
+}
+
+#clear-canvas-btn {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 80px;
+    height: 50px;
+    background: indianred;
+    color: white;
+    border-radius: 2rem 0 0 2rem;
+    z-index: 100;
+}
+
+#room-btn {
+    width: 80px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 0 2rem 2rem 0;
+    z-index: 100;
+}
+
 #room-btn:hover,
 #google-btn:hover {
     color: var(--primary);
     background: white;
 }
 
+#clear-canvas-btn:hover{
+    color: indianred;
+    background: white;
+}
+
 #room-btn:focus,
+#clear-canvas-btn:focus,
 #google-btn:focus {
     box-shadow: 0 0 0 0;
 }
 
-#send-msg-btn:hover {
+#send-msg-btn:hover,
+#send-emoji-btn:hover {
     color: white;
     background: var(--primary);
 }
