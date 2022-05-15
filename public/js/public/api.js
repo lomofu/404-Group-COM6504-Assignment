@@ -60,4 +60,11 @@ export const room = {
       },
     });
   },
+  getRoomMembers(id){
+    return http.get("api/room/listMembers",{
+      params: {
+        id,
+      },
+    })
+  }
 };

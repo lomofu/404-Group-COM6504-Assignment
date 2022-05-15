@@ -62,15 +62,25 @@
 
     <div class="offcanvas-body">
         <div class="py-2">
-            <div class="fs-sm fw-light text-black-50">Room Name</div>
+            <div class="fs-sm fw-light text-black-50 py-1">Story Title</div>
+            <h5 id="story-detail-title"></h5>
+        </div>
+        <hr>
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50 py-1">Room Name</div>
             <h5 id="room-detail-title"></h5>
         </div>
         <div class="py-2">
-            <div class="fs-sm fw-light text-black-50">Room Description</div>
+            <div class="fs-sm fw-light text-black-50 py-1">Room Description</div>
             <h5 id="room-detail-desc"></h5>
         </div>
-        <i id="leave-room-btn" class="bi bi-box-arrow-left" type="button"  data-bs-toggle="modal"
-           data-bs-target="#leaveModal"></i>
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50 py-1">Room Create Time</div>
+            <h5 id="room-detail-time"></h5>
+        </div>
+        <i id="leave-room-btn" class="bi bi-box-arrow-left fs-2 text-purple" type="button" data-bs-toggle="modal"
+           data-bs-target="#leaveModal">
+        </i>
     </div>
 </div>
 
@@ -105,7 +115,7 @@
     <div class="col-md-3 shadow-lg vh-100 d-flex flex-column justify-content-between">
         <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
             <!-- chat screen-->
-            <div class="h-100 d-flex flex-column justify-content-between tab-pane fade show active py-3" id="nav-chat"
+            <div class="h-100 tab-pane d-flex flex-column justify-content-between fade show active py-3" id="nav-chat"
                  role="tabpanel">
                 <h5>History Chats</h5>
                 <!-- chat history screen-->
@@ -136,9 +146,8 @@
 
             <!-- members screen-->
             <div class="tab-pane fade h-100 py-3" id="nav-members" role="tabpanel">
-                <h3>Room 4001</h3>
-                <div class="p-3">
-
+                <h5>Room Members</h5>
+                <div class="p-3" id="room-members">
                 </div>
             </div>
         </div>
