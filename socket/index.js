@@ -35,18 +35,46 @@ module.exports = (server) => {
 
       socket.on("send_KLGraph", (roomId, name, row) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit("received_KLGraph",name, row);
+        socket.broadcast.to(roomId).emit("received_KLGraph", name, row);
       });
 
-      socket.on('draw', (roomId, name, width, height, prevX, prevY, currX, currY, color, thickness) => {
-        socket.join(roomId);
-        socket.broadcast.to(roomId).emit('received_draw', roomId, name, width, height, prevX, prevY, currX, currY, color, thickness);
-      });
+      socket.on(
+        "draw",
+        (
+          roomId,
+          name,
+          width,
+          height,
+          prevX,
+          prevY,
+          currX,
+          currY,
+          color,
+          thickness,
+        ) => {
+          socket.join(roomId);
+          socket.broadcast
+            .to(roomId)
+            .emit(
+              "received_draw",
+              roomId,
+              name,
+              width,
+              height,
+              prevX,
+              prevY,
+              currX,
+              currY,
+              color,
+              thickness,
+            );
+        },
+      );
 
       socket.on("disconnect", () => {
-        console.log(cache.get(socket.id));
         const { roomId, name } = cache.get(socket.id);
         console.log(`👋 User: ${name} has left room ${roomId}!`);
+        cache.delete(socket.id);
         socket.broadcast.to(roomId).emit("left", name);
       });
     } catch (e) {
@@ -55,4 +83,8 @@ module.exports = (server) => {
   });
 };
 
-module.exports.cache = cache;
+const useCacheStore = () => cache;
+
+module.exports.cache = {
+  useCacheStore,
+};
