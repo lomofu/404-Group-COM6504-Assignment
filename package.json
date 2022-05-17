@@ -1,6 +1,6 @@
 {
   "name": "intelligent-web",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "local": "set NODE_ENV=local&&export NODE_ENV=local&&node ./bin/www",
