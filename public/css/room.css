@@ -97,17 +97,17 @@ i {
     z-index: 100;
 }
 
-#clear-canvas-btn {
-    position: absolute;
-    right: 0;
-    top: 60px;
-    width: 80px;
-    height: 50px;
-    background: indianred;
-    color: white;
-    border-radius: 2rem 0 0 2rem;
-    z-index: 100;
-}
+/*#clear-canvas-btn {*/
+/*    position: absolute;*/
+/*    right: 0;*/
+/*    top: 60px;*/
+/*    width: 80px;*/
+/*    height: 50px;*/
+/*    background: indianred;*/
+/*    color: white;*/
+/*    border-radius: 2rem 0 0 2rem;*/
+/*    z-index: 100;*/
+/*}*/
 
 #room-btn {
     width: 80px;

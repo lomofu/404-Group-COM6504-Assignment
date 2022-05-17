@@ -387,6 +387,8 @@ export const useSocket = (name) => {
                </div>
              </div>`);
       $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
+      $("#chat-input").val("");
+      $("#chat-input").attr("rows", 1);
       socket.emit("send_chat", roomId, username, message);
     }
   });
@@ -417,5 +419,46 @@ export const useSocket = (name) => {
              </div>`);
     $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
     socket.emit("send_emoji", roomId, username, src);
+  });
+};
+
+export const useToolBox = () => {
+  const $tool = $("#tool-box");
+  $tool.mousedown(function (e) {
+    const positionDiv = $(this).offset();
+    const distenceX = e.pageX - positionDiv.left;
+    const distenceY = e.pageY - positionDiv.top;
+    $tool.removeClass("shadow-none");
+    $tool.addClass("shadow-lg");
+    $tool.css("background-color", "rgb(255,255,255)");
+
+    //drage
+    $(document).mousemove(function (e) {
+      let x = e.pageX - distenceX;
+      let y = e.pageY - distenceY;
+
+      if (x < 0) {
+        x = 0;
+      } else if (x > $(document).width() - $tool.outerWidth(true)) {
+        x = $(document).width() - $tool.outerWidth(true);
+      }
+      if (y < 0) {
+        y = 0;
+      } else if (y > $(document).height() - $tool.outerHeight(true)) {
+        y = $(document).height() - $tool.outerHeight(true);
+      }
+
+      $tool.css({
+        left: x + "px",
+        top: y + "px",
+      });
+    });
+
+    $(document).mouseup(function () {
+      $tool.css("background-color", "rgba(211,211,211,0.76)");
+      $tool.addClass("shadow-none");
+      $tool.removeClass("shadow-lg");
+      $(document).off("mousemove");
+    });
   });
 };
