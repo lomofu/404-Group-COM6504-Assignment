@@ -85,6 +85,10 @@ module.exports = (server) => {
 
 const useCacheStore = () => cache;
 
+const getMembersByRoomId = (id) =>
+  [...cache.values()].filter((e) => e.roomId === id);
+
 module.exports.cache = {
   useCacheStore,
+  getMembersByRoomId,
 };
