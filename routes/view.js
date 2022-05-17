@@ -33,4 +33,8 @@ router.get("/error", (req, res) => {
   });
 });
 
+router.get("/offline", (req, res) => {
+  res.render("offline");
+});
+
 module.exports = router;

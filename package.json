@@ -1,10 +1,10 @@
 {
   "name": "intelligent-web",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "local": "set NODE_ENV=local&&export NODE_ENV=local&&node ./bin/www",
-    "test": "set NODE_ENV=test&&export NODE_ENV=test&&node ./bin/www",
+    "dev": "set NODE_ENV=dev&&export NODE_ENV=dev&&node ./bin/www",
     "start": "set NODE_ENV=prod&&export NODE_ENV=prod&&node ./bin/www"
   },
   "dependencies": {

@@ -6,7 +6,7 @@
  */
 const local = {
   mongodb_config: {
-    connect: "mongodb://mission.lomofu.com:27017/mission",
+    connect: "mongodb://localhost:27017/mission",
   },
 };
 
