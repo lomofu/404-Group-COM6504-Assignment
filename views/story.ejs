@@ -42,43 +42,32 @@
         <div id="grid-container" class="row slide-top">
             <!-- dynamic render-->
         </div>
-
-        <nav class="mt-3 row">
-            <ul class="pagination justify-content-end p-0">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        
     </div>
 </main>
 
 
 <%- include("public/script"); %>
 <script type="module">
-    import {jq} from "/js/public/constant.js";
-    import {loadScript} from "/js/util/util.js";
-    import {useNav} from "/js/public/nav.js";
-    import {story} from "/js/public/api.js";
-    import {useChangeType} from "/js/view/story.js";
+    import { jq } from "/js/public/constant.js";
+    import { loadScript } from "/js/util/util.js";
+    import { useNav } from "/js/public/nav.js";
+    import { story } from "/js/public/api.js";
+    import { useChangeType } from "/js/view/story.js";
+    import { loading } from "/js/util/loading.js";
 
     loadScript(jq, async () => {
         useNav();
 
-        const {data} = await story.getStoryList();
-        const type = useChangeType(data);
+        const load = loading($('body'));
+        try {
+            const { data } = await story.getStoryList();
+            const type = useChangeType(data);
 
-        $('#list-btn').click(() => type.value = 0);
-        $('#grid-btn').click(() => type.value = 1);
+            $('#list-btn').click(() => type.value = 0);
+            $('#grid-btn').click(() => type.value = 1);
+        } finally {
+            load.remove();
+        }
     });
 </script>
