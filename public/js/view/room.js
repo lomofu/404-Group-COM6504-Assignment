@@ -20,9 +20,7 @@ const emojiList = [
   },
   { name: "happy", src: "/img/emoji/smile.webp" },
 ];
-
 const { chatDao, KLGDao } = await useDao();
-
 const { getChatData, storeChatData } = chatDao;
 const { getKLGData } = KLGDao;
 
@@ -142,12 +140,14 @@ async function _renderChatHistory() {
 async function _renderKLGraph() {
   let KLGHistory = await getKLGData(roomId);
   for (let elm of KLGHistory) {
+    console.log(elm);
     $("#google-cards").prepend(`
-      <div id="${elm.id}" class="card w-100 my-2">
+      <div id="${elm.id}" class="card w-100 my-2" style="border-color: ${elm.color}">
           <div class="card-body">
               <h5 class="card-title">${elm.row.name}</h5>
               <p class="card-text">${elm.row.rc}</p>
               <a href="${elm.row.qc}" class="card-link" target="_blank">Link to WebPage</a>
+              <div style="color: ${elm.color}">Searched by : ${elm.name}</div>
           </div>
       </div>
     `);
@@ -342,16 +342,22 @@ export const useSocket = async (name) => {
     $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
   });
 
-  socket.on("received_KLGraph", async (username, row) => {
-    await myGoogleKLG.storeKLGData({ roomId: roomId, row: row });
+  socket.on("received_KLGraph", async (color, username, row) => {
+    await myGoogleKLG.storeKLGData({
+      roomId: roomId,
+      color: color,
+      name: username,
+      row: row,
+    });
     let KLGHistory = await myGoogleKLG.getKLGData(roomId);
     let cardId = KLGHistory.length;
     $("#google-cards").prepend(`
-      <div id="${cardId}" class="card w-100 my-2">
+      <div id="${cardId}" class="card w-100 my-2" style="border-color: ${color}">
           <div class="card-body">
               <h5 class="card-title">${row.name}</h5>
               <p class="card-text">${row.rc}</p>
               <a href="${row.qc}" class="card-link" target="_blank">Link to WebPage</a>
+              <div style="color: ${color}">Searched by : ${username}</div>
           </div>
       </div>
     `);

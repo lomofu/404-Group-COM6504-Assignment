@@ -15,7 +15,7 @@ const e = require("express");
 const { getMembersByRoomId } = require("../socket/index").cache;
 
 // get room list
-router.get("/list", async (req, res) => {
+router.get("/list", async (req, res, next) => {
   const { storyId } = req.query;
   try {
     const list = await service.getRoomList(storyId);
@@ -26,7 +26,7 @@ router.get("/list", async (req, res) => {
 });
 
 // create new room
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { storyId, name, description } = req.body;
 
   if (!storyId) {
@@ -82,9 +82,13 @@ router.get("/", async (req, res, next) => {
 });
 
 // get room members list
-router.get("/listMembers", async (req, res) => {
-  const {id} = req.query;
-  res.json(getMembersByRoomId(id));
+router.get("/listMembers", async (req, res, next) => {
+  const { id } = req.query;
+  try {
+    res.json(getMembersByRoomId(id));
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = router;
