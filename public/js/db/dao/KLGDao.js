@@ -7,7 +7,6 @@ class KLGDao {
 
     async getKLGData(roomId) {
         try {
-            console.log("fetching: " + roomId);
             let tx = await db.transaction(KLG_STORE_NAME, "readonly");
             let store = await tx.objectStore(KLG_STORE_NAME);
             let index = await store.index("roomId");
@@ -25,7 +24,6 @@ class KLGDao {
             let store = await tx.objectStore(KLG_STORE_NAME);
             await store.put(KLGObject);
             await tx.complete;
-            console.log("added item to the store! " + JSON.stringify(KLGObject));
         } catch (error) {
             console.log("error: I could not store the element. Reason: " + error);
         }

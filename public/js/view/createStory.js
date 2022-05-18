@@ -152,7 +152,6 @@ const _getImage = async () => {
         const blob = await data.blob();
         file64 = await _getBase64(blob);
     }
-    console.log(file64);
     if (file64 !== "") {
         return file64;
     }

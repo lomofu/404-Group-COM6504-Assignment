@@ -8,9 +8,8 @@
 window.myGoogleKLG = {};
 
 const apiKey = "AIzaSyAG7w627q-djB4gTTahssufwNOImRqdYKM";
-const roomId = window.location.pathname
-  .split("/")
-  .filter((e) => e !== "" && e !== "room")[0];
+const url = new URL(window.location.href);
+const roomId = url.searchParams.get("roomId");
 let KLGColor;
 let username;
 
@@ -37,6 +36,7 @@ const selectItem = async (event) => {
   let socket = window.mySocket;
   let row = event.row;
   let KLGHistory = await myGoogleKLG.getKLGData(roomId);
+  console.log(KLGHistory);
   let cardId = 0;
   let exist = false;
   if(KLGHistory){

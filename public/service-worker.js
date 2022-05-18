@@ -70,11 +70,9 @@ const whiteList = [
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
-  console.log("[ServiceWorker] Install");
   e.waitUntil(
     caches.open(assetsCacheName).then((cacheX) => {
       assetCache = cacheX;
-      console.log("[ServiceWorker] Assets Cache open successfully");
       return assetCache.addAll(filesToCache);
     }),
   );
@@ -84,14 +82,12 @@ self.addEventListener("install", (e) => {
  * activation of service worker: it removes all cashed files if necessary
  */
 self.addEventListener("activate", (e) => {
-  console.log("[ServiceWorker] Activate");
 
   e.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(
         keyList.map((key) => {
           if (key !== assetsCacheName) {
-            console.log("[ServiceWorker] Removing old cache", key);
             return caches.delete(key);
           }
         }),

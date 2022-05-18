@@ -30,7 +30,7 @@ const _render = async () => {
         <img width="50" height="50" src="${src}" alt="${name}">
        `),
   );
-
+  $("#chat-input").val("");
   $("#nav-chat-btn").click(() => {
     $("#nav-chat").removeClass("d-none");
     $("#nav-members").addClass("d-none");
@@ -140,7 +140,6 @@ async function _renderChatHistory() {
 async function _renderKLGraph() {
   let KLGHistory = await getKLGData(roomId);
   for (let elm of KLGHistory) {
-    console.log(elm);
     $("#google-cards").prepend(`
       <div id="${elm.id}" class="card w-100 my-2" style="border-color: ${elm.color}">
           <div class="card-body">

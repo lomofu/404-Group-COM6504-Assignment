@@ -79,5 +79,4 @@ export async function initDatabase() {
       },
     });
   }
-  console.log("db is created");
 }

@@ -9,7 +9,6 @@ class ChatDao {
 
   async getChatData(roomId) {
     try {
-      console.log("fetching: " + roomId);
       let tx = await db.transaction(CHAT_STORE_NAME, "readonly");
       let store = await tx.objectStore(CHAT_STORE_NAME);
       let index = await store.index("roomId");
@@ -27,7 +26,6 @@ class ChatDao {
       let store = await tx.objectStore(CHAT_STORE_NAME);
       await store.put(chatObject);
       await tx.complete;
-      console.log("added item to the store! " + JSON.stringify(chatObject));
     } catch (error) {
       console.log("error: I could not store the element. Reason: " + error);
     }
