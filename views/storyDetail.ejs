@@ -24,8 +24,8 @@
                 <div id="story-detail-author" class="fs-4"></div>
                 <p id="story-detail-desc" class="fs-5 card-text">
                 </p>
-                <a id="create-room-modal-btn" href="#" class="btn btn-purple" data-bs-toggle="modal"
-                   data-bs-target="#create-room-modal">Create a Room</a>
+                <button id="create-room-modal-btn" class="btn btn-purple" data-bs-toggle="modal"
+                        data-bs-target="#create-room-modal">Create a Room</button>
             </div>
         </div>
     </div>
@@ -84,4 +84,14 @@
         useNav();
         initView("<%= storyId %>");
     });
+
+    window.addEventListener('offline', () => {
+        document.getElementById('create-room-modal-btn').disabled = true;
+    });
+
+    window.addEventListener('online', function() {
+        document.getElementById('create-room-modal-btn').disabled = false;
+
+    });
+
 </script>

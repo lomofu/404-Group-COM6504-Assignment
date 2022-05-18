@@ -3,7 +3,7 @@
 // cache storage instances
 let assetCache = null;
 
-const assetsCacheName = "mission-cache-v03";
+const assetsCacheName = "mission-cache-v3";
 
 // asset files need to be store
 const filesToCache = [
@@ -81,7 +81,6 @@ self.addEventListener("install", (e) => {
  * activation of service worker: it removes all cashed files if necessary
  */
 self.addEventListener("activate", (e) => {
-
   e.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(
@@ -99,7 +98,11 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   if (whiteList.filter((v) => e.request.url.includes(v)).length > 0) {
     e.respondWith(fetch(e.request));
-  } else if (e.request.url.includes("/api") && e.request.destination === "") {
+  } else if (
+    e.request.method === "GET" &&
+    e.request.url.includes("/api") &&
+    e.request.destination === ""
+  ) {
     // api request, network first strategy
     e.respondWith(
       fetch(e.request)
