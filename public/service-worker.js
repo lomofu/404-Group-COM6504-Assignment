@@ -7,28 +7,59 @@ const assetsCacheName = "mission-cache-v1";
 
 // asset files need to be store
 const filesToCache = [
-  "/offline",
+  "/favicon.ico",
+  "/manifest.json",
   "/bootstrap/css/bootstrap.css",
+  "/css/index.css",
   "/css/animate.css",
   "/css/base.css",
-  "/img/icon-64.png",
-  "/manifest.json",
-  "/favicon.ico",
-  "/404",
+  "/css/about.css",
+  "/css/createStory.css",
+  "/css/room.css",
+  "/css/story.css",
+  "/css/storyDetail.css",
+
   "/",
   "about",
   "/story",
   "/createStory",
   "/room",
-  "/css/about.css",
+  "/offline",
+  "/404",
+
+  "/img/icon-64.png",
   "/img/feature3.jpg",
   "/img/feature1.jpg",
   "/img/feature2.jpg",
+  "/img/default-img.jpg",
+
   "/socket.io/socket.io.js",
+  "/js/util/util.js",
+  "/js/util/http.js",
+  "/js/util/loading.js",
+  "/js/public/nav.js",
+  "/js/public/api.js",
+  "/js/public/constant.js",
+  "/js/public/googleKLGraph.js",
+  "/js/view/index.js",
+  "/js/view/createStory.js",
+  "/js/view/room.js",
+  "/js/view/story.js",
+  "/js/view/storyDetail.js",
+  "/js/canvas.js",
+
+  "/font/Fredoka-Light.woff",
+  "/font/Fredoka-Medium.woff",
+  "/font/Fredoka-SemiBold.woff",
+  "/font/Fredoka-Regular.woff",
+  "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/fonts/bootstrap-icons.woff2?524846017b983fc8ded9325d94ed40f3",
+  "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/fonts/bootstrap-icons.woff?524846017b983fc8ded9325d94ed40f3",
+
   "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js",
   "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
   "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css",
   "https://cdn.skypack.dev/pin/axios@v0.26.1-3c1TUCVdnljWzSKyoXbP/mode=imports,min/optimized/axios.js",
+  "https://cdn.skypack.dev/-/axios@v0.26.1-3c1TUCVdnljWzSKyoXbP/dist=es2020,mode=imports,min/optimized/axios.js",
 ];
 
 const whiteList = [
@@ -39,16 +70,12 @@ const whiteList = [
 
 self.addEventListener("install", (e) => {
   console.log("[ServiceWorker] Install");
-
   e.waitUntil(
-    caches
-      .open(assetsCacheName)
-      .then((cacheX) => {
-        assetCache = cacheX;
-        console.log("[ServiceWorker] Assets Cache open successfully");
-        return assetCache.addAll(filesToCache);
-      })
-      .then(() => self.skipWaiting()),
+    caches.open(assetsCacheName).then((cacheX) => {
+      assetCache = cacheX;
+      console.log("[ServiceWorker] Assets Cache open successfully");
+      return assetCache.addAll(filesToCache);
+    }),
   );
 });
 
@@ -85,39 +112,34 @@ self.addEventListener("fetch", (e) => {
           return res;
         })
         .catch(() => {
-          return caches.match(e.request);
+          return caches.match(e.request.url);
         }),
     );
   } else {
     // static resources, cache first strategy
     e.respondWith(
-      caches
-        .match(e.request)
-        .then(function (response) {
-          return (
-            response ||
-            fetch(e.request)
-              .then(function (response) {
-                assetCache.add(e.request);
-                return response;
-              })
-              .catch(function (err) {
-                console.log("error: " + err);
-                return caches.match("/offline");
-              })
-          );
-        })
-        .catch(() => {
-          return fetch(e.request)
+      caches.match(e.request).then(function (response) {
+        return (
+          response ||
+          fetch(e.request)
             .then(function (response) {
+              if (
+                (response.status !== 200 &&
+                  response.status !== 304 &&
+                  response.type !== "opaque") ||
+                e.request.method === "POST"
+              ) {
+                return response;
+              }
               assetCache.add(e.request);
               return response;
             })
             .catch(function (err) {
               console.log("error: " + err);
               return caches.match("/offline");
-            });
-        }),
+            })
+        );
+      }),
     );
   }
 });
