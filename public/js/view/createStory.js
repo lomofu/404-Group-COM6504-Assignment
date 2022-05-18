@@ -5,6 +5,9 @@
  * @date 2022/4/24
  */
 import {story} from "/js/public/api.js";
+// import { useDao } from "/js/db/dao.js";
+// const { storyDao } = await useDao();
+// const { getStoreData,storeStoryData } = storyDao;
 
 export const eventListener = () => {
     _validSize();

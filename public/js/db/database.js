@@ -7,6 +7,7 @@ const DB_NAME = "db_mission";
 export const CHAT_STORE_NAME = "chatdb";
 export const KLG_STORE_NAME = "klgdb";
 export const ANNOTATION_STORE_NAME = "annotationdb";
+export const STORY_STORE_NAME = "storydb";
 export let db;
 
 /**
@@ -75,6 +76,16 @@ export async function initDatabase() {
             unique: false,
             multiEntry: true,
           });
+        }
+
+        if (!upgradeDb.objectStoreNames.contains(STORY_STORE_NAME)) {
+          let storyDataBase = upgradeDb.createObjectStore(
+              STORY_STORE_NAME,
+              {
+                keyPath: "id",
+                autoIncrement: true,
+              },
+          );
         }
       },
     });
