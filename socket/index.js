@@ -1,4 +1,6 @@
 /** @format */
+const roomService = require("../service/roomService");
+
 const cache = new Map();
 
 module.exports = (server) => {
@@ -15,9 +17,11 @@ module.exports = (server) => {
           name,
         });
         io.sockets.to(roomId).emit("joined", name);
+        roomService.updateRoomMemberNum(roomId, getMembersByRoomId(roomId).length);
       });
 
       socket.on("leave", (roomId, name) => {
+
         console.log(`👤 User: ${name} left room ${roomId}!`);
         socket.join(roomId);
         io.sockets.to(roomId).emit("left", name);
@@ -76,6 +80,7 @@ module.exports = (server) => {
         console.log(`👋 User: ${name} has left room ${roomId}!`);
         cache.delete(socket.id);
         socket.broadcast.to(roomId).emit("left", name);
+        roomService.updateRoomMemberNum(roomId, getMembersByRoomId(roomId).length);
       });
     } catch (e) {
       console.error(e);

@@ -176,6 +176,7 @@ const _renderRoomDetail = (data) => {
 };
 
 const _renderMemberList = async () => {
+    debugger
   const { data } = await room.getRoomMembers(roomId);
   $("#room-members").empty();
   data.forEach((d) => {
@@ -271,7 +272,7 @@ export const useSocket = (name) => {
     _renderMemberList();
   });
 
-  socket.on("left", (username) => {
+  socket.on("left", async (username) => {
     storeChatData({
       roomId: roomId,
       chat: "",
@@ -293,10 +294,6 @@ export const useSocket = (name) => {
        </div>`);
     _renderMemberList();
   });
-
-  socket.on("disconnect", () =>
-    socket.emit("leave", roomId, window.localStorage.getItem("username")),
-  );
 
   socket.on("received_chat", (username, message) => {
     storeChatData({
