@@ -9,9 +9,8 @@ import { useCanvas } from "/js/canvas.js";
 import { useDao } from "/js/db/dao.js";
 import { room } from "/js/public/api.js";
 
-const roomId = window.location.pathname
-  .split("/")
-  .filter((e) => e !== "" && e !== "room")[0];
+const url = new URL(window.location.href);
+const roomId = url.searchParams.get("roomId");
 
 const emojiList = [
   { name: "happy", src: "/img/emoji/happy.webp" },
@@ -243,6 +242,8 @@ export const useSocket = async (name) => {
   if (!navigator.onLine) {
     const { data } = await room.getRoomDetail(roomId);
     await useCanvas(roomId, name, socket, data.imageUrl);
+    _renderRoomDetail(data);
+    return;
   }
 
   socket.on("connect", async () => {

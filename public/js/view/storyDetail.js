@@ -54,7 +54,7 @@ const _initRoomList = async () => {
         <div class="w-100 card mt-3">
             <div class="card-body d-flex flex-row">
                 <div class="fs-4 me-auto">${name}</div>
-                <button id="${id}" onclick="{window.open('/room/'+this.id)}" class="btn btn-purple join-btn">Join</button>
+                <button id="${id}" onclick="{window.open('/room?roomId='+this.id)}" class="btn btn-purple join-btn">Join</button>
             </div>
             <div class="card-footer">
                 <div class="text-start">Members: ${members}</div>
@@ -66,7 +66,7 @@ const _initRoomList = async () => {
         <div class="w-100 card mt-3">
             <div class="card-body d-flex flex-row">
                 <div class="fs-4 me-auto">${name}</div>
-                <button  id="${id}" onclick="{window.open('/room/'+this.id)}" class="btn btn-purple join-btn">Join</button>
+                <button  id="${id}" onclick="{window.open('/room?roomId='+this.id)}" class="btn btn-purple join-btn">Join</button>
             </div>
             <div class="card-footer">
                 <div class="text-start">Members: ${members}</div>
