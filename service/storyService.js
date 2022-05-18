@@ -47,8 +47,7 @@ module.exports = {
   async getStoryDetail(id) {
     if (id) {
       try {
-        const data = await StorySchema.findById(id);
-        return data;
+        return await StorySchema.findById(id);
       } catch (e) {
         throw new Exception(ERROR_PAGE.code, "Story cannot be found");
       }
