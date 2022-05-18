@@ -177,7 +177,6 @@ const _renderRoomDetail = (data) => {
 
 const _renderMemberList = async () => {
   const { data } = await room.getRoomMembers(roomId);
-  console.log(data);
   $("#room-members").empty();
   data.forEach((d) => {
     $("#room-members").prepend(

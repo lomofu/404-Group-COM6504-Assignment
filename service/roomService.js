@@ -54,7 +54,7 @@ module.exports = {
         name: result.name,
         description: result.description,
         createTime: result.createTime,
-        delete:result.delete,
+        delete: result.delete,
         members: result.members,
       };
     }
@@ -62,5 +62,13 @@ module.exports = {
       code: 400,
       message: "Id should not be empty",
     });
+  },
+  async updateRoomMemberNum(id, num) {
+    try {
+      return await RoomSchema.findByIdAndUpdate(id, {"members": num});
+    } catch (e) {
+      logger.error(`received: ${e}`);
+      throw new Error("Could not insert data!");
+    }
   },
 };
