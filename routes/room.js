@@ -11,6 +11,7 @@ const service = require("../service/roomService");
 const storyService = require("../service/storyService");
 const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
 const { log } = require("debug");
+const e = require("express");
 const { getMembersByRoomId } = require("../socket/index").cache;
 
 // get room list
@@ -83,10 +84,7 @@ router.get("/", async (req, res, next) => {
 // get room members list
 router.get("/listMembers", async (req, res) => {
   const {id} = req.query;
-  const result = getMembersByRoomId(id);
-  const d = await service.updateRoomMemberNum(id, result.length);
-  console.log(d);
-  res.json(result);
+  res.json(getMembersByRoomId(id));
 });
 
 module.exports = router;

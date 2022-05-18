@@ -140,3 +140,6 @@ i {
     color: white;
     background: var(--primary);
 }
+.dropdown-menu.show {
+    display: flex;
+}
