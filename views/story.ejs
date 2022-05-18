@@ -37,6 +37,9 @@
 
         <ul id="list-container" class="row list-group mt-3 d-none slide-top">
             <!-- dynamic render-->
+            <div>
+                NO DATA :)
+            </div>
         </ul>
 
         <div id="grid-container" class="row slide-top">
@@ -62,7 +65,7 @@
         const load = loading($('body'));
         try {
             const { data } = await story.getStoryList();
-            const type = useChangeType(data);
+            // const type = useChangeType(data);
 
             $('#list-btn').click(() => type.value = 0);
             $('#grid-btn').click(() => type.value = 1);

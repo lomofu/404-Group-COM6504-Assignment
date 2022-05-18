@@ -7,7 +7,7 @@ const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
 const Exception = require("../util/exception");
 
 // get story list
-router.get("/list", async (req, res) => {
+router.get("/list", async (req, res, next) => {
   try {
     const list = await service.getStoryList();
     res.json(list);
@@ -17,7 +17,7 @@ router.get("/list", async (req, res) => {
 });
 
 // create new story
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { title, author, description, image } = req.body;
 
   if (!title) {
