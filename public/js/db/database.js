@@ -49,6 +49,10 @@ export async function initDatabase() {
             unique: false,
             multiEntry: false,
           });
+          KLGDataBase.createIndex("name", "name", {
+            unique: false,
+            multiEntry: false,
+          });
           KLGDataBase.createIndex("row", "row", {
             unique: false,
             multiEntry: true,

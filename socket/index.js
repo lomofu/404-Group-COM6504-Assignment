@@ -17,11 +17,13 @@ module.exports = (server) => {
           name,
         });
         io.sockets.to(roomId).emit("joined", name);
-        roomService.updateRoomMemberNum(roomId, getMembersByRoomId(roomId).length);
+        roomService.updateRoomMemberNum(
+          roomId,
+          getMembersByRoomId(roomId).length,
+        );
       });
 
       socket.on("leave", (roomId, name) => {
-
         console.log(`👤 User: ${name} left room ${roomId}!`);
         socket.join(roomId);
         io.sockets.to(roomId).emit("left", name);
@@ -37,9 +39,9 @@ module.exports = (server) => {
         socket.broadcast.to(roomId).emit("received_emoji", name, message);
       });
 
-      socket.on("send_KLGraph", (roomId, name, color, row) => {
+      socket.on("send_KLGraph", (roomId, color, name, row) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit("received_KLGraph", name, color,row);
+        socket.broadcast.to(roomId).emit("received_KLGraph", name, color, row);
       });
 
       socket.on(
@@ -75,19 +77,22 @@ module.exports = (server) => {
         },
       );
 
-      socket.on('clear', (roomId, name, width, height) => {
+      socket.on("clear", (roomId, name, width, height) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit('received_clear', roomId, name, width, height);
+        socket.broadcast
+          .to(roomId)
+          .emit("received_clear", roomId, name, width, height);
       });
-
-
 
       socket.on("disconnect", () => {
         const { roomId, name } = cache.get(socket.id);
         console.log(`👋 User: ${name} has left room ${roomId}!`);
         cache.delete(socket.id);
         socket.broadcast.to(roomId).emit("left", name);
-        roomService.updateRoomMemberNum(roomId, getMembersByRoomId(roomId).length);
+        roomService.updateRoomMemberNum(
+          roomId,
+          getMembersByRoomId(roomId).length,
+        );
       });
     } catch (e) {
       console.error(e);
