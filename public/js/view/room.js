@@ -143,8 +143,9 @@ async function _renderChatHistory() {
 async function _renderKLGraph() {
   let KLGHistory = await getKLGData(roomId);
   for (let elm of KLGHistory) {
+    console.log(elm);
     $("#google-cards").prepend(`
-      <div id="${elm.id}" class="card w-100 my-2">
+      <div id="${elm.id}" class="card w-100 my-2" style="border-color: ${elm.color}">
           <div class="card-body">
               <h5 class="card-title">${elm.row.name}</h5>
               <p class="card-text">${elm.row.rc}</p>
@@ -341,12 +342,12 @@ export const useSocket = async (name) => {
     $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
   });
 
-  socket.on("received_KLGraph", async (username, row) => {
-    await myGoogleKLG.storeKLGData({ roomId: roomId, row: row });
+  socket.on("received_KLGraph", async (username, color, row) => {
+    await myGoogleKLG.storeKLGData({ roomId: roomId, color: color, row: row });
     let KLGHistory = await myGoogleKLG.getKLGData(roomId);
     let cardId = KLGHistory.length;
     $("#google-cards").prepend(`
-      <div id="${cardId}" class="card w-100 my-2">
+      <div id="${cardId}" class="card w-100 my-2" style="border-color: ${color}">
           <div class="card-body">
               <h5 class="card-title">${row.name}</h5>
               <p class="card-text">${row.rc}</p>

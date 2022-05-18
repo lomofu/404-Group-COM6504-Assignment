@@ -7,8 +7,8 @@ import { useDao } from "/js/db/dao.js";
 const { annotationDao } = await useDao();
 const { storeAnnotationData, getAnnotationData, deleteAnnotationData } = annotationDao;
 
-const lineOption = {
-  color: "red",
+export const lineOption = {
+  color: "black",
   thickness: 4,
 };
 
