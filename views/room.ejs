@@ -241,7 +241,7 @@
     const url = new URL(window.location.href);
     const roomId = url.searchParams.get("roomId");
     let username;
-    
+
     const {KLGDao} = await useDao();
     const {getKLGData, storeKLGData} = KLGDao;
 

@@ -37,40 +37,45 @@
 
         <ul id="list-container" class="row list-group mt-3 d-none slide-top">
             <!-- dynamic render-->
-            <div>
+            <h4 class="text-center">
                 NO DATA :)
-            </div>
+            </h4>
         </ul>
 
         <div id="grid-container" class="row slide-top">
             <!-- dynamic render-->
+            <div>
+                <h4 class="text-center">
+                    NO DATA :)
+                </h4>
+            </div>
         </div>
-        
+
     </div>
 </main>
 
 
 <%- include("public/script"); %>
 <script type="module">
-    import { jq } from "/js/public/constant.js";
-    import { loadScript } from "/js/util/util.js";
-    import { useNav } from "/js/public/nav.js";
-    import { story } from "/js/public/api.js";
-    import { useChangeType } from "/js/view/story.js";
-    import { loading } from "/js/util/loading.js";
+  import { jq } from "/js/public/constant.js";
+  import { loadScript } from "/js/util/util.js";
+  import { useNav } from "/js/public/nav.js";
+  import { story } from "/js/public/api.js";
+  import { useChangeType } from "/js/view/story.js";
+  import { loading } from "/js/util/loading.js";
 
-    loadScript(jq, async () => {
-        useNav();
+  loadScript(jq, async () => {
+    useNav();
+      
+    const load = loading($('body'));
+    try {
+      const { data } = await story.getStoryList();
+      const type = useChangeType(data);
 
-        const load = loading($('body'));
-        try {
-            const { data } = await story.getStoryList();
-            const type = useChangeType(data);
-
-            $('#list-btn').click(() => type.value = 0);
-            $('#grid-btn').click(() => type.value = 1);
-        } finally {
-            load.remove();
-        }
-    });
+      $('#list-btn').click(() => type.value = 0);
+      $('#grid-btn').click(() => type.value = 1);
+    } finally {
+      load.remove();
+    }
+  });
 </script>

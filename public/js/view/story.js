@@ -31,7 +31,7 @@ export const useChangeType = (data) => {
 };
 
 const _useList = (list) => {
-  if (!list || (list.length && list.length <= 0)) {
+  if (list && list.length <= 0) {
     return;
   }
   const $listContainer = $("#list-container");
@@ -77,7 +77,7 @@ const _useList = (list) => {
 };
 
 const _useGrid = (list) => {
-  if (!list || (list.length && list.length <= 0)) {
+  if (list && list.length <= 0) {
     return;
   }
 
