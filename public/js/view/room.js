@@ -276,7 +276,7 @@ export const useSocket = async (name) => {
     _renderMemberList();
   });
 
-  socket.on("left", (username) => {
+  socket.on("left", async (username) => {
     storeChatData({
       roomId: roomId,
       chat: "",
@@ -298,10 +298,6 @@ export const useSocket = async (name) => {
        </div>`);
     _renderMemberList();
   });
-
-  socket.on("disconnect", () =>
-    socket.emit("leave", roomId, window.localStorage.getItem("username")),
-  );
 
   socket.on("received_chat", (username, message) => {
     storeChatData({

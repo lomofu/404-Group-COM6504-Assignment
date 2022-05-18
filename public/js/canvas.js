@@ -20,7 +20,12 @@ let room;
 let userId;
 let socket;
 
+export const changeColor = (color) => {
+  lineOption.color = color;
+};
+
 export const useCanvas = async (roomId, username, sct, imageURL) => {
+  lineOption.color = "black";
   canvas = $("#main-canvas");
   room = roomId;
   userId = username;
