@@ -3,7 +3,7 @@
 // cache storage instances
 let assetCache = null;
 
-const assetsCacheName = "mission-cache-v3";
+const assetsCacheName = "mission-cache-v03";
 
 // asset files need to be store
 const filesToCache = [
@@ -40,7 +40,6 @@ const filesToCache = [
   "/js/public/nav.js",
   "/js/public/api.js",
   "/js/public/constant.js",
-  "/js/public/googleKLGraph.js",
   "/js/view/index.js",
   "/js/view/createStory.js",
   "/js/view/room.js",
