@@ -66,5 +66,5 @@ export const room = {
         id,
       },
     })
-  }
+  },
 };

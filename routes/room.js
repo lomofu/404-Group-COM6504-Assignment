@@ -10,6 +10,7 @@ const router = express.Router();
 const service = require("../service/roomService");
 const storyService = require("../service/storyService");
 const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
+const { log } = require("debug");
 const { getMembersByRoomId } = require("../socket/index").cache;
 
 // get room list
@@ -79,9 +80,13 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/listMembers", (req, res) => {
-  const { id } = req.query;
-  res.json(getMembersByRoomId(id));
+// get room members list
+router.get("/listMembers", async (req, res) => {
+  const {id} = req.query;
+  const result = getMembersByRoomId(id);
+  const d = await service.updateRoomMemberNum(id, result.length);
+  console.log(d);
+  res.json(result);
 });
 
 module.exports = router;
