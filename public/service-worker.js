@@ -3,7 +3,7 @@
 // cache storage instances
 let assetCache = null;
 
-const assetsCacheName = "mission-cache-v1";
+const assetsCacheName = "mission-cache-v3";
 
 // asset files need to be store
 const filesToCache = [
@@ -69,6 +69,7 @@ const whiteList = [
 ];
 
 self.addEventListener("install", (e) => {
+  self.skipWaiting();
   console.log("[ServiceWorker] Install");
   e.waitUntil(
     caches.open(assetsCacheName).then((cacheX) => {

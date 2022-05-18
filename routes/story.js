@@ -12,7 +12,7 @@ router.get("/list", async (req, res, next) => {
     const list = await service.getStoryList();
     res.json(list);
   } catch (e) {
-    next(e);
+    res.json([]);
   }
 });
 
