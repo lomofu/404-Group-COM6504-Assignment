@@ -23,8 +23,8 @@ router.get("/storyDetail/:storyId", (req, res) => {
   res.render("storyDetail", { storyId: req.params["storyId"] });
 });
 
-router.get("/room/:roomId", (req, res) => {
-  res.render("room", { roomId: req.params["roomId"] });
+router.get("/room", (req, res) => {
+  res.render("room", { roomId: req.query["roomId"] });
 });
 
 router.get("/error", (req, res) => {
