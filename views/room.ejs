@@ -241,7 +241,7 @@
     const roomId = window.location.pathname
         .split("/")
         .filter((e) => e !== "" && e !== "room");
-
+    const username = window.localStorage.getItem(`${roomId}-username`);
     const {KLGDao} = await useDao();
     const {getKLGData, storeKLGData} = KLGDao;
 
@@ -260,7 +260,7 @@
             })
 
             $('#google-kl-input').keydown(() => {
-                widgeInit(lineOption.color);
+                widgeInit(lineOption.color,username);
             })
 
             useRoom();

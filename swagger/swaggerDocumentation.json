@@ -13,10 +13,6 @@
     {
       "url": "http://localhost:3000/",
       "description": "Local server"
-    },
-    {
-      "url": "http:/mission.lomofu.com",
-      "description": "Testing server"
     }
   ],
   "paths": {
@@ -296,6 +292,94 @@
           }
         }
       }
+    },
+    "/api/room/list": {
+      "get": {
+        "tags": ["room"],
+        "description": "get room list by room id",
+        "parameters": [
+          {
+            "name": "storyId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "story id",
+              "example": "62851825e615f2edefcd1446"
+            },
+            "allowEmptyValue": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get rooms list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomList"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/room/listMembers": {
+      "get": {
+        "tags": ["room"],
+        "description": "get room members list by room id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "room id",
+              "example": "62851834e615f2edefcd144a"
+            },
+            "allowEmptyValue": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get room members list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberList"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -454,6 +538,33 @@
           "properties": {
             "story": {
               "$ref": "#/components/schemas/Room"
+            }
+          }
+        }
+      },
+      "Member": {
+        "type": "object",
+        "properties": {
+          "roomId": {
+            "type": "string",
+            "description": "room id",
+            "example": "62851834e615f2edefcd144a"
+          },
+          "name": {
+            "type": "string",
+            "description": "member name",
+            "example": "Luna"
+          }
+        }
+
+      },
+      "MemberList": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "story": {
+              "$ref": "#/components/schemas/Member"
             }
           }
         }
