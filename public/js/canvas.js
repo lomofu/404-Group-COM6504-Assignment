@@ -129,7 +129,8 @@ const _initEvents = (room, userId, socket, imageURL) => {
           lineOption.thickness,
         );
         storeAnnotationData({
-          roomId: room+userId,
+          roomId: room,
+          annotation:room+userId,
           url: imageURL,
           canvasWidth: canvas.width,
           canvasHeight: canvas.height,
@@ -159,7 +160,8 @@ const _initEvents = (room, userId, socket, imageURL) => {
       thickness_,
     ) {
       storeAnnotationData({
-        roomId: room+userId,
+        roomId: room,
+        annotation:room+userId,
         url: imageURL,
         canvasWidth: canvas.width,
         canvasHeight: canvas.height,
@@ -195,7 +197,7 @@ function getMousePos(canvas, evt) {
 }
 
 const _initDraws = async () => {
-  let annotationHistory = await getAnnotationData(roomId+userId);
+  let annotationHistory = await getAnnotationData(room);
 
   for (let elm of annotationHistory) {
     _draw(

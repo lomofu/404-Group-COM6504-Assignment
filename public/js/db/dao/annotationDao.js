@@ -34,7 +34,7 @@ class annotationDao{
             console.log("Deleting" + roomId);
             let tx = await db.transaction(ANNOTATION_STORE_NAME, "readwrite");
             let store = await tx.objectStore(ANNOTATION_STORE_NAME);
-            let index = await store.index("roomId");
+            let index = await store.index("annotation");
             let remove = index.openCursor(roomId);
             remove.then(async cursor => {
                 while (cursor) {
