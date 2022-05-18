@@ -75,6 +75,13 @@ module.exports = (server) => {
         },
       );
 
+      socket.on('clear', (roomId, name, width, height) => {
+        socket.join(roomId);
+        socket.broadcast.to(roomId).emit('received_clear', roomId, name, width, height);
+      });
+
+
+
       socket.on("disconnect", () => {
         const { roomId, name } = cache.get(socket.id);
         console.log(`👋 User: ${name} has left room ${roomId}!`);
