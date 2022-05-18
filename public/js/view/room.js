@@ -176,7 +176,6 @@ const _renderRoomDetail = (data) => {
 };
 
 const _renderMemberList = async () => {
-    debugger
   const { data } = await room.getRoomMembers(roomId);
   $("#room-members").empty();
   data.forEach((d) => {

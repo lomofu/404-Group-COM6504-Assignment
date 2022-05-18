@@ -87,7 +87,7 @@
      class="m-0 alert alert-danger alert-dismissible fade show rounded-0 border-0 position-absolute top-0 start-0 end-0"
      role="alert" style="display: none;z-index: 10000">
     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-        <use xlink:href="#exclamation-triangle-fill" />
+        <use xlink:href="#exclamation-triangle-fill"/>
     </svg>
     Your are offline now!
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -114,13 +114,26 @@
                             <i class="bi bi-pencil-fill"></i>
                         </button>
                         <div class="dropdown">
-                            <button class="btn btn-outline-primary border-0 mx-3">
-                                <i class="bi bi-square"></i>
+                            <button class="btn btn-outline-primary border-0 mx-3 dropdown-toggle" type="button"
+                                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-palette"></i>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <ul class="dropdown-menu justify-content-around p-2 shadow mt-2 w-auto"
+                                aria-labelledby="dropdownMenuButton1">
+                                <button color="blue" class="btn btn-primary rounded-circle changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: blue"></button>
+                                <button color="red" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: red"></button>
+                                <button color="orange" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: orange"></button>
+                                <button color="green" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: green"></button>
+                                <button color="cyan" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: cyan"></button>
+                                <button color="yellow" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: yellow"></button>
+                                <button color="purple" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: purple"></button>
                             </ul>
                         </div>
                         <button id="clear-canvas-btn" class="btn btn-danger mx-3" type="button">
@@ -134,7 +147,7 @@
             <div id="google-kl" class="d-none vh-100 col-0 p-3">
                 <!-- keyword search input area-->
                 <input id="google-kl-input" type="text" class="form-control"
-                       placeholder="search from google knowledge graph" onkeydown="widgeInit()" />
+                       placeholder="search from google knowledge graph" onkeydown="widgeInit()"/>
                 <!-- search result cards-->
                 <div id="google-cards">
                 </div>
@@ -206,45 +219,52 @@
 <script src="/js/public/googleKLGraph.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
 <script>
-  !navigator.onLine && offlineHandler();
+    !navigator.onLine && offlineHandler();
 
-  window.addEventListener('online', function() {
-    document.getElementById('offline-alert').style.display = "none";
-  });
+    window.addEventListener('online', function () {
+        document.getElementById('offline-alert').style.display = "none";
+    });
 
-  window.addEventListener('offline', () => offlineHandler());
+    window.addEventListener('offline', () => offlineHandler());
 
-  function offlineHandler() {
-    document.getElementById('offline-alert').style.display = "block";
-  }
+    function offlineHandler() {
+        document.getElementById('offline-alert').style.display = "block";
+    }
 </script>
 <script type="module">
-  import { jq } from "/js/public/constant.js";
-  import { loadScript } from "/js/util/util.js";
-  import { useRoom, usernameModal, useSocket, useToolBox } from "/js/view/room.js";
-  import { useDao } from "/js/db/dao.js";
+    import {jq} from "/js/public/constant.js";
+    import {loadScript} from "/js/util/util.js";
+    import {useRoom, usernameModal, useSocket, useToolBox} from "/js/view/room.js";
+    import {useDao} from "/js/db/dao.js";
+    import {changeColor} from "/js/canvas.js";
 
-  const roomId = window.location.pathname
-    .split("/")
-    .filter((e) => e !== "" && e !== "room");
+    const roomId = window.location.pathname
+        .split("/")
+        .filter((e) => e !== "" && e !== "room");
 
-  const { KLGDao } = await useDao();
-  const { getKLGData, storeKLGData } = KLGDao;
+    const {KLGDao} = await useDao();
+    const {getKLGData, storeKLGData} = KLGDao;
 
-  window.myGoogleKLG = {
-    getKLGData,
-    storeKLGData
-  }
+    window.myGoogleKLG = {
+        getKLGData,
+        storeKLGData
+    }
 
-  if (roomId.length === 1) {
-    loadScript(jq, async () => {
-      useRoom();
-      usernameModal((username) => useSocket(username));
-      useToolBox();
-    })
-  } else {
-    alert('path is invalid, please make sure it is the form of /room/roomId ');
-  }
+    if (roomId.length === 1) {
+        loadScript(jq, async () => {
+
+            $('.changeColorBtn').click(function (e) {
+                console.log($(this).attr('color'))
+                changeColor($(this).attr('color'));
+            })
+
+            useRoom();
+            usernameModal((username) => useSocket(username));
+            useToolBox();
+        })
+    } else {
+        alert('path is invalid, please make sure it is the form of /room/roomId ');
+    }
 
 </script>
 </body>
