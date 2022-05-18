@@ -65,7 +65,7 @@
         const load = loading($('body'));
         try {
             const { data } = await story.getStoryList();
-            // const type = useChangeType(data);
+            const type = useChangeType(data);
 
             $('#list-btn').click(() => type.value = 0);
             $('#grid-btn').click(() => type.value = 1);

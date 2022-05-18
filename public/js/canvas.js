@@ -166,7 +166,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
         prevY: prev_Y,
         currX: curr_X,
         currY: curr_Y,
-        color: lineOption.color,
+        color: color_,
         thickness: lineOption.thickness,
       });
       let ctx = canvas[0].getContext("2d");

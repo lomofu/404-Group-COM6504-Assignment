@@ -39,16 +39,18 @@ const selectItem = async (event) => {
   let KLGHistory = await myGoogleKLG.getKLGData(roomId);
   let cardId = 0;
   let exist = false;
-  for (let elm of KLGHistory) {
-    if (row.name === elm.row.name) {
-      cardId = elm.id;
-      exist = true;
-      $("#" + cardId)
-        .css("color", "purple")
-        .css("border-color", KLGColor);
-      $("#google-kl-input").click(() => {
-        $("#" + cardId).css("color", "black");
-      });
+  if(KLGHistory){
+    for (let elm of KLGHistory) {
+      if (row.name === elm.row.name) {
+        cardId = elm.id;
+        exist = true;
+        $("#" + cardId)
+            .css("color", "purple")
+            .css("border-color", KLGColor);
+        $("#google-kl-input").click(() => {
+          $("#" + cardId).css("color", "black");
+        });
+      }
     }
   }
   if (cardId === 0) {
@@ -58,7 +60,11 @@ const selectItem = async (event) => {
       name: username,
       row: row,
     });
-    cardId = KLGHistory.length + 1;
+    if(KLGHistory){
+      cardId = KLGHistory.length + 1;
+    }else {
+      cardId = 1;
+    }
     $("#google-cards").prepend(`
         <div id="${cardId}" class="card w-100 my-2" style="border-color: ${KLGColor}">
             <div class="card-body">

@@ -129,7 +129,7 @@ const _addListener = () => {
       const description = $("#create-room-desc-input").val();
       const { data } = await room.createRoom({ storyId, name, description });
       bootstrap.Modal.getInstance(createRoomModal).hide();
-      window.open("/room/" + data);
+      window.open('/room?roomId='+data);
     }
   });
 };

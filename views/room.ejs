@@ -238,11 +238,10 @@
     import {useDao} from "/js/db/dao.js";
     import {changeColor,lineOption} from "/js/canvas.js";
 
-
     const url = new URL(window.location.href);
     const roomId = url.searchParams.get("roomId");
-
-
+    let username;
+    
     const {KLGDao} = await useDao();
     const {getKLGData, storeKLGData} = KLGDao;
 
@@ -261,13 +260,14 @@
             })
 
             $('#google-kl-input').keydown(() => {
-
                 widgeInit(lineOption.color,username);
-
             })
 
             useRoom();
-            usernameModal((username) => useSocket(username));
+            usernameModal((name) => {
+                 username = window.localStorage.getItem(`${roomId}-username`);
+                useSocket(name);
+            });
             useToolBox();
         })
     } else {
