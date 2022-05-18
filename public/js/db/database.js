@@ -45,6 +45,10 @@ export async function initDatabase() {
             unique: false,
             multiEntry: false,
           });
+          KLGDataBase.createIndex("color", "color", {
+            unique: false,
+            multiEntry: false,
+          });
           KLGDataBase.createIndex("row", "row", {
             unique: false,
             multiEntry: true,
@@ -52,10 +56,13 @@ export async function initDatabase() {
         }
 
         if (!upgradeDb.objectStoreNames.contains(ANNOTATION_STORE_NAME)) {
-          let annotationDataBase = upgradeDb.createObjectStore(ANNOTATION_STORE_NAME, {
-            keyPath: "id",
-            autoIncrement: true,
-          });
+          let annotationDataBase = upgradeDb.createObjectStore(
+            ANNOTATION_STORE_NAME,
+            {
+              keyPath: "id",
+              autoIncrement: true,
+            },
+          );
           annotationDataBase.createIndex("roomId", "roomId", {
             unique: false,
             multiEntry: false,
@@ -65,7 +72,6 @@ export async function initDatabase() {
             multiEntry: true,
           });
         }
-
       },
     });
   }

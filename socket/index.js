@@ -37,9 +37,9 @@ module.exports = (server) => {
         socket.broadcast.to(roomId).emit("received_emoji", name, message);
       });
 
-      socket.on("send_KLGraph", (roomId, name, row) => {
+      socket.on("send_KLGraph", (roomId, name, color, row) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit("received_KLGraph", name, row);
+        socket.broadcast.to(roomId).emit("received_KLGraph", name, color,row);
       });
 
       socket.on(

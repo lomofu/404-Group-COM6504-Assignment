@@ -42,14 +42,20 @@ const selectItem = async (event) => {
     if (row.name === elm.row.name) {
       cardId = elm.id;
       exist = true;
-      $("#" + cardId).css("color", "purple").css("border-color",KLGColor);
+      $("#" + cardId)
+        .css("color", "purple")
+        .css("border-color", KLGColor);
       $("#google-kl-input").click(() => {
         $("#" + cardId).css("color", "black");
       });
     }
   }
   if (cardId === 0) {
-    await myGoogleKLG.storeKLGData({ roomId: roomId, row: row });
+    await myGoogleKLG.storeKLGData({
+      roomId: roomId,
+      color: KLGColor,
+      row: row,
+    });
     cardId = KLGHistory.length + 1;
     $("#google-cards").prepend(`
         <div id="${cardId}" class="card w-100 my-2" style="border-color: ${KLGColor}">
@@ -60,7 +66,7 @@ const selectItem = async (event) => {
             </div>
         </div>
     `);
-    socket.emit("send_KLGraph", roomId, username, row);
+    socket.emit("send_KLGraph", roomId, KLGColor, username, row);
   }
 
   $("#google-kl-input").val("");
