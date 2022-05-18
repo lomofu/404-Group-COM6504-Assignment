@@ -236,9 +236,14 @@ export const usernameModal = (success) => {
   });
 };
 
-export const useSocket = (name) => {
+export const useSocket = async (name) => {
   const $chat = $("#chat-history");
   const socket = io();
+
+  if (!navigator.onLine) {
+    const { data } = await room.getRoomDetail(roomId);
+    await useCanvas(roomId, name, socket, data.imageUrl);
+  }
 
   socket.on("connect", async () => {
     socket.emit("create or join", roomId, name);
@@ -423,41 +428,27 @@ export const useSocket = (name) => {
 
 export const useToolBox = () => {
   const $tool = $("#tool-box");
-  $tool.mousedown(function (e) {
-    const positionDiv = $(this).offset();
-    const distenceX = e.pageX - positionDiv.left;
-    const distenceY = e.pageY - positionDiv.top;
-    $tool.removeClass("shadow-none");
-    $tool.addClass("shadow-lg");
-    $tool.css("background-color", "rgb(255,255,255)");
+  $tool.mousedown(dg);
 
-    //drage
-    $(document).mousemove(function (e) {
-      let x = e.pageX - distenceX;
-      let y = e.pageY - distenceY;
+  function dg(e) {
+    window.my_dragging = {};
+    my_dragging.pageX0 = e.pageX;
+    my_dragging.pageY0 = e.pageY;
+    my_dragging.elem = this;
+    my_dragging.offset0 = $(this).offset();
 
-      if (x < 0) {
-        x = 0;
-      } else if (x > $(document).width() - $tool.outerWidth(true)) {
-        x = $(document).width() - $tool.outerWidth(true);
-      }
-      if (y < 0) {
-        y = 0;
-      } else if (y > $(document).height() - $tool.outerHeight(true)) {
-        y = $(document).height() - $tool.outerHeight(true);
-      }
+    function handle_dragging(e) {
+      var left = my_dragging.offset0.left + (e.pageX - my_dragging.pageX0);
+      var top = my_dragging.offset0.top + (e.pageY - my_dragging.pageY0);
+      $(my_dragging.elem).offset({ top: top, left: left });
+    }
 
-      $tool.css({
-        left: x + "px",
-        top: y + "px",
-      });
-    });
+    function handle_mouseup(e) {
+      $("body")
+        .off("mousemove", handle_dragging)
+        .off("mouseup", handle_mouseup);
+    }
 
-    $(document).mouseup(function () {
-      $tool.css("background-color", "rgba(211,211,211,0.76)");
-      $tool.addClass("shadow-none");
-      $tool.removeClass("shadow-lg");
-      $(document).off("mousemove");
-    });
-  });
+    $("body").on("mouseup", handle_mouseup).on("mousemove", handle_dragging);
+  }
 };
