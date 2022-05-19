@@ -3,11 +3,16 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/storyService");
-const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
-const Exception = require("../util/exception");
+const { BAD_REQUEST } = require("../util/http");
 
-// get story list
-router.get("/list", async (req, res, next) => {
+/**
+ * get story list once directly
+ *
+ * @return return all the data from MongoDB
+ *
+ * @exception when occur, return an empty list
+ */
+router.get("/list", async (req, res) => {
   try {
     const list = await service.getStoryList();
     res.json(list);
@@ -16,9 +21,19 @@ router.get("/list", async (req, res, next) => {
   }
 });
 
+router.post("/offlineList", async (req, res, next) => {
+  try {
+    const offlineList = req.body;
+    await service.uploadOfflineList(offlineList);
+    res.json("update successfully");
+  } catch (e) {
+    next(e);
+  }
+});
+
 // create new story
 router.post("/", async (req, res, next) => {
-  const { title, author, description, image } = req.body;
+  const { title, author, description, image, createTime } = req.body;
 
   if (!title) {
     res
@@ -51,6 +66,7 @@ router.post("/", async (req, res, next) => {
       author,
       description,
       image,
+      createTime,
     });
 
     res.json(id);

@@ -9,9 +9,7 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/roomService");
 const storyService = require("../service/storyService");
-const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
-const { log } = require("debug");
-const e = require("express");
+const { BAD_REQUEST } = require("../util/http");
 const { getMembersByRoomId } = require("../socket/index").cache;
 
 // get room list
@@ -31,14 +29,14 @@ router.post("/", async (req, res, next) => {
 
   if (!storyId) {
     res
-      .status(BAD_REQUEST.code)
-      .send(BAD_REQUEST.message('Miss the "story Id" value'));
+        .status(BAD_REQUEST.code)
+        .send(BAD_REQUEST.message('Miss the "story Id" value'));
     return;
   }
   if (!name) {
     res
-      .status(BAD_REQUEST.code)
-      .send(BAD_REQUEST.message('Miss the "name" value'));
+        .status(BAD_REQUEST.code)
+        .send(BAD_REQUEST.message('Miss the "name" value'));
     return;
   }
   try {
