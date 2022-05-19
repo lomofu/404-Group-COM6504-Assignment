@@ -19,8 +19,8 @@ router.get("/createStory", (req, res) => {
   res.render("createStory", { path: "createStory" });
 });
 
-router.get("/storyDetail/:storyId", (req, res) => {
-  res.render("storyDetail", { storyId: req.params["storyId"] });
+router.get("/storyDetail", (req, res) => {
+  res.render("storyDetail", { storyId: req.query["storyId"]});
 });
 
 router.get("/room", (req, res) => {
