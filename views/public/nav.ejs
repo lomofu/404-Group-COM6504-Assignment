@@ -1,7 +1,7 @@
 <!--nav-->
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
     </symbol>
 </svg>
 
@@ -10,7 +10,7 @@
     <div id="offline-alert" class="m-0 alert alert-danger w-100 alert-dismissible fade show rounded-0 border-0 mb-2"
          role="alert" style="display: none">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-            <use xlink:href="#exclamation-triangle-fill" />
+            <use xlink:href="#exclamation-triangle-fill"/>
         </svg>
         Your are offline now!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
@@ -37,10 +37,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <hr class="col-12 d-lg-none text-light">
             <div class="container my-3 my-lg-0">
-                <div class="row">
-                    <input class="form-control me-lg-3 mb-3 mb-lg-0 col" type="search" placeholder="Search a story"
-                           aria-label="Search">
-
+                <div class="row justify-content-end">
                     <button class="btn btn-outline-light me-3 col-12 col-lg-3"
                             onclick="{window.location.href='/createStory'}">
                         Create a Story
@@ -51,22 +48,77 @@
     </div>
 </nav>
 
-<script>
-  !navigator.onLine && offlineHandler();
+<div id="sync-toast"
+     class="toast align-items-center text-white bg-warning border-0 position-fixed bottom-0 start-50 translate-middle-x mb-2"
+     role="alert"
+     aria-live="assertive" aria-atomic="true" style="z-index: 999;" data-bs-delay="99999999">
+    <div class="d-flex">
+        <div class="toast-body d-flex align-items-center">
+            <div class="spinner-grow me-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <span>Start to upload offline stories to the sever</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white me-1 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+    </div>
+</div>
 
-  window.addEventListener('online', function() {
-    document.getElementById('offline-alert').style.display = "none";
-    document.getElementById('nav-bar').classList.remove('pt-0');
-  });
+<script type="module">
+    import {useDao} from "/js/db/dao.js";
+    import {story} from "/js/public/api.js";
 
-  window.addEventListener('offline', () => offlineHandler());
+    const {storyDao} = await useDao();
 
-  function offlineHandler() {
-    document.getElementById('offline-alert').style.display = "block";
-    document.getElementById('nav-bar').classList.add('pt-0');
-  }
 
-  function handleClose() {
-    document.getElementById('nav-bar').classList.remove('pt-0');
-  }
+    console.log("You are: ", navigator.onLine ? "Online mode" : "Offline mode");
+
+    if (navigator.onLine) {
+        uploadOfflineStory();
+    } else {
+        offlineHandler();
+    }
+    window.addEventListener('online', function () {
+        uploadOfflineStory();
+        document.getElementById('offline-alert').style.display = "none";
+        document.getElementById('nav-bar').classList.remove('pt-0');
+    });
+
+    window.addEventListener('offline', () => offlineHandler());
+
+    function offlineHandler() {
+        document.getElementById('offline-alert').style.display = "block";
+        document.getElementById('nav-bar').classList.add('pt-0');
+    }
+
+    function handleClose() {
+        document.getElementById('nav-bar').classList.remove('pt-0');
+    }
+
+    async function uploadOfflineStory() {
+        const data = await storyDao.getOfflineStoryList();
+
+        if (data.length > 0) {
+            const myToastEl = document.getElementById("sync-toast");
+            const toast = bootstrap.Toast.getOrCreateInstance(myToastEl);
+
+            try {
+                await toast.show();
+                await story.updateOfflineStoryList(data.map(({author, createTime, description, image, title}) => ({
+                    author,
+                    createTime,
+                    description,
+                    image,
+                    title,
+                    offline: false,
+                    rooms: 0,
+                })));
+            } finally {
+                setTimeout(async () => {
+                    await toast.dispose();
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+    }
 </script>

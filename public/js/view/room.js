@@ -1,9 +1,5 @@
-/**
- * @format
- * @Description:
- * @author Lixuan Lou, lomofu, Xu Li
- * @date 2022/3/19
- */
+/** @format */
+
 import { useTimeFormat } from "/js/util/util.js";
 import { useCanvas } from "/js/canvas.js";
 import { useDao } from "/js/db/dao.js";
@@ -24,6 +20,11 @@ const { chatDao, KLGDao } = await useDao();
 const { getChatData, storeChatData } = chatDao;
 const { getKLGData } = KLGDao;
 
+/**
+ *  Render history data about chat history, emoji list and google knowledge graph history
+ * @returns {Promise<void>}
+ * @private
+ */
 const _render = async () => {
   emojiList.forEach(({ name, src }) =>
     $("#emoji-box").append(`
@@ -46,6 +47,11 @@ const _render = async () => {
   _renderKLGraph();
 };
 
+/**
+ * Render chat history
+ * @returns {Promise<void>}
+ * @private
+ */
 async function _renderChatHistory() {
   const $chat = $("#chat-history");
   let chatHistory = await getChatData(roomId);
@@ -137,6 +143,11 @@ async function _renderChatHistory() {
   $chat.animate({ scrollTop: $chat.prop("scrollHeight") });
 }
 
+/**
+ *  Render google knowledge graph history
+ * @returns {Promise<void>}
+ * @private
+ */
 async function _renderKLGraph() {
   let KLGHistory = await getKLGData(roomId);
   for (let elm of KLGHistory) {
@@ -154,6 +165,11 @@ async function _renderKLGraph() {
   }
 }
 
+/**
+ * Render room details at left off-canvas
+ * @param data
+ * @private
+ */
 const _renderRoomDetail = (data) => {
   const { roomName, roomDescription, roomCreateTime, storyTitle } = data;
   $("#room-detail-title").text(roomName);
@@ -173,6 +189,11 @@ const _renderRoomDetail = (data) => {
   $("#leave-title").text("Room Name: " + roomName);
 };
 
+/**
+ * Render real-time room members at the right section
+ * @returns {Promise<void>}
+ * @private
+ */
 const _renderMemberList = async () => {
   const { data } = await room.getRoomMembers(roomId);
   $("#room-members").empty();
@@ -183,6 +204,10 @@ const _renderMemberList = async () => {
   });
 };
 
+/**
+ * Render data and listening to the open state of the Google Knowledge Graph section
+ * @returns {Promise<void>}
+ */
 export const useRoom = async () => {
   await _render();
   let flag = false;
@@ -209,6 +234,10 @@ export const useRoom = async () => {
   });
 };
 
+/**
+ * Render username input modal if the user is entering the room for the first time
+ * @param success
+ */
 export const usernameModal = (success) => {
   const myModalEl = document.getElementById("usernameModal");
   const modal = bootstrap.Modal.getOrCreateInstance(myModalEl);
@@ -234,6 +263,11 @@ export const usernameModal = (success) => {
   });
 };
 
+/**
+ * Use Socket.io for user communication
+ * @param name
+ * @returns {Promise<void>}
+ */
 export const useSocket = async (name) => {
   const $chat = $("#chat-history");
   const socket = io();
@@ -428,6 +462,9 @@ export const useSocket = async (name) => {
   });
 };
 
+/**
+ * Render hover paint button and clean button
+ */
 export const useToolBox = () => {
   const $tool = $("#tool-box");
   $tool.mousedown(dg);

@@ -4,10 +4,8 @@
  * @author Lixuan Lou
  * @date 2022/4/24
  */
-import {story} from "/js/public/api.js";
-// import { useDao } from "/js/db/dao.js";
-// const { storyDao } = await useDao();
-// const { getStoreData,storeStoryData } = storyDao;
+import { useDao } from "/js/db/dao.js";
+import { story } from "/js/public/api.js";
 
 export const eventListener = () => {
     _validSize();
@@ -44,7 +42,9 @@ export const eventListener = () => {
 const _validSize = () => {
     // valid title size
     $("#story-title-input").keydown(() => {
-        $("#story-title-limit").text("(" + $("#story-title-input").val().length + "/40)",);
+        $("#story-title-limit").text(
+            "(" + $("#story-title-input").val().length + "/40)",
+        );
         if ($("#story-title-input").val().length > 40) {
             $("#story-title-input").css("color", "red");
             $("#story-title-limit").css("color", "red");
@@ -55,7 +55,9 @@ const _validSize = () => {
     });
     // valid author size
     $("#story-author-input").keydown(() => {
-        $("#story-author-limit").text("(" + $("#story-author-input").val().length + "/20)",);
+        $("#story-author-limit").text(
+            "(" + $("#story-author-input").val().length + "/20)",
+        );
         if ($("#story-author-input").val().length > 20) {
             $("#story-author-input").css("color", "red");
             $("#story-author-limit").css("color", "red");
@@ -66,7 +68,9 @@ const _validSize = () => {
     });
     // valid description size
     $("#story-desc-input").keydown(() => {
-        $("#story-desc-limit").text("(" + $("#story-desc-input").val().length + "/200)",);
+        $("#story-desc-limit").text(
+            "(" + $("#story-desc-input").val().length + "/200)",
+        );
         if ($("#story-desc-input").val().length > 200) {
             $("#story-desc-input").css("color", "red");
             $("#story-desc-limit").css("color", "red");
@@ -170,35 +174,60 @@ const _getBase64 = (file) => {
 };
 
 const _validFileType = (fileBase64) => {
-    if (fileBase64.substr(5, 6) === "image/") {
-        return true;
-    } else {
-        return false;
-    }
+    return fileBase64.substr(5, 6) === "image/";
 };
 
 const _createStory = async () => {
+    const { storyDao } = await useDao();
+    const { storeAStoryData } = storyDao;
     const title = $("#story-title-input").val();
     const author = $("#story-author-input").val();
     const image = $("#preview-story-img").attr("src");
     const description = $("#story-desc-input").val();
-    try {
-        const {data} = await story.createStory({
-            title, author, description, image,
-        });
 
-        if (data) {
-            $("#preview-story-card").addClass("d-none");
-            $("#create-success-card").removeClass("d-none");
-            $("#go-list-btn").click(() => {
-                window.location.href = "/story";
+    try {
+        if (navigator.onLine) {
+            const { data } = await story.createStory({
+                title,
+                author,
+                description,
+                image,
             });
-            $("#go-story-btn").click(() => {
-                window.location.href = "/storyDetail/" + data;
+            await storeAStoryData(data);
+        } else {
+            // if offline store into indexDB with offline flag
+            await storeAStoryData({
+                id: Date.now(),
+                title,
+                author,
+                image,
+                description,
+                createTime: new Date().toISOString(),
+                offline: true,
+                rooms: 0,
             });
         }
     } catch (e) {
-        console.error(e);
+        console.warn("Catch error, store in the indexDB!");
+        await storeAStoryData({
+            id: Date.now(),
+            title,
+            author,
+            image,
+            description,
+            createTime: new Date().toISOString(),
+            offline: true,
+            rooms: 0,
+        });
+    } finally {
+        $("#preview-story-card").addClass("d-none");
+        $("#create-success-card").removeClass("d-none");
+        $("#go-list-btn").click(() => {
+            window.location.href = "/story";
+        });
+        $("#go-story-btn").click(() => {
+            window.location.href = "/storyDetail?storyId=" + data;
+        });
     }
 };
 

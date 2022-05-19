@@ -1,10 +1,6 @@
 /**
- * @format
- * @author lomofu
- * @desc
- * @create 11/Mar/2022 18:12
+ * Generate dynamic presentation cards on the index page
  */
-
 export const useCards = () => {
   let interval;
   const createAnimation = () =>

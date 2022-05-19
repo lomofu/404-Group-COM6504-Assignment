@@ -5,7 +5,7 @@
  * @date 2022/3/31
  */
 
-import { story, room } from "/js/public/api.js";
+import { room, story } from "/js/public/api.js";
 
 let storyId;
 
@@ -31,17 +31,15 @@ export const initView = (id) => {
 };
 
 const _initStoryDetails = async () => {
-  try {
-    const { data } = await story.getStoryDetail(storyId);
-    $("#story-detail-title").text(data.title);
-    $("#story-detail-author").text("@" + data.author);
-    $("#story-detail-desc").text(data.description);
-    $("#story-detail-img").attr("src", data.image);
-    $("#rooms-number").text(data.rooms);
-    if (data.rooms > 0) {
-      _initRoomList();
-    }
-  } catch (e) {}
+  const { data } = await story.getStoryDetail(storyId);
+  $("#story-detail-title").text(data.title);
+  $("#story-detail-author").text("@" + data.author);
+  $("#story-detail-desc").text(data.description);
+  $("#story-detail-img").attr("src", data.image);
+  $("#rooms-number").text(data.rooms);
+  if (data.rooms > 0) {
+    _initRoomList();
+  }
 };
 
 const _initRoomList = async () => {
@@ -94,7 +92,7 @@ const _addListener = () => {
 
   $("#create-room-name-input").keydown(() => {
     $("#room-name-limit").text(
-      "(" + $("#create-room-name-input").val().length + "/30)",
+        "(" + $("#create-room-name-input").val().length + "/30)",
     );
     if ($("#create-room-name-input").val().length > 30) {
       $("#create-room-name-input").css("color", "red");
@@ -107,7 +105,7 @@ const _addListener = () => {
 
   $("#create-room-desc-input").keydown(() => {
     $("#room-desc-limit").text(
-      "(" + $("#create-room-desc-input").val().length + "/100)",
+        "(" + $("#create-room-desc-input").val().length + "/100)",
     );
     if ($("#create-room-desc-input").val().length > 100) {
       $("#create-room-desc-input").css("color", "red");
@@ -122,14 +120,14 @@ const _addListener = () => {
     if ($("#create-room-name-input").val().length === 0) {
       $("#room-name-limit").text("Empty!").css("color", "red");
     } else if (
-      $("#create-room-name-input").val().length < 30 &&
-      $("#create-room-desc-input").val().length < 100
+        $("#create-room-name-input").val().length < 30 &&
+        $("#create-room-desc-input").val().length < 100
     ) {
       const name = $("#create-room-name-input").val();
       const description = $("#create-room-desc-input").val();
       const { data } = await room.createRoom({ storyId, name, description });
       bootstrap.Modal.getInstance(createRoomModal).hide();
-      window.open('/room?roomId='+data);
+      window.open("/room?roomId=" + data);
     }
   });
 };
