@@ -3,7 +3,7 @@
 // cache storage instances
 let assetCache = null;
 
-const assetsCacheName = "mission-cache-v3";
+const assetsCacheName = "mission-cache-v1";
 
 // asset files need to be store
 const filesToCache = [
@@ -20,9 +20,10 @@ const filesToCache = [
   "/css/storyDetail.css",
 
   "/",
-  "about",
-  "/story",
+  "/storyDetail",
   "/createStory",
+  "/story",
+  "about",
   "/room",
   "/offline",
   "/404",
@@ -32,6 +33,7 @@ const filesToCache = [
   "/img/feature1.jpg",
   "/img/feature2.jpg",
   "/img/default-img.jpg",
+  "/img/story-intro-bg.png",
 
   "/socket.io/socket.io.js",
   "/js/util/util.js",
@@ -46,6 +48,14 @@ const filesToCache = [
   "/js/view/story.js",
   "/js/view/storyDetail.js",
   "/js/canvas.js",
+  "/js/extra/idb/build/index.js",
+  "/js/extra/idb/build/wrap-idb-value.js",
+  "/js/db/dao.js",
+  "/js/db/database.js",
+  "/js/db/dao/storyDao.js",
+  "/js/db/dao/KLGDao.js",
+  "/js/db/dao/chatDao.js",
+  "/js/db/dao/annotationDao.js",
 
   "/font/Fredoka-Light.woff",
   "/font/Fredoka-Medium.woff",
@@ -80,40 +90,25 @@ self.addEventListener("install", (e) => {
 /**
  * activation of service worker: it removes all cashed files if necessary
  */
-self.addEventListener("activate", (e) => {
+self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(
-        keyList.map((key) => {
-          if (key !== assetsCacheName) {
-            return caches.delete(key);
-          }
-        }),
-      );
-    }),
+    caches
+      .open(assetsCacheName)
+      .then((cacheX) => {
+        assetCache = cacheX;
+        return assetCache.addAll(filesToCache);
+      })
+      .then(() => self.skipWaiting()),
   );
-  return self.clients.claim();
 });
 
 self.addEventListener("fetch", (e) => {
+  //bypass
   if (whiteList.filter((v) => e.request.url.includes(v)).length > 0) {
     e.respondWith(fetch(e.request));
-  } else if (
-    e.request.method === "GET" &&
-    e.request.url.includes("/api") &&
-    e.request.destination === ""
-  ) {
-    // api request, network first strategy
-    e.respondWith(
-      fetch(e.request)
-        .then((res) => {
-          assetCache.add(e.request.url);
-          return res;
-        })
-        .catch(() => {
-          return caches.match(e.request.url);
-        }),
-    );
+  } else if (e.request.url.includes("/api") && e.request.destination === "") {
+    // api request, bypass
+    e.respondWith(fetch(e.request));
   } else {
     // static resources, cache first strategy
     e.respondWith(
