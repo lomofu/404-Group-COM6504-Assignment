@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu
- * @desc
- * @create 19/Mar/2022 16:03
+ * @desc Configuration file of connection to MongoDB
  */
 const mongoose = require("mongoose");
 const { mongodb_config } = require(`./${process.env.NODE_ENV}`);

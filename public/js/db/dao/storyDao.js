@@ -1,4 +1,6 @@
-/** @format */
+/**
+ * @desc Different methods for story in IndexedDB.
+ * @format */
 
 import { db, STORY_STORE_NAME } from "/js/db/database.js";
 
@@ -7,11 +9,19 @@ class storyDao {
         this.db = db;
     }
 
+    /**
+     * Get story list when offline.
+     * @returns {Promise<*>}
+     */
     async getOfflineStoryList() {
         const data = await this.getStoryList();
         return data.filter((e) => e.offline);
     }
 
+    /**
+     * Get story list in IndexedDB.
+     * @returns {Promise<*>}
+     */
     async getStoryList() {
         const objectStore = db
             .transaction(STORY_STORE_NAME)
@@ -19,6 +29,11 @@ class storyDao {
         return await objectStore.getAll();
     }
 
+    /**
+     * Store story data in IndexedDB.
+     * @param storyObject
+     * @returns {Promise<void>}
+     */
     async storeAStoryData(storyObject) {
         try {
             let tx = await db.transaction(STORY_STORE_NAME, "readwrite");
@@ -30,6 +45,11 @@ class storyDao {
         }
     }
 
+    /**
+     * Store story list in IndexedDB.
+     * @param list
+     * @returns {Promise<void>}
+     */
     async storeStoryList(list) {
         let tx = await db.transaction(STORY_STORE_NAME, "readwrite");
         let store = await tx.objectStore(STORY_STORE_NAME);
@@ -51,6 +71,10 @@ class storyDao {
         }
     }
 
+    /**
+     * Delete offline story list when system online.
+     * @returns {Promise<void>}
+     */
     async deleteOfflineStoryList() {
         const data = await this.getOfflineStoryList();
         let tx = await db.transaction(STORY_STORE_NAME, "readwrite");

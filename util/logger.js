@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu
  * @desc
- * @create 21/Mar/2022 19:43
  */
 module.exports = {
   info: (msg) => console.log("\x1b[32m[info] %s\x1b[0m", msg),

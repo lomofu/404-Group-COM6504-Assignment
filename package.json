@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "local": "set NODE_ENV=local&&export NODE_ENV=local&&node ./bin/www",
-    "dev": "set NODE_ENV=dev&&export NODE_ENV=dev&&node ./bin/www",
     "start": "set NODE_ENV=prod&&export NODE_ENV=prod&&node ./bin/www"
   },
   "dependencies": {

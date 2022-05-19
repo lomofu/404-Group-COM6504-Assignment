@@ -1,6 +1,8 @@
 /**
- * Generate dynamic presentation cards on the index page
+ * @format
+ * @desc Related scripts required to render the index page. Generate dynamic presentation cards on the index page
  */
+
 export const useCards = () => {
   let interval;
   const createAnimation = () =>

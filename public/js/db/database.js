@@ -1,4 +1,6 @@
-/** @format */
+/**
+ * @desc Inits the IndexedDB database.
+ * @format */
 
 import * as idb from "/js/extra/idb/build/index.js";
 
@@ -12,12 +14,12 @@ export let db;
 
 /**
  * it inits the database
- * store chat history
  */
 export async function initDatabase() {
   if (!db) {
     db = await idb.openDB(DB_NAME, 2, {
       upgrade(upgradeDb, oldVersion, newVersion) {
+        //Create the chat store
         if (!upgradeDb.objectStoreNames.contains(CHAT_STORE_NAME)) {
           let chatDataBase = upgradeDb.createObjectStore(CHAT_STORE_NAME, {
             keyPath: "id",
@@ -37,6 +39,7 @@ export async function initDatabase() {
           });
         }
 
+        //Create the KLG store
         if (!upgradeDb.objectStoreNames.contains(KLG_STORE_NAME)) {
           let KLGDataBase = upgradeDb.createObjectStore(KLG_STORE_NAME, {
             keyPath: "id",
@@ -60,6 +63,7 @@ export async function initDatabase() {
           });
         }
 
+        //Create the annotation store.
         if (!upgradeDb.objectStoreNames.contains(ANNOTATION_STORE_NAME)) {
           let annotationDataBase = upgradeDb.createObjectStore(
             ANNOTATION_STORE_NAME,
@@ -77,6 +81,8 @@ export async function initDatabase() {
             multiEntry: true,
           });
         }
+
+        //Create the story store
         if (!upgradeDb.objectStoreNames.contains(STORY_STORE_NAME)) {
           let storyDataBase = upgradeDb.createObjectStore(STORY_STORE_NAME, {
             keyPath: "id",

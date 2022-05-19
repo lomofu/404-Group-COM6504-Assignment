@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu
  * @desc
- * @create 11/Mar/2022 15:00
  */
 
 const express = require("express");

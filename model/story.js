@@ -1,4 +1,6 @@
-/** @format */
+/**
+ * @description Here is the schema for story in MongoDB
+ * */
 
 const mongoose = require("mongoose");
 

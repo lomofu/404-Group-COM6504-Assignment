@@ -1,8 +1,6 @@
 /**
  * @format
  * @Description:
- * @author Lixuan Lou
- * @date 2022/4/23
  */
 
 const express = require("express");

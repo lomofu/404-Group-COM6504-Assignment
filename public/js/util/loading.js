@@ -1,8 +1,6 @@
 /**
  * @format
- * @Description:
- * @author Lixuan Lou
- * @date 2022/4/22
+ * @desc: Give a loading animation when loading data.
  */
 
 export const loading = (dom, { height }) => {

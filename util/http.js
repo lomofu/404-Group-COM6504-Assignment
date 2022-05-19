@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu
  * @desc
- * @create 21/Mar/2022 18:25
  */
 
 module.exports = {

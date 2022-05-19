@@ -1,3 +1,8 @@
+/**
+ * @desc Different methods for KLGraph in IndexedDB.
+ * @format */
+
+
 import { db, KLG_STORE_NAME } from "/js/db/database.js";
 
 class KLGDao {
@@ -5,6 +10,11 @@ class KLGDao {
         this.db = db;
     }
 
+    /**
+     * Get Google Knowledge Graph data in IndexedDB.
+     * @param roomId
+     * @returns {Promise<*>}
+     */
     async getKLGData(roomId) {
         try {
             let tx = await db.transaction(KLG_STORE_NAME, "readonly");
@@ -18,6 +28,11 @@ class KLGDao {
         }
     }
 
+    /**
+     * Store Google Knowledge Graph data in IndexedDB.
+     * @param KLGObject
+     * @returns {Promise<void>}
+     */
     async storeKLGData(KLGObject) {
         try {
             let tx = await db.transaction(KLG_STORE_NAME, "readwrite");

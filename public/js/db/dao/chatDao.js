@@ -1,4 +1,6 @@
-/** @format */
+/**
+ * @desc Different methods for chat in IndexedDB.
+ * @format */
 
 import { db, CHAT_STORE_NAME } from "/js/db/database.js";
 
@@ -7,6 +9,11 @@ class ChatDao {
     this.db = db;
   }
 
+  /**
+   * Get chat data in IndexedDB.
+   * @param roomId
+   * @returns {Promise<*>}
+   */
   async getChatData(roomId) {
     try {
       let tx = await db.transaction(CHAT_STORE_NAME, "readonly");
@@ -20,6 +27,11 @@ class ChatDao {
     }
   }
 
+  /**
+   * Store chat data in IndexedDB.
+   * @param chatObject
+   * @returns {Promise<void>}
+   */
   async storeChatData(chatObject) {
     try {
       let tx = await db.transaction(CHAT_STORE_NAME, "readwrite");

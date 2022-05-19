@@ -1,8 +1,6 @@
 /**
  * @format
- * @author Jiaqi Fu, Lixuan Lou
- * @desc
- * @create 19/Mar/2022 17:00
+ * @desc Here contains all the api for room and story
  */
 import http from "/js/util/http.js";
 import { useDao } from "/js/db/dao.js";

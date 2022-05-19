@@ -1,7 +1,5 @@
 /**
- * @Description:
- * @author Lixuan Lou
- * @date 2022/4/23
+ * @desc: Here is the schema for room in MongoDB
  */
 
 const mongoose = require("mongoose");

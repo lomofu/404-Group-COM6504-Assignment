@@ -1,3 +1,7 @@
+/**
+ * @desc Different methods for room in IndexedDB.
+ * @format */
+
 import { db, ANNOTATION_STORE_NAME } from "/js/db/database.js";
 
 class annotationDao{
@@ -5,6 +9,11 @@ class annotationDao{
         this.db = db;
     }
 
+    /**
+     * Get Annotation Data in IndexedDB.
+     * @param roomId
+     * @returns {Promise<*>}
+     */
     async getAnnotationData(roomId) {
         try {
             let tx = await db.transaction(ANNOTATION_STORE_NAME, "readonly");
@@ -18,6 +27,11 @@ class annotationDao{
         }
     }
 
+    /**
+     * Store annotation data in IndexedDB.
+     * @param annotationObject
+     * @returns {Promise<void>}
+     */
     async storeAnnotationData(annotationObject) {
         try {
             let tx = await db.transaction(ANNOTATION_STORE_NAME, "readwrite");
@@ -29,6 +43,11 @@ class annotationDao{
         }
     }
 
+    /**
+     * Delete annotation data in IndexedDB.
+     * @param roomId
+     * @returns {Promise<void>}
+     */
     async deleteAnnotationData(roomId) {
         try {
             console.log("Deleting" + roomId);

@@ -1,4 +1,6 @@
-/** @format */
+/** @format
+ * @desc  Related scripts required to render the room page.
+ **/
 
 import { useTimeFormat } from "/js/util/util.js";
 import { useCanvas } from "/js/canvas.js";

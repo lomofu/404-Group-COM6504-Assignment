@@ -1,12 +1,10 @@
 /**
  * @format
- * @author lomofu
- * @desc
- * @create 19/Mar/2022 16:00
+ * @desc The information of local MongoDB.
  */
 const local = {
   mongodb_config: {
-    connect: "mongodb://localhost:27017/mission",
+    connect: "mongodb://localhost:8000/mission",
   },
 };
 

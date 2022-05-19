@@ -1,8 +1,6 @@
 /**
  * @format
- * @Description:
- * @author Lixuan Lou
- * @date 2022/4/24
+ * @Description:  Related scripts required to render the createStory page
  */
 import { useDao } from "/js/db/dao.js";
 import { story } from "/js/public/api.js";

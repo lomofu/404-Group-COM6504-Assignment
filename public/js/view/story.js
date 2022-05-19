@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu, Lixuan Lou
- * @desc
- * @create 18/Mar/2022 12:50
+ * @desc Related scripts required to render the story page.
  */
 import { useTimeFormat } from "/js/util/util.js";
 

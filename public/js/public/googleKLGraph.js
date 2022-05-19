@@ -1,8 +1,6 @@
 /**
  * @format
- * @Description:
- * @author Lixuan Lou
- * @date 2022/3/27
+ * @Description: Google Knowledge Graph related methods
  */
 
 window.myGoogleKLG = {};
@@ -39,14 +37,14 @@ const selectItem = async (event) => {
   console.log(KLGHistory);
   let cardId = 0;
   let exist = false;
-  if(KLGHistory){
+  if (KLGHistory) {
     for (let elm of KLGHistory) {
       if (row.name === elm.row.name) {
         cardId = elm.id;
         exist = true;
         $("#" + cardId)
-            .css("color", "purple")
-            .css("border-color", KLGColor);
+          .css("color", "purple")
+          .css("border-color", KLGColor);
         $("#google-kl-input").click(() => {
           $("#" + cardId).css("color", "black");
         });
@@ -60,9 +58,9 @@ const selectItem = async (event) => {
       name: username,
       row: row,
     });
-    if(KLGHistory){
+    if (KLGHistory) {
       cardId = KLGHistory.length + 1;
-    }else {
+    } else {
       cardId = 1;
     }
     $("#google-cards").prepend(`

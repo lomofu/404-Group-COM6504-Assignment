@@ -1,4 +1,5 @@
-/** @format */
+/**
+ * @format */
 
 import chatDao from "/js/db/dao/chatDao.js";
 import KLGDao from "/js/db/dao/KLGDao.js";
