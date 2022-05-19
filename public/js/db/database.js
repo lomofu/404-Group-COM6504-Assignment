@@ -77,15 +77,34 @@ export async function initDatabase() {
             multiEntry: true,
           });
         }
-
         if (!upgradeDb.objectStoreNames.contains(STORY_STORE_NAME)) {
-          let storyDataBase = upgradeDb.createObjectStore(
-              STORY_STORE_NAME,
-              {
-                keyPath: "id",
-                autoIncrement: true,
-              },
-          );
+          let storyDataBase = upgradeDb.createObjectStore(STORY_STORE_NAME, {
+            keyPath: "id",
+          });
+          storyDataBase.createIndex("author", "author", {
+            unique: false,
+            multiEntry: false,
+          });
+          storyDataBase.createIndex("description", "description", {
+            unique: false,
+            multiEntry: false,
+          });
+          storyDataBase.createIndex("image", "image", {
+            unique: false,
+            multiEntry: false,
+          });
+          storyDataBase.createIndex("rooms", "rooms", {
+            unique: false,
+            multiEntry: false,
+          });
+          storyDataBase.createIndex("title", "title", {
+            unique: false,
+            multiEntry: false,
+          });
+          storyDataBase.createIndex("offline", "offline", {
+            unique: false,
+            multiEntry: false,
+          });
         }
       },
     });
