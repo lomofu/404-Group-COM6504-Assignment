@@ -65,12 +65,25 @@ export const story = {
       },
     );
   },
-  getStoryDetail(id) {
-    return http.get("api/story", {
-      params: {
-        id,
-      },
-    });
+  async getStoryDetail(id) {
+    const { storyDao } = await useDao();
+    // offline directly read from the indexDB
+    if (!navigator.onLine) {
+      return {
+        data: await storyDao.getStoryDetail(id),
+      };
+    }
+    try {
+      return await http.get("api/story", {
+        params: {
+          id,
+        },
+      });
+    } catch (e) {
+      return {
+        data: await storyDao.getStoryDetail(id),
+      };
+    }
   },
   async updateOfflineStoryList(list) {
     try {
@@ -85,12 +98,25 @@ export const story = {
 };
 
 export const room = {
-  getRoomList(storyId) {
-    return http.get("api/room/list", {
-      params: {
-        storyId,
-      },
-    });
+  async getRoomList(storyId) {
+    const { roomDao } = await useDao();
+    // offline directly read from the indexDB
+    if (!navigator.onLine) {
+      return {
+        data: await storyDao.getStoryDetail(id),
+      };
+    }
+    try {
+      return await http.get("api/story", {
+        params: {
+          id,
+        },
+      });
+    } catch (e) {
+      return {
+        data: await storyDao.getStoryDetail(id),
+      };
+    }
   },
   createRoom({ storyId, name, description }) {
     return http.post("api/room", {
@@ -99,12 +125,26 @@ export const room = {
       description,
     });
   },
-  getRoomDetail(id) {
-    return http.get("api/room", {
-      params: {
-        id,
-      },
-    });
+  async getRoomDetail(id) {
+    const { roomDao } = await useDao();
+    // offline directly read from the indexDB
+    if (!navigator.onLine) {
+      return {
+        data: await roomDao.getRoomDetail(id),
+      };
+    }
+
+    try {
+      return http.get("api/room", {
+        params: {
+          id,
+        },
+      });
+    } catch (e) {
+      return {
+        data: await roomDao.getRoomDetail(id),
+      };
+    }
   },
   getRoomMembers(id) {
     return http.get("api/room/listMembers", {

@@ -36,14 +36,13 @@ const _initStoryDetails = async () => {
   $("#story-detail-img").attr("src", data.image);
   $("#rooms-number").text(data.rooms);
   if (data.rooms > 0) {
-    _initRoomList();
+    _initRoomList(data.roomList);
   }
 };
 
-const _initRoomList = async () => {
+const _initRoomList = (roomData) => {
   $("#room-list-container").empty();
-  const { data } = await room.getRoomList(storyId);
-  data.forEach(({ id, name, description, members }) => {
+  roomData.forEach(({ id, name, description, members }) => {
     let room;
     if (description === undefined) {
       room = `

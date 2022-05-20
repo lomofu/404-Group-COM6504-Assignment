@@ -79,19 +79,11 @@
     import {loadScript} from "/js/util/util.js";
     import {useNav} from "/js/public/nav.js";
     import {initView} from "/js/view/storyDetail.js";
+    const url = new URL(window.location.href);
+    const storyId = url.searchParams.get("storyId");
 
     loadScript(jq, async () => {
         useNav();
-        initView("<%= storyId %>");
+        initView(storyId);
     });
-
-    window.addEventListener('offline', () => {
-        document.getElementById('create-room-modal-btn').disabled = true;
-    });
-
-    window.addEventListener('online', function() {
-        document.getElementById('create-room-modal-btn').disabled = false;
-
-    });
-
 </script>

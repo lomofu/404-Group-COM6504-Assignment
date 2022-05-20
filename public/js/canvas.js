@@ -56,9 +56,14 @@ const _initImage = (imageURL) => {
     let ratioX = 1;
     let ratioY = 1;
     // if the screen is smaller than the img size we have to reduce the image to fit
-    if (img.width > window.innerWidth) ratioX = window.innerWidth / img.width;
-    if (img.height > window.innerHeight)
+    if (img.width > window.innerWidth) {
+      ratioX = window.innerWidth / img.width;
+    }
+
+    if (img.height > window.innerHeight) {
       ratioY = img.height / window.innerHeight;
+    }
+
     let ratio = Math.min(ratioX, ratioY);
     // resize the canvas to fit the screen and the image
     cvx.width = canvas.width = img.width * ratio;
@@ -72,7 +77,7 @@ const _initImage = (imageURL) => {
 function drawImageScaled(img, canvas, ctx) {
   // get the top left position of the image
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0, img.width, img.height);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 }
 
 const _initEvents = (room, userId, socket, imageURL) => {

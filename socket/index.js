@@ -85,14 +85,15 @@ module.exports = (server) => {
       });
 
       socket.on("disconnect", () => {
-        const { roomId, name } = cache.get(socket.id);
-        console.log(`👋 User: ${name} has left room ${roomId}!`);
+        const item = cache.get(socket.id);
         cache.delete(socket.id);
-        socket.broadcast.to(roomId).emit("left", name);
-        roomService.updateRoomMemberNum(
-          roomId,
-          getMembersByRoomId(roomId).length,
-        );
+        if (item?.hasOwnProperty("roomId")) {
+          socket.broadcast.to(item.roomId).emit("left", item.name);
+          roomService.updateRoomMemberNum(
+              item.roomId,
+            getMembersByRoomId(item.roomId).length,
+          );
+        }
       });
     } catch (e) {
       console.error(e);

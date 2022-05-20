@@ -70,9 +70,7 @@ const _useList = (list) => {
                             <span class="ms-1">${rooms}</span>
                         </div>
                         <span>${
-                          offline
-                            ? useTimeFormat(new Date(createTime))
-                            : createTime
+                            useTimeFormat(new Date(createTime))
                         }</span>
                     </div>
                 </div>
@@ -121,9 +119,7 @@ const _useGrid = (list) => {
                             </div>
                             <div class="card-footer bg-transparent border-0 pb-3 d-flex justify-content-between align-items-center">
                                <div>${
-                                 offline
-                                   ? useTimeFormat(new Date(createTime))
-                                   : createTime
+                                    useTimeFormat(new Date(createTime))
                                }</div>
                                 <div class="d-flex align-items-center">
                                         <i class="bi bi-chat-left-dots"></i>

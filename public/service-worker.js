@@ -75,6 +75,7 @@ const whiteList = [
   "/socket.io/?EIO=",
   "https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css",
   "https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js",
+  "https://kgsearch.googleapis.com/v1/entities:search?",
 ];
 
 self.addEventListener("install", (e) => {
@@ -109,6 +110,20 @@ self.addEventListener("fetch", (e) => {
   } else if (e.request.url.includes("/api") && e.request.destination === "") {
     // api request, bypass
     e.respondWith(fetch(e.request));
+  } else if (e.request.url.includes("storyDetail?storyId=")) {
+    // storyDetail page
+    e.respondWith(
+      caches.match("/storyDetail").then((res) => {
+        return res;
+      }),
+    );
+  } else if (e.request.url.includes("room?roomId=")) {
+    // room page
+    e.respondWith(
+      caches.match("/room").then((res) => {
+        return res;
+      }),
+    );
   } else {
     // static resources, cache first strategy
     e.respondWith(

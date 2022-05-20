@@ -75,6 +75,8 @@
 
     if (navigator.onLine) {
         uploadOfflineStory();
+        const createBtn = document.getElementById('create-room-modal-btn');
+        createBtn && (createBtn.disabled = false);
     } else {
         offlineHandler();
     }
@@ -82,6 +84,8 @@
         uploadOfflineStory();
         document.getElementById('offline-alert').style.display = "none";
         document.getElementById('nav-bar').classList.remove('pt-0');
+        const createBtn = document.getElementById('create-room-modal-btn');
+        createBtn && (createBtn.disabled = false);
     });
 
     window.addEventListener('offline', () => offlineHandler());
@@ -89,6 +93,8 @@
     function offlineHandler() {
         document.getElementById('offline-alert').style.display = "block";
         document.getElementById('nav-bar').classList.add('pt-0');
+        const createBtn = document.getElementById('create-room-modal-btn');
+        createBtn && (createBtn.disabled = true);
     }
 
     function handleClose() {
@@ -116,9 +122,24 @@
             } finally {
                 setTimeout(async () => {
                     await toast.dispose();
-                    window.location.reload();
+                    switchPathToLoad();
                 }, 1000);
             }
         }
     }
+
+    function switchPathToLoad() {
+        switch (window.location.pathname) {
+            case '/storyDetail': {
+                window.location.replace("/story")
+
+                break;
+            }
+            case "/story": {
+                window.location.reload();
+            }
+        }
+    }
+
+
 </script>
