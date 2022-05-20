@@ -1,6 +1,7 @@
 /**
  * @desc Inits the IndexedDB database.
- * @format */
+ * @format
+ */
 
 import * as idb from "/js/extra/idb/build/index.js";
 

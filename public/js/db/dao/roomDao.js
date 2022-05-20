@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @@desc  Different methods for room in IndexedDB.
+ * @format
+ */
 
 import { db, STORY_STORE_NAME } from "/js/db/database.js";
 import storyDao from "/js/db/dao/storyDao.js";
@@ -8,6 +11,11 @@ class roomDao {
     this.db = db;
   }
 
+  /**
+   * Get room detail data from indexDB
+   * @param id
+   * @returns {Promise<{storyId, roomDescription, imageUrl: *, storyTitle, roomCreateTime: (string|*), roomMembers: *, roomId, roomName}>}
+   */
   async getRoomDetail(id) {
     debugger;
     const stories = await storyDao.getStoryList();
@@ -22,7 +30,7 @@ class roomDao {
       roomMembers: room.members,
       roomName: room.name,
       storyId: story.id,
-      storyTitle: story.title
+      storyTitle: story.title,
     };
   }
 }

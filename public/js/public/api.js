@@ -6,6 +6,11 @@ import http from "/js/util/http.js";
 import { useDao } from "/js/db/dao.js";
 
 export const story = {
+
+  /**
+   * Sync story list with indexDB
+   * @returns {Promise<{syncTime: string, data: (Promise<*>|Promise<*|undefined>|*)}>}
+   */
   async syncStoryList() {
     const { storyDao } = await useDao();
     // online sync the latest stories
@@ -46,6 +51,15 @@ export const story = {
       data: await storyDao.getStoryList(),
     };
   },
+
+  /**
+   * Create story with story data
+   * @param title
+   * @param author
+   * @param description
+   * @param image
+   * @returns {*}
+   */
   createStory({ title, author, description, image }) {
     return http.post(
       "api/story",
@@ -65,6 +79,12 @@ export const story = {
       },
     );
   },
+
+  /**
+   * Get story detail by story id
+   * @param id
+   * @returns {Promise<{data: (Promise<{data: *}|*|{data: *}|undefined>|Promise<(*&{roomList: *})|undefined>|Promise<*>|*)}|*>}
+   */
   async getStoryDetail(id) {
     const { storyDao } = await useDao();
     // offline directly read from the indexDB
@@ -85,6 +105,12 @@ export const story = {
       };
     }
   },
+
+  /**
+   * Update offline story list after online
+   * @param list
+   * @returns {Promise<void>}
+   */
   async updateOfflineStoryList(list) {
     try {
       const { storyDao } = await useDao();
@@ -98,6 +124,11 @@ export const story = {
 };
 
 export const room = {
+  /**
+   * Get room list by story id (deprecated)
+   * @param storyId
+   * @returns {Promise<*|{data: (Promise<{data: (Promise<{data: *}|*|undefined>|Promise<*|undefined>|Promise<*>|*)}|*>|Promise<*>|Promise<(*&{roomList: *})|undefined>|*)}>}
+   */
   async getRoomList(storyId) {
     const { roomDao } = await useDao();
     // offline directly read from the indexDB
@@ -118,6 +149,14 @@ export const room = {
       };
     }
   },
+
+  /**
+   * Create new room with room data
+   * @param storyId
+   * @param name
+   * @param description
+   * @returns {*}
+   */
   createRoom({ storyId, name, description }) {
     return http.post("api/room", {
       storyId,
@@ -125,6 +164,12 @@ export const room = {
       description,
     });
   },
+
+  /**
+   * Get room detail by room id
+   * @param id
+   * @returns {Promise<{data: (Promise<{data: *}|*|{data: *}|undefined>|Promise<{storyId, roomDescription, imageUrl: *, storyTitle, roomCreateTime: (string|*), roomMembers: *, roomId, roomName}>|Promise<{storyId: *, createTime: *, members: *, name: *, description: *, id: *, delete: *}|undefined>|*)}|*>}
+   */
   async getRoomDetail(id) {
     const { roomDao } = await useDao();
     // offline directly read from the indexDB
@@ -146,6 +191,12 @@ export const room = {
       };
     }
   },
+
+  /**
+   * Get real-time room members by room id
+   * @param id
+   * @returns {*}
+   */
   getRoomMembers(id) {
     return http.get("api/room/listMembers", {
       params: {

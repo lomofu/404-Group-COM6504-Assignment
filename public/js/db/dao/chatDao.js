@@ -1,6 +1,7 @@
 /**
  * @desc Different methods for chat in IndexedDB.
- * @format */
+ * @format
+ */
 
 import { db, CHAT_STORE_NAME } from "/js/db/database.js";
 

@@ -1,6 +1,7 @@
 /**
  * @desc Different methods for KLGraph in IndexedDB.
- * @format */
+ * @format
+ */
 
 
 import { db, KLG_STORE_NAME } from "/js/db/database.js";

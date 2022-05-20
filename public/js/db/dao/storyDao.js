@@ -1,6 +1,7 @@
 /**
  * @desc Different methods for story in IndexedDB.
- * @format */
+ * @format
+ */
 
 import { db, STORY_STORE_NAME } from "/js/db/database.js";
 
