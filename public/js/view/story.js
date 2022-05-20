@@ -52,7 +52,7 @@ const _useList = (list) => {
       $listContainer.append(`
              <li id="${id}" class="list-group-item d-flex p-3 mb-3 shadow-sm">             
                   ${offlineContent}
-                  < img src="${image}"
+                  <img src="${image}"
                      width="400"
                      height="200"
                      class="rounded">
