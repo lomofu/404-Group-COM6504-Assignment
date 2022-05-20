@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu
- * @desc
- * @create 11/Mar/2022 16:01
+ * @desc A number of useful tools
  */
 
 export const loadScript = (url, callback) => {

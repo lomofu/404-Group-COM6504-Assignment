@@ -1,4 +1,6 @@
 /** @format */
+const roomService = require("../service/roomService");
+
 const cache = new Map();
 
 module.exports = (server) => {
@@ -15,6 +17,10 @@ module.exports = (server) => {
           name,
         });
         io.sockets.to(roomId).emit("joined", name);
+        roomService.updateRoomMemberNum(
+          roomId,
+          getMembersByRoomId(roomId).length,
+        );
       });
 
       socket.on("leave", (roomId, name) => {
@@ -33,16 +39,61 @@ module.exports = (server) => {
         socket.broadcast.to(roomId).emit("received_emoji", name, message);
       });
 
-      socket.on('draw', (roomId, name, width, height, prevX, prevY, currX, currY, color, thickness) => {
+      socket.on("send_KLGraph", (roomId, color, name, row) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit('received_draw', roomId, name, width, height, prevX, prevY, currX, currY, color, thickness);
+        socket.broadcast.to(roomId).emit("received_KLGraph", name, color, row);
+      });
+
+      socket.on(
+        "draw",
+        (
+          roomId,
+          name,
+          width,
+          height,
+          prevX,
+          prevY,
+          currX,
+          currY,
+          color,
+          thickness,
+        ) => {
+          socket.join(roomId);
+          socket.broadcast
+            .to(roomId)
+            .emit(
+              "received_draw",
+              roomId,
+              name,
+              width,
+              height,
+              prevX,
+              prevY,
+              currX,
+              currY,
+              color,
+              thickness,
+            );
+        },
+      );
+
+      socket.on("clear", (roomId, name, width, height) => {
+        socket.join(roomId);
+        socket.broadcast
+          .to(roomId)
+          .emit("received_clear", roomId, name, width, height);
       });
 
       socket.on("disconnect", () => {
-        console.log(cache.get(socket.id));
-        const { roomId, name } = cache.get(socket.id);
-        console.log(`👋 User: ${name} has left room ${roomId}!`);
-        socket.broadcast.to(roomId).emit("left", name);
+        const item = cache.get(socket.id);
+        cache.delete(socket.id);
+        if (item?.hasOwnProperty("roomId")) {
+          socket.broadcast.to(item.roomId).emit("left", item.name);
+          roomService.updateRoomMemberNum(
+              item.roomId,
+            getMembersByRoomId(item.roomId).length,
+          );
+        }
       });
     } catch (e) {
       console.error(e);
@@ -50,4 +101,12 @@ module.exports = (server) => {
   });
 };
 
-module.exports.cache = cache;
+const useCacheStore = () => cache;
+
+const getMembersByRoomId = (id) =>
+  [...cache.values()].filter((e) => e.roomId === id);
+
+module.exports.cache = {
+  useCacheStore,
+  getMembersByRoomId,
+};

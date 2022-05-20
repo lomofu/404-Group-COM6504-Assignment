@@ -1,4 +1,6 @@
-/** @format */
+/**
+ * @description Here is the schema for story in MongoDB
+ * */
 
 const mongoose = require("mongoose");
 
@@ -9,9 +11,9 @@ const story = new Schema({
   author: { type: String, required: true, max: 100 },
   description: { type: String, required: true, max: 100 },
   image: { type: String, required: true, max: 100 },
-  createTime: { type: String, required: true },
-  delete: { type: Boolean, required: true },
+  createTime: { type: Date, required: true },
   rooms: { type: Number, required: true },
+  offline: { type: Boolean, required: true },
 });
 
 story.set("toObject", { getters: true, virtuals: true });

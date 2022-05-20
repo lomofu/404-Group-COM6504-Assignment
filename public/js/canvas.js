@@ -5,10 +5,11 @@
  */
 import { useDao } from "/js/db/dao.js";
 const { annotationDao } = await useDao();
-const { storeAnnotationData, getAnnotationData } = annotationDao;
+const { storeAnnotationData, getAnnotationData, deleteAnnotationData } =
+  annotationDao;
 
-const lineOption = {
-  color: "red",
+export const lineOption = {
+  color: "black",
   thickness: 4,
 };
 
@@ -20,13 +21,32 @@ let room;
 let userId;
 let socket;
 
+export const changeColor = (color) => {
+  lineOption.color = color;
+};
+
 export const useCanvas = async (roomId, username, sct, imageURL) => {
+  lineOption.color = "black";
   canvas = $("#main-canvas");
   room = roomId;
   userId = username;
   socket = sct;
   _initImage(imageURL);
   _initEvents(room, userId, socket, imageURL);
+
+  $(".canvas-clear").on("click", async function (e) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    socket.emit("clear", room, userId, canvas.width, canvas.height);
+    await deleteAnnotationData(room + userId);
+    _initImage(imageURL);
+  });
+
+  socket.on("received_clear", function (room, userId, width, height) {
+    let ctx = canvas[0].getContext("2d");
+    ctx.clearRect(0, 0, width, height);
+    deleteAnnotationData(room + userId);
+    _initImage(imageURL);
+  });
 };
 
 const _initImage = (imageURL) => {
@@ -36,9 +56,14 @@ const _initImage = (imageURL) => {
     let ratioX = 1;
     let ratioY = 1;
     // if the screen is smaller than the img size we have to reduce the image to fit
-    if (img.width > window.innerWidth) ratioX = window.innerWidth / img.width;
-    if (img.height > window.innerHeight)
+    if (img.width > window.innerWidth) {
+      ratioX = window.innerWidth / img.width;
+    }
+
+    if (img.height > window.innerHeight) {
       ratioY = img.height / window.innerHeight;
+    }
+
     let ratio = Math.min(ratioX, ratioY);
     // resize the canvas to fit the screen and the image
     cvx.width = canvas.width = img.width * ratio;
@@ -52,7 +77,7 @@ const _initImage = (imageURL) => {
 function drawImageScaled(img, canvas, ctx) {
   // get the top left position of the image
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0, img.width, img.height);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 }
 
 const _initEvents = (room, userId, socket, imageURL) => {
@@ -107,6 +132,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
         );
         storeAnnotationData({
           roomId: room,
+          annotation: room + userId,
           url: imageURL,
           canvasWidth: canvas.width,
           canvasHeight: canvas.height,
@@ -137,6 +163,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
     ) {
       storeAnnotationData({
         roomId: room,
+        annotation: room + userId,
         url: imageURL,
         canvasWidth: canvas.width,
         canvasHeight: canvas.height,
@@ -144,7 +171,7 @@ const _initEvents = (room, userId, socket, imageURL) => {
         prevY: prev_Y,
         currX: curr_X,
         currY: curr_Y,
-        color: lineOption.color,
+        color: color_,
         thickness: lineOption.thickness,
       });
       let ctx = canvas[0].getContext("2d");
@@ -172,7 +199,7 @@ function getMousePos(canvas, evt) {
 }
 
 const _initDraws = async () => {
-  let annotationHistory = await getAnnotationData(roomId);
+  let annotationHistory = await getAnnotationData(room);
 
   for (let elm of annotationHistory) {
     _draw(

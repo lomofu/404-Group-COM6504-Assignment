@@ -19,18 +19,22 @@ router.get("/createStory", (req, res) => {
   res.render("createStory", { path: "createStory" });
 });
 
-router.get("/storyDetail/:storyId", (req, res) => {
-  res.render("storyDetail", { storyId: req.params["storyId"] });
+router.get("/storyDetail", (req, res) => {
+  res.render("storyDetail", { storyId: req.query["storyId"]});
 });
 
-router.get("/room/:roomId", (req, res) => {
-  res.render("room", { roomId: req.params["roomId"] });
+router.get("/room", (req, res) => {
+  res.render("room", { roomId: req.query["roomId"] });
 });
 
 router.get("/error", (req, res) => {
   res.render("error", {
     message: req.query.msg,
   });
+});
+
+router.get("/offline", (req, res) => {
+  res.render("offline");
 });
 
 module.exports = router;

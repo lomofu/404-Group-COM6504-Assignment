@@ -1,8 +1,6 @@
 /**
  * @format
- * @author lomofu
- * @desc
- * @create 11/Mar/2022 18:12
+ * @desc Related scripts required to render the index page. Generate dynamic presentation cards on the index page
  */
 
 export const useCards = () => {

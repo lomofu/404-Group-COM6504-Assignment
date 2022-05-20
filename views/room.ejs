@@ -5,11 +5,12 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/room.css">
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css">
-    <title>Mission! Room | <%= roomId %> </title>
+    <title>Mission! | Room </title>
 </head>
 <body>
 
-<div class="modal modal fade" id="usernameModal" data-bs-backdrop="static" tabindex="-1"
+<!--User Name Modal-->
+<div class="modal fade" id="usernameModal" data-bs-backdrop="static" tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -31,6 +32,25 @@
     </div>
 </div>
 
+<!--Leave Modal-->
+<div class="modal fade" id="leaveModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+     aria-labelledby="leave" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>leave the room?</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                <img class="w-100" src="/img/exit.jpg">
+                <button type="button" class="btn btn-primary" id="leave-close-btn" onclick="window.close()">
+                    Close the Page
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- room button-->
 <button id="room-btn" class="btn fixed-top mt-5 room-btn" type="button" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasLeft">
@@ -39,32 +59,95 @@
 
 <!--room detail and leave button-->
 <div class="offcanvas offcanvas-start ps-5" tabindex="-1" id="offcanvasLeft">
-    <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">Room Details</h5>
+    <div class="offcanvas-body">
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50 py-1">Story Title</div>
+            <h5 id="story-detail-title"></h5>
+        </div>
+        <hr>
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50 py-1">Room Name</div>
+            <h5 id="room-detail-title"></h5>
+        </div>
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50 py-1">Room Description</div>
+            <h5 id="room-detail-desc"></h5>
+        </div>
+        <div class="py-2">
+            <div class="fs-sm fw-light text-black-50 py-1">Room Create Time</div>
+            <h5 id="room-detail-time"></h5>
+        </div>
+        <i id="leave-room-btn" class="bi bi-box-arrow-left fs-2 text-purple" type="button" data-bs-toggle="modal"
+           data-bs-target="#leaveModal">
+        </i>
     </div>
-    <div class="offcanvas-body pt-5">
-        <p>You are in Room 1004</p>
-        <i class="bi bi-box-arrow-left" type="button"></i>
-    </div>
+</div>
+
+<div id="offline-alert"
+     class="m-0 alert alert-danger alert-dismissible fade show rounded-0 border-0 position-absolute top-0 start-0 end-0"
+     role="alert" style="display: none;z-index: 10000">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+        <use xlink:href="#exclamation-triangle-fill"/>
+    </svg>
+    Your are offline now!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </button>
 </div>
 
 <!--main screen-->
 <main class="row gx-0 vh-100 w-100 overflow-hidden">
-    <div class="col-md-9 px-0">
+    <div class="col-md-9 px-0 vh-100">
         <div class="row mx-0 h-100 flex-nowrap">
             <!-- drawer screen-->
             <div id="room-screen" class="col-12 bg-dark px-0 position-relative">
                 <canvas id="main-canvas" class="w-100 h-100"></canvas>
+
                 <button id="google-btn" class="btn mt-5" type="button">
                     Search
                 </button>
+
+                <div class="card position-absolute shadow-none rounded-pill"
+                     style="cursor: move;top: 10px;left: 50%; transform: translateX(-50%); background-color: rgba(211,211,211,0.76); z-index: 999"
+                     id="tool-box">
+                    <div class="card-body d-flex justify-content-around align-items-center px-3 py-2">
+                        <button class="btn btn-outline-dark border-0 rounded-circle mx-3">
+                            <i id="canvas-pencil" class="bi bi-pencil-fill"></i>
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-dark border-0 mx-3 dropdown-toggle" type="button"
+                                    id="canvas-palette" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-palette"></i>
+                            </button>
+                            <ul class="dropdown-menu justify-content-around p-2 shadow mt-2 w-auto"
+                                aria-labelledby="canvas-palette">
+                                <button color="blue" class="btn btn-primary rounded-circle changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: blue"></button>
+                                <button color="red" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: red"></button>
+                                <button color="orange" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: orange"></button>
+                                <button color="green" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: green"></button>
+                                <button color="cyan" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: cyan"></button>
+                                <button color="yellow" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: yellow"></button>
+                                <button color="purple" class="btn btn-primary rounded-circle  changeColorBtn border-0"
+                                        style="height: 30px;width: 30px;background-color: purple"></button>
+                            </ul>
+                        </div>
+                        <button id="clear-canvas-btn" class="btn btn-danger mx-3 canvas-clear" type="button">
+                            Clear
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- google knowledge graph-->
             <div id="google-kl" class="d-none vh-100 col-0 p-3">
                 <!-- keyword search input area-->
                 <input id="google-kl-input" type="text" class="form-control"
-                       placeholder="search from google knowledge graph" onkeydown="widgeInit()"/>
+                       placeholder="search from google knowledge graph"/>
                 <!-- search result cards-->
                 <div id="google-cards">
                 </div>
@@ -73,10 +156,10 @@
     </div>
 
     <!-- chat and members screen-->
-    <div class="col-md-3 shadow-lg d-flex flex-column justify-content-between">
+    <div class="col-md-3 shadow-lg vh-100 d-flex flex-column justify-content-between">
         <div class="tab-content px-3 justify-content-center" id="nav-tabContent">
             <!-- chat screen-->
-            <div class="h-100 d-flex flex-column justify-content-between tab-pane fade show active py-3" id="nav-chat"
+            <div class="h-100 tab-pane d-flex flex-column justify-content-between fade show active py-3" id="nav-chat"
                  role="tabpanel">
                 <h5>History Chats</h5>
                 <!-- chat history screen-->
@@ -86,11 +169,14 @@
 
                 <!-- chat input -->
                 <div class="input-group mt-2">
-                    <input id="chat-input" type="text" class="form-control" placeholder="input something to say..."/>
+                    <textarea id="chat-input" type="text" class="form-control"
+                              placeholder="input something to say..." maxlength="200" style="max-height: 200px"
+                              rows="1">
+                    </textarea>
 
                     <div class="btn-group dropup">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                                aria-expanded="false" id="send-emoji-btn">
                             <i class="bi bi-emoji-laughing"></i>
                         </button>
                         <ul class="dropdown-menu">
@@ -107,9 +193,8 @@
 
             <!-- members screen-->
             <div class="tab-pane fade h-100 py-3" id="nav-members" role="tabpanel">
-                <h3>Room 4001</h3>
-                <div class="p-3">
-
+                <h5>Room Members</h5>
+                <div class="p-3" id="room-members">
                 </div>
             </div>
         </div>
@@ -118,7 +203,7 @@
         <div class="nav w-100 d-flex justify-content-around nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active col" id="nav-chat-btn" data-bs-toggle="tab"
                     data-bs-target="#nav-chat" type="button" role="tab">
-                <i class="bi bi-chat-right-dots "></i>
+                <i class="bi bi-chat-right-dots"></i>
             </button>
             <button class="nav-link col" id="nav-members-btn" data-bs-toggle="tab"
                     data-bs-target="#nav-members"
@@ -133,17 +218,31 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/public/googleKLGraph.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js"></script>
+<script>
+    !navigator.onLine && offlineHandler();
+
+    window.addEventListener('online', function () {
+        document.getElementById('offline-alert').style.display = "none";
+    });
+
+    window.addEventListener('offline', () => offlineHandler());
+
+    function offlineHandler() {
+        document.getElementById('offline-alert').style.display = "block";
+    }
+</script>
 <script type="module">
     import {jq} from "/js/public/constant.js";
     import {loadScript} from "/js/util/util.js";
-    import {useRoom, usernameModal, useSocket} from "/js/view/room.js";
-    import { useDao } from "/js/db/dao.js";
+    import {useRoom, usernameModal, useSocket, useToolBox} from "/js/view/room.js";
+    import {useDao} from "/js/db/dao.js";
+    import {changeColor,lineOption} from "/js/canvas.js";
 
-    const roomId = window.location.pathname
-        .split("/")
-        .filter((e) => e !== "" && e !== "room");
+    const url = new URL(window.location.href);
+    const roomId = url.searchParams.get("roomId");
+    let username;
 
-    const { KLGDao } = await useDao();
+    const {KLGDao} = await useDao();
     const {getKLGData, storeKLGData} = KLGDao;
 
     window.myGoogleKLG = {
@@ -151,13 +250,28 @@
         storeKLGData
     }
 
-    if (roomId.length === 1) {
+    if (roomId) {
         loadScript(jq, async () => {
+
+            $('.changeColorBtn').click(function (e) {
+                changeColor( $(this).attr('color'));
+                $('#canvas-pencil').css("color",lineOption.color);
+                $('#canvas-palette').css("color",lineOption.color);
+            })
+
+            $('#google-kl-input').keydown(() => {
+                widgeInit(lineOption.color,username);
+            })
+
             useRoom();
-            usernameModal((username) => useSocket(username));
+            usernameModal((name) => {
+                 username = window.localStorage.getItem(`${roomId}-username`);
+                useSocket(name);
+            });
+            useToolBox();
         })
     } else {
-        alert('path is invalid, please make sure it is the form of /room/roomId ');
+        alert('path is invalid ');
     }
 
 </script>

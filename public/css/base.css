@@ -7,11 +7,11 @@
     color: var(--primary);
 }
 
-.text-purple{
+.text-purple {
     color: var(--primary);
 }
 
-.bg-purple{
+.bg-purple {
     background: var(--primary);
 }
 
@@ -89,4 +89,8 @@ body {
     border-color: purple;
     color: white;
     box-shadow: 0 0 0 0;
+}
+
+.fs-sm {
+    font-size: 0.8rem;
 }

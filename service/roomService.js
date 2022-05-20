@@ -1,7 +1,7 @@
 /**
  * @format
  * @Description:
- * @author Lixuan Lou
+ 
  * @date 2022/4/23
  */
 
@@ -28,7 +28,7 @@ module.exports = {
       const story = await StorySchema.findById(storyId);
       story.rooms += 1;
       await story.save();
-      return result._id;
+      return result;
     } catch (e) {
       logger.error(`received: ${e}`);
       throw new Error("Could not insert data!");
@@ -54,6 +54,7 @@ module.exports = {
         name: result.name,
         description: result.description,
         createTime: result.createTime,
+        delete: result.delete,
         members: result.members,
       };
     }
@@ -61,5 +62,13 @@ module.exports = {
       code: 400,
       message: "Id should not be empty",
     });
+  },
+  async updateRoomMemberNum(id, num) {
+    try {
+      return await RoomSchema.findByIdAndUpdate(id, {"members": num});
+    } catch (e) {
+      logger.error(`received: ${e}`);
+      throw new Error("Could not insert data!");
+    }
   },
 };

@@ -4,7 +4,7 @@
     <%- include('public/header'); %>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/createStory.css">
-    <title>Mission!</title>
+    <title>Mission! | Story</title>
 </head>
 <body>
 <%- include('public/nav'); %>
@@ -47,7 +47,9 @@
                                 </select>
                             </div>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="story-image-input"
+                                <input type="file" class="form-control" id="story-image-file-input"
+                                       placeholder="Image File" />
+                                <input type="text" class="d-none form-control" id="story-image-url-input"
                                        placeholder="Image URL" />
                             </div>
                         </div>

@@ -1,75 +1,57 @@
 /**
  * @format
  * @Description:
- * @author Lixuan Lou
- * @date 2022/4/23
  */
 
 const express = require("express");
 const router = express.Router();
 const service = require("../service/roomService");
-const storyService =
-require("../service/storyService");
-const { BAD_REQUEST, SERVER_ERROR } = require("../util/http");
+const storyService = require("../service/storyService");
+const { BAD_REQUEST } = require("../util/http");
+const { getMembersByRoomId } = require("../socket/index").cache;
 
 // get room list
-router.get("/list", async (req, res) => {
+router.get("/list", async (req, res, next) => {
   const { storyId } = req.query;
   try {
     const list = await service.getRoomList(storyId);
     res.json(list);
   } catch (e) {
-    console.log(e);
-    res.status(SERVER_ERROR.code).send(SERVER_ERROR.message(e.message));
+    next(e);
   }
 });
 
 // create new room
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { storyId, name, description } = req.body;
 
   if (!storyId) {
     res
-      .status(BAD_REQUEST.code)
-      .send(BAD_REQUEST.message('Miss the "story Id" value'));
+        .status(BAD_REQUEST.code)
+        .send(BAD_REQUEST.message('Miss the "story Id" value'));
     return;
   }
   if (!name) {
     res
-      .status(BAD_REQUEST.code)
-      .send(BAD_REQUEST.message('Miss the "name" value'));
+        .status(BAD_REQUEST.code)
+        .send(BAD_REQUEST.message('Miss the "name" value'));
     return;
   }
   try {
-    const id = await service.save({
+    const result = await service.save({
       storyId,
       name,
       description,
     });
 
-    res.json(id);
-  } catch (e) {
-    res
-      .status(SERVER_ERROR.code)
-      .send(
-        SERVER_ERROR.message("Server error, insert failed! Please try again!"),
-      );
-  }
-});
-
-// get room details
-router.get("/", async (req, res, next) => {
-  const { id } = req.query;
-
-  try {
-    const details = await service.getRoomDetail(id);
-    res.json(details);
+    res.json(result);
   } catch (e) {
     next(e);
   }
 });
 
-router.get("/detail", async (req, res, next) => {
+// get room details
+router.get("/", async (req, res, next) => {
   const { id } = req.query;
 
   try {
@@ -82,12 +64,24 @@ router.get("/detail", async (req, res, next) => {
     res.json({
       roomId: id,
       roomName: room.name,
+      roomDescription: room.description,
       roomCreateTime: room.createTime,
+      roomDelete: room.delete,
+      roomMembers: room.members,
       storyId: story._id,
       storyTitle: story.title,
-      imageUrl:story.image
-
+      imageUrl: story.image,
     });
+  } catch (e) {
+    next(e);
+  }
+});
+
+// get room members list
+router.get("/listMembers", async (req, res, next) => {
+  const { id } = req.query;
+  try {
+    res.json(getMembersByRoomId(id));
   } catch (e) {
     next(e);
   }

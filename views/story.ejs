@@ -4,7 +4,7 @@
     <%- include('public/header'); %>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/story.css">
-    <title>Mission!</title>
+    <title>Mission! | Story</title>
 </head>
 <body>
 <!--nav-->
@@ -22,7 +22,10 @@
 
 <main class="w-100 d-flex flex-column align-items-center container mt-4">
     <div class="container">
-        <div class="row justify-content-end">
+        <div class="row justify-content-between align-items-center">
+            <div class="col">
+                Last Sync Time: <span id="sync-time"></span>
+            </div>
             <div class="col-2 d-flex justify-content-end px-0">
                 <div class="btn-group" role="group" aria-label="Basic example">
                     <button id="list-btn" type="button" class="btn btn-primary">
@@ -37,29 +40,20 @@
 
         <ul id="list-container" class="row list-group mt-3 d-none slide-top">
             <!-- dynamic render-->
+            <h4 class="text-center">
+                NO DATA :)
+            </h4>
         </ul>
 
         <div id="grid-container" class="row slide-top">
             <!-- dynamic render-->
+            <div>
+                <h4 class="text-center">
+                    NO DATA :)
+                </h4>
+            </div>
         </div>
 
-        <nav class="mt-3 row">
-            <ul class="pagination justify-content-end p-0">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </div>
 </main>
 
@@ -67,18 +61,26 @@
 <%- include("public/script"); %>
 <script type="module">
     import {jq} from "/js/public/constant.js";
-    import {loadScript} from "/js/util/util.js";
+    import {loadScript, useTimeFormat} from "/js/util/util.js";
     import {useNav} from "/js/public/nav.js";
     import {story} from "/js/public/api.js";
     import {useChangeType} from "/js/view/story.js";
+    import {loading} from "/js/util/loading.js";
 
     loadScript(jq, async () => {
         useNav();
 
-        const {data} = await story.getStoryList();
-        const type = useChangeType(data);
-
-        $('#list-btn').click(() => type.value = 0);
-        $('#grid-btn').click(() => type.value = 1);
+        const load = loading($('body'), {
+            height: 100
+        });
+        try {
+            const { syncTime, data } = await story.syncStoryList();
+            $('#sync-time').text(useTimeFormat(new Date(syncTime)));
+            const type = useChangeType(data);
+            $('#list-btn').click(() => type.value = 0);
+            $('#grid-btn').click(() => type.value = 1);
+        } finally {
+            load.remove();
+        }
     });
 </script>

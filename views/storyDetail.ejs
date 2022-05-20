@@ -4,7 +4,7 @@
     <%- include('public/header'); %>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/storyDetail.css">
-    <title>Mission!</title>
+    <title>Mission! | Story</title>
 </head>
 <body>
 <!--nav-->
@@ -24,8 +24,8 @@
                 <div id="story-detail-author" class="fs-4"></div>
                 <p id="story-detail-desc" class="fs-5 card-text">
                 </p>
-                <a id="create-room-modal-btn" href="#" class="btn btn-purple" data-bs-toggle="modal"
-                   data-bs-target="#create-room-modal">Create a Room</a>
+                <button id="create-room-modal-btn" class="btn btn-purple" data-bs-toggle="modal"
+                        data-bs-target="#create-room-modal">Create a Room</button>
             </div>
         </div>
     </div>
@@ -79,9 +79,11 @@
     import {loadScript} from "/js/util/util.js";
     import {useNav} from "/js/public/nav.js";
     import {initView} from "/js/view/storyDetail.js";
+    const url = new URL(window.location.href);
+    const storyId = url.searchParams.get("storyId");
 
     loadScript(jq, async () => {
         useNav();
-        initView("<%= storyId %>");
+        initView(storyId);
     });
 </script>

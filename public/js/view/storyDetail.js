@@ -1,11 +1,9 @@
 /**
  * @format
- * @Description:
- * @author Lixuan Lou
- * @date 2022/3/31
+ * @Description: Related scripts required to render the storyDetail page.
  */
 
-import { story, room } from "/js/public/api.js";
+import { room, story } from "/js/public/api.js";
 
 let storyId;
 
@@ -31,30 +29,27 @@ export const initView = (id) => {
 };
 
 const _initStoryDetails = async () => {
-  try {
-    const { data } = await story.getStoryDetail(storyId);
-    $("#story-detail-title").text(data.title);
-    $("#story-detail-author").text("@" + data.author);
-    $("#story-detail-desc").text(data.description);
-    $("#story-detail-img").attr("src", data.image);
-    $("#rooms-number").text(data.rooms);
-    if (data.rooms > 0) {
-      _initRoomList();
-    }
-  } catch (e) {}
+  const { data } = await story.getStoryDetail(storyId);
+  $("#story-detail-title").text(data.title);
+  $("#story-detail-author").text("@" + data.author);
+  $("#story-detail-desc").text(data.description);
+  $("#story-detail-img").attr("src", data.image);
+  $("#rooms-number").text(data.rooms);
+  if (data.rooms > 0) {
+    _initRoomList(data.roomList);
+  }
 };
 
-const _initRoomList = async () => {
+const _initRoomList = (roomData) => {
   $("#room-list-container").empty();
-  const { data } = await room.getRoomList(storyId);
-  data.forEach(({ id, name, description, members }) => {
+  roomData.forEach(({ id, name, description, members }) => {
     let room;
     if (description === undefined) {
       room = `
         <div class="w-100 card mt-3">
             <div class="card-body d-flex flex-row">
                 <div class="fs-4 me-auto">${name}</div>
-                <button id="${id}" onclick="{window.open('/room/'+this.id)}" class="btn btn-purple join-btn">Join</button>
+                <button id="${id}" onclick="{window.open('/room?roomId='+this.id)}" class="btn btn-purple join-btn">Join</button>
             </div>
             <div class="card-footer">
                 <div class="text-start">Members: ${members}</div>
@@ -66,7 +61,7 @@ const _initRoomList = async () => {
         <div class="w-100 card mt-3">
             <div class="card-body d-flex flex-row">
                 <div class="fs-4 me-auto">${name}</div>
-                <button  id="${id}" onclick="{window.open('/room/'+this.id)}" class="btn btn-purple join-btn">Join</button>
+                <button  id="${id}" onclick="{window.open('/room?roomId='+this.id)}" class="btn btn-purple join-btn">Join</button>
             </div>
             <div class="card-footer">
                 <div class="text-start">Members: ${members}</div>
@@ -89,7 +84,7 @@ const _addListener = () => {
     $("#room-desc-limit").text("");
   });
   createRoomModal.addEventListener("hide.bs.modal", () => {
-    _initRoomList();
+    _initStoryDetails();
   });
 
   $("#create-room-name-input").keydown(() => {
@@ -127,9 +122,9 @@ const _addListener = () => {
     ) {
       const name = $("#create-room-name-input").val();
       const description = $("#create-room-desc-input").val();
-      const { data } = await room.createRoom({ storyId, name, description });
+      const data = await room.createRoom({ storyId, name, description });
+      window.open("/room?roomId=" + data._id);
       bootstrap.Modal.getInstance(createRoomModal).hide();
-      window.open("/room/" + data);
     }
   });
 };
