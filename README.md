@@ -17,9 +17,59 @@
 - **Browser** (Google, Firefox, Safari)
 
 
+
+## Screenshots
+
+
+
+### Web Application
+
+![Index](img/Index.png)
+
+
+
+![Story_List](img/Story_List.png)
+
+
+
+### Create Your Story
+
+![Create_Story](img/Create_Story.png)
+
+
+
+![Preview_Create_Story](img/Preview_Create_Story.png)
+
+
+
+![Story_Detail](img/Story_Detail.png)
+
+
+
+![Create_Room](img/Create_Room.png)
+
+### Interact In A Room
+
+![Room_Chat](img/Room_Chat.png)
+
+
+
+![Leave_Room](img/Leave_Room.png)
+
+
+
+### Support Offline
+
+![Offline](img/Offline.png)
+
+
+
+![Offline_To_Online](img/Offline_To_Online.png)
+
+
 ## Architecture Design
 
-![image-20220428205739980](img/image-20220428205739980.png)
+<img src="img/image-20220428205739980.png" alt="image-20220428205739980" style="zoom:50%;" />
 
 ## Setup Step
 1. Use `nmp install` to install packages
