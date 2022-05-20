@@ -51,29 +51,27 @@ Other Libraries: **Axios**, **JQuery**, **Mongoose**
 5. Make annotations on the picture in the chat room 
 6. Different users can chat in the same room in real time
 7. Use Google Knowledge Graph to search for keywords in the room and get a list of relevant Knowledge Graph content cards
-8. Store the history messages and annotation into the IndexDB
-
-
-
-### Pending ⏰
-
-1. File uploaded from local
-2. Display the online users of the room in real time
-3. Support offline mode
-4. Render room information 
-5. Pagenation support
-6. Search story support
-7. Support service worker
-8. Provide the javascript document in terms of javadoc
-9. Export the swagger document offline
-
+8. Store the history messages and annotation into the IndexDB 
+9. File uploaded from local 
+10. Display the online users of the room in real time
+11. Support offline mode
+12. Render room information 
+13. Support service worker
+14. Provide the javascript document in terms of javadoc
+15. Export the swagger document offline
 
 
 ## Development Logs
 
 - **Version**: Beta 3.0 (Current)
 
-> 
+>1. File uploaded from local 
+>2. Display the online users of the room in real time
+>3. Support offline mode 
+>4. Render room information
+>5. Support service worker
+>6. Provide the javascript document in terms of javadoc
+>7. Export the swagger document offline
 
 
 
