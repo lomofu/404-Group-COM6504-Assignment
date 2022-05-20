@@ -47,6 +47,7 @@ class storyDao {
       let store = await tx.objectStore(STORY_STORE_NAME);
       await store.put(storyObject);
       await tx.complete;
+      return storyObject.id;
     } catch (error) {
       console.error("error: I could not store the element. Reason: " + error);
     }

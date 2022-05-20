@@ -4,7 +4,7 @@
  */
 const local = {
   mongodb_config: {
-    connect: "mongodb://localhost:8000/mission",
+    connect: "mongodb://localhost:27017/mission",
   },
 };
 
