@@ -35,6 +35,7 @@ const filesToCache = [
   "/img/default-img.jpg",
   "/img/story-intro-bg.png",
 
+  "app.js",
   "/socket.io/socket.io.js",
   "/js/util/util.js",
   "/js/util/http.js",

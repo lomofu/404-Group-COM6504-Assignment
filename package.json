@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "local": "set NODE_ENV=local&&export NODE_ENV=local&&node ./bin/www",
-    "start": "set NODE_ENV=prod&&export NODE_ENV=prod&&node ./bin/www"
+    "start": "set NODE_ENV=local&&export NODE_ENV=local&&node ./bin/www"
   },
   "dependencies": {
     "body-parser": "^1.19.2",

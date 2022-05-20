@@ -17,13 +17,16 @@
 - **Browser** (Google, Firefox, Safari)
 
 
-
 ## Architecture Design
 
 ![image-20220428205739980](img/image-20220428205739980.png)
 
-
-
+## Setup Step
+1. Use `nmp install` to install packages
+2. Use `mongodb://localhost:27017/mission` to connect to mongoDB
+3. Use `nmp start` to start 
+4. Browse http://localhost:3000/  
+5. Browse http://localhost:3000/swagger/
 
 
 ## Tech Stack
@@ -63,7 +66,7 @@ Other Libraries: **Axios**, **JQuery**, **Mongoose**
 
 ## Development Logs
 
-- **Version**: Beta 3.0 (Current)
+- **Version**: `Beta 3.0` (Current)
 
 >1. File uploaded from local 
 >2. Display the online users of the room in real time
