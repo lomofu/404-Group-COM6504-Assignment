@@ -6,7 +6,6 @@ import http from "/js/util/http.js";
 import { useDao } from "/js/db/dao.js";
 
 export const story = {
-
   /**
    * Sync story list with indexDB
    * @returns {Promise<{syncTime: string, data: (Promise<*>|Promise<*|undefined>|*)}>}
@@ -48,7 +47,7 @@ export const story = {
     await storyDao.storeStoryList(data);
     return {
       syncTime: lastSyncTime,
-      data: await storyDao.getStoryList(),
+      data,
     };
   },
 
@@ -157,12 +156,19 @@ export const room = {
    * @param description
    * @returns {*}
    */
-  createRoom({ storyId, name, description }) {
-    return http.post("api/room", {
-      storyId,
-      name,
-      description,
-    });
+  async createRoom({ storyId, name, description }) {
+    const { roomDao } = await useDao();
+    try {
+      const { data } = await http.post("api/room", {
+        storyId,
+        name,
+        description,
+      });
+      await roomDao.updateRoomList(data);
+      return data;
+    } catch (e) {
+      // ignore
+    }
   },
 
   /**

@@ -84,7 +84,7 @@ const _addListener = () => {
     $("#room-desc-limit").text("");
   });
   createRoomModal.addEventListener("hide.bs.modal", () => {
-    _initRoomList();
+    _initStoryDetails();
   });
 
   $("#create-room-name-input").keydown(() => {
@@ -122,9 +122,9 @@ const _addListener = () => {
     ) {
       const name = $("#create-room-name-input").val();
       const description = $("#create-room-desc-input").val();
-      const { data } = await room.createRoom({ storyId, name, description });
+      const data = await room.createRoom({ storyId, name, description });
+      window.open("/room?roomId=" + data._id);
       bootstrap.Modal.getInstance(createRoomModal).hide();
-      window.open("/room?roomId=" + data);
     }
   });
 };

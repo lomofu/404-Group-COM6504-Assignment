@@ -265,6 +265,70 @@ export const usernameModal = (success) => {
   });
 };
 
+function chatEvents($chat, socket) {
+  // chat send message event
+  $("#send-msg-btn").click(() => {
+    const message = $("#chat-input").val();
+    const username = window.localStorage.getItem(`${roomId}-username`);
+    storeChatData({
+      roomId: roomId,
+      chat: message,
+      username: username,
+      type: 2,
+      date: useTimeFormat(new Date()),
+    });
+    if (message) {
+      $chat.append(`
+             <div class="pb-3 slide-top">
+                 <div class="text-end">
+                     <span class="text-purple fw-bold">${username}</span>
+                     <span class="ps-2 text-black-50">
+                         ${useTimeFormat(new Date())}
+                     </span>
+                 </div>
+                 <div class="d-flex justify-content-end w-100">
+                     <div class="message sender p-3 text-start">
+                         ${message}
+                     </div>
+                 </div>
+               </div>
+             </div>`);
+      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
+      $("#chat-input").val("");
+      $("#chat-input").attr("rows", 1);
+      socket.emit("send_chat", roomId, username, message);
+    }
+  });
+
+  //chat send emoji
+  $("#emoji-box img").click(function () {
+    const { src } = this;
+    const username = window.localStorage.getItem(`${roomId}-username`);
+    storeChatData({
+      roomId: roomId,
+      chat: src,
+      username: username,
+      type: 3,
+      date: useTimeFormat(new Date()),
+    });
+    $chat.append(`
+             <div class="pb-3">
+                 <div class="text-end">
+                     <span class="text-purple fw-bold">${username}</span>
+                     <span class="ps-2 text-black-50">
+                         ${useTimeFormat(new Date())}
+                     </span>
+                 </div>
+                 <div class="d-flex justify-content-end w-100">
+                     <img height="60" width="60" src="${src}">
+                 </div>
+               </div>
+             </div>`);
+    $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
+    socket.emit("send_emoji", roomId, username, src);
+  });
+}
+
 /**
  * Use Socket.io for user communication
  * @param name
@@ -273,6 +337,8 @@ export const usernameModal = (success) => {
 export const useSocket = async (name) => {
   const $chat = $("#chat-history");
   const socket = io();
+
+  chatEvents($chat, socket);
 
   if (!navigator.onLine) {
     const { data } = await room.getRoomDetail(roomId);
@@ -400,68 +466,6 @@ export const useSocket = async (name) => {
   });
 
   window.mySocket = socket;
-
-  // chat send message event
-  $("#send-msg-btn").click(() => {
-    const message = $("#chat-input").val();
-    const username = window.localStorage.getItem(`${roomId}-username`);
-    storeChatData({
-      roomId: roomId,
-      chat: message,
-      username: username,
-      type: 2,
-      date: useTimeFormat(new Date()),
-    });
-    if (message) {
-      $chat.append(`
-             <div class="pb-3 slide-top">
-                 <div class="text-end">
-                     <span class="text-purple fw-bold">${username}</span>
-                     <span class="ps-2 text-black-50">
-                         ${useTimeFormat(new Date())}
-                     </span>
-                 </div>
-                 <div class="d-flex justify-content-end w-100">
-                     <div class="message sender p-3 text-start">
-                         ${message}
-                     </div>
-                 </div>
-               </div>
-             </div>`);
-      $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
-      $("#chat-input").val("");
-      $("#chat-input").attr("rows", 1);
-      socket.emit("send_chat", roomId, username, message);
-    }
-  });
-
-  //chat send emoji
-  $("#emoji-box img").click(function () {
-    const { src } = this;
-    const username = window.localStorage.getItem(`${roomId}-username`);
-    storeChatData({
-      roomId: roomId,
-      chat: src,
-      username: username,
-      type: 3,
-      date: useTimeFormat(new Date()),
-    });
-    $chat.append(`
-             <div class="pb-3">
-                 <div class="text-end">
-                     <span class="text-purple fw-bold">${username}</span>
-                     <span class="ps-2 text-black-50">
-                         ${useTimeFormat(new Date())}
-                     </span>
-                 </div>
-                 <div class="d-flex justify-content-end w-100">
-                     <img height="60" width="60" src="${src}">
-                 </div>
-               </div>
-             </div>`);
-    $chat.animate({ scrollTop: $chat.prop("scrollHeight") }, 500);
-    socket.emit("send_emoji", roomId, username, src);
-  });
 };
 
 /**

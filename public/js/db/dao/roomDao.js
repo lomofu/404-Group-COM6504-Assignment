@@ -17,7 +17,6 @@ class roomDao {
    * @returns {Promise<{storyId, roomDescription, imageUrl: *, storyTitle, roomCreateTime: (string|*), roomMembers: *, roomId, roomName}>}
    */
   async getRoomDetail(id) {
-    debugger;
     const stories = await storyDao.getStoryList();
     const roomList = stories.flatMap((e) => e.roomList);
     const room = roomList.find((e) => e.id == id);
@@ -32,6 +31,18 @@ class roomDao {
       storyId: story.id,
       storyTitle: story.title,
     };
+  }
+
+  async updateRoomList(object) {
+    const story = await storyDao.getStoryDetail(object.storyId);
+    story.roomList.push({
+      createTime: object.createTime,
+      description: object.description,
+      id: object._id,
+      members: 0,
+      name: object.name,
+      storyId: object.storyId,
+    });
   }
 }
 

@@ -38,13 +38,13 @@ router.post("/", async (req, res, next) => {
     return;
   }
   try {
-    const id = await service.save({
+    const result = await service.save({
       storyId,
       name,
       description,
     });
 
-    res.json(id);
+    res.json(result);
   } catch (e) {
     next(e);
   }

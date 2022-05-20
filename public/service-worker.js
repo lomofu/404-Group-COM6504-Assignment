@@ -3,7 +3,7 @@
 // cache storage instances
 let assetCache = null;
 
-const assetsCacheName = "mission-cache-v1";
+const assetsCacheName = "mission-cache-v2";
 
 // asset files need to be store
 const filesToCache = [
@@ -54,6 +54,7 @@ const filesToCache = [
   "/js/db/dao.js",
   "/js/db/database.js",
   "/js/db/dao/storyDao.js",
+  "/js/db/dao/roomDao.js",
   "/js/db/dao/KLGDao.js",
   "/js/db/dao/chatDao.js",
   "/js/db/dao/annotationDao.js",

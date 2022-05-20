@@ -28,7 +28,7 @@ module.exports = {
       const story = await StorySchema.findById(storyId);
       story.rooms += 1;
       await story.save();
-      return result._id;
+      return result;
     } catch (e) {
       logger.error(`received: ${e}`);
       throw new Error("Could not insert data!");
