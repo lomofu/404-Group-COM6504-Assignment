@@ -3,7 +3,7 @@
 // cache storage instances
 let assetCache = null;
 
-const assetsCacheName = "mission-cache-v2";
+const assetsCacheName = "mission-cache-v1";
 
 // asset files need to be store
 const filesToCache = [
@@ -74,6 +74,7 @@ const filesToCache = [
 ];
 
 const whiteList = [
+  "/swagger",
   "/socket.io/?EIO=",
   "https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.css",
   "https://www.gstatic.com/knowledge/kgsearch/widget/1.0/widget.min.js",
